@@ -2,8 +2,7 @@
 <html>
 
 <head>
-<script src="jquery-3.2.1.min.js"></script>
-</head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script></head>
 
 <body>
 
