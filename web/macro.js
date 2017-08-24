@@ -17,6 +17,12 @@
 
 
 <script>
+
+
+
+$(function() {
+    alert( 'JavaScript Loaded!' );
+});
 	
 var url = "GET.php";
 var method = "GET";
