@@ -13,18 +13,19 @@ src="http://code.jquery.com/jquery-latest.min.js">
 
 <h2>Convert a string written in JSON format, into a JavaScript object.</h2>
 
+<p id="demo"></p>
+
 <script>
-var data = { "var1":"hello world" }
-//jQuery.ajax(
-//  	url: "index.php",
-//	method: "GET",
-  //	data: {"var":"$txt"},
-//	dataType: "json"
-  //	success: function (data, status, jqXHR){
-		
+
+	jQuery.ajax(
+  	url: "GET.php",
+	method: "GET",
+  	data: {"var":"$txt"},
+	dataType: "json"
+  	success: function (data, status, jqXHR){
 		document.write(data.var1);
-//		}
-//});
+		}
+});
 
 
 			   
