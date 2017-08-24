@@ -8,7 +8,7 @@
 
 
 <script>
-function showHint(str) {
+function showHint(json) {
     if (str.length == 0) { 
         document.getElementById("txtHint").innerHTML = "";
         return;
@@ -19,7 +19,7 @@ function showHint(str) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "GET.php?q=" + str, true);
+        xmlhttp.open("GET", "GET.php?q=" + json, true);
         xmlhttp.send();
     }
 }
