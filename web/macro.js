@@ -13,8 +13,8 @@
 <script>
 	
 jQuery.ajax(
-  	url: '/index.php',
-	method: 'GET',
+  	url: "index.php",
+	method: "GET",
   	data: {"var":"$txt"},
 	dataType: "json"
   	success: function (data, status, jqXHR){
