@@ -9,8 +9,8 @@ $snakefound = false;
 $myJSON = $_REQUEST["q"];
 $myObj = json_decode($myJSON, true)
 
-if (myObj !== "") {
-    echo $myObj[var]
+if (myJSON !== "") {
+    echo $myObj['var'];
     }
 
 /*
