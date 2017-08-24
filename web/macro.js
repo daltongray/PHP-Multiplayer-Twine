@@ -4,14 +4,13 @@ $(function() {
 	
 var url = "GET.php";
 var method = "GET";
-var dataJSON =  {"var":"$txt"};
+var dataJSON =  { "var":"$txt" };
 
 	
 jQuery.ajax({
 	url: url,
 	method: method,
 	data: dataJSON,
-	dataType: 'json',
 	success: function (data, status, jqXHR) {
 		console.log("Success! Here's the data is returned: ", data);
 		console.log("Text status: ", status);
@@ -26,7 +25,7 @@ jQuery.ajax({
 	},
 	error: function (jqXHR, status) {
 		console.log("AJAX Error: ", jqXHR);
-		console.log("Error tText status: ", status);
+		console.log("Error Text status: ", status);
 	}
 })
 	
