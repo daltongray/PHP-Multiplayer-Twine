@@ -7,6 +7,19 @@
 <p id="demo"></p>
 
 <script>
+	
+$.ajax({
+  	url: index.php,
+	method: 'GET',
+  	data: {"var":"$txt"},
+	dataType: "json"
+  	success: function (data, status, jqXHR){
+		var myJSON = data;
+		var myObj = JSON.parse(myJSON);
+		document.write(myObj.var1);
+		}
+  	dataType: 'json',
+});
 
 var myJSON = '{ "name":"John", "age":31, "city":"New York" }';
 var myObj = JSON.parse(myJSON);
@@ -14,10 +27,6 @@ var name = myObj.city;
 
 document.write(name);
 
-</script>
-
-</body>
-</html>
 
 
 
@@ -58,3 +67,7 @@ jQuery.ajax({
 			}
 		})
 */
+</script>
+
+</body>
+</html>
