@@ -17,9 +17,34 @@
 
 
 <script>
-function $.get( "GET.php", {"var":"$txt"}, function (data) {
-  	alert( "Data Loaded: " + data ), 'json';
-});
+	
+var url = "GET.php";
+var method = "GET";
+var dataJSON =  {"var":"$txt"};
+
+	
+jQuery.ajax({
+	url: url,
+	method: method,
+	data: dataJSON,
+	dataType: 'json',
+	success: function (data, status, jqXHR) {
+		console.log("Success! Here's the data is returned: ", data);
+		console.log("Text status: ", status);
+		console.log("HTTP Request response: ", jqXHR);
+
+		if (method == "GET") {
+			return data;
+		} else if (method == "POST") {
+			return "Data updated, response from server: " + data;
+		} 
+
+	},
+	error: function (jqXHR, status) {
+		console.log("AJAX Error: ", jqXHR);
+		console.log("Error tText status: ", status);
+	}
+})
 	
 	
 	/*
