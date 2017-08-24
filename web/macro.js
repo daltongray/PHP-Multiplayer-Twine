@@ -3,9 +3,7 @@
 
 <head>
 	
-<script> 
-src="http://code.jquery.com/jquery-latest.min.js"> 
-</script>
+<script> src="http://code.jquery.com/jquery-latest.min.js" </script>
 
 </head>
 
@@ -14,15 +12,16 @@ src="http://code.jquery.com/jquery-latest.min.js">
 <h2>Convert a string written in JSON format, into a JavaScript object.</h2>
 
 <script>
-	jQuery.ajax(
+
+jQuery.ajax(
   	url: "GET.php",
 	method: "GET",
   	data: {"var":"$txt"},
-	dataType: "json"
+	dataType: "json",
   	success: function (data, status, jqXHR){
 		document.write(data.var1);
 		}
-});
+	)
 
 
 			   
