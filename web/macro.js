@@ -17,11 +17,11 @@ jQuery.ajax(
   	url: "GET.php",
 	method: "GET",
   	data: {"var":"$txt"},
-	dataType: "json",
+	dataType: "json",)
   	success: function (data, status, jqXHR){
 		document.write(data.var1);
 		}
-	)
+	
 
 
 			   
