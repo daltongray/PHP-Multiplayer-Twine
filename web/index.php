@@ -9,7 +9,7 @@
 
 <script>
 function showHint(json) {
-    if (str.length == 0) { 
+    if (json.length == 0) { 
         document.getElementById("txtHint").innerHTML = "";
         return;
     } else {
