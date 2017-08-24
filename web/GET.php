@@ -1,6 +1,6 @@
 <?php
-ini_set("allow_url_fopen", 1);
-echo "Hello World!" +  $_GET;
+// ini_set("allow_url_fopen", 1);
+echo "Hello World!";
 
 // ini_set("allow_url_fopen", 1);
 
