@@ -1,5 +1,22 @@
 
-var dataJSON = {"key":"val"}
+
+
+
+document.write(hello world);
+
+			   
+/*
+
+$.ajax({
+  	url: index.php,
+	method: 'GET',
+  	data: {"var":"$txt"},
+  	success: function (data){
+		
+		}
+  	dataType: 'json',
+});
+
 
 jQuery.ajax({
 			url: 'index.php',
@@ -23,3 +40,4 @@ jQuery.ajax({
 				console.log("Error tText status: ", status);
 			}
 		})
+*/
