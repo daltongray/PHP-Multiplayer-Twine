@@ -7,11 +7,10 @@ $snakefound = false;
 
 // get the q parameter from URL
 $myJSON = $_REQUEST[q];
-$myObj = json_decode($myJSON, true)
-
+$myObj = json_decode($myJSON, true);
 if ($myJSON !== "") {
     echo $myObj['var'];
-    }
+    };
 
 /*
 $hint = "";
