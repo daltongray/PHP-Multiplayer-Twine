@@ -13,9 +13,9 @@
 
 <script>
 	
-$.ajax({
-  	url: index.php,
-	method: 'GET',
+jQuery.ajax(
+  	url: "index.php",
+	method: "GET",
   	data: {"var":"$txt"},
 	dataType: "json"
   	success: function (data, status, jqXHR){
@@ -23,7 +23,6 @@ $.ajax({
 		var myObj = JSON.parse(myJSON);
 		document.write(myObj.var1);
 		}
-  	dataType: 'json',
 });
 
 var myJSON = '{ "name":"John", "age":31, "city":"New York" }';
