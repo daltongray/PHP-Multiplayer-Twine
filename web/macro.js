@@ -11,7 +11,18 @@
 
 <h2>Convert a string written in JSON format, into a JavaScript object.</h2>
 
+
+
+
+
+
 <script>
+function $.get( "GET.php", {"var":"$txt"}, function (data) {
+  	alert( "Data Loaded: " + data ), 'json';
+});
+	
+	
+	/*
 function JQuery.ajax(
   	url: "GET.php",
 	method: "GET",
@@ -22,7 +33,7 @@ function JQuery.ajax(
 		
 });
 	
-
+*/
 
 			   
 /*
