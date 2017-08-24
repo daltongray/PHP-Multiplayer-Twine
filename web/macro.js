@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+<script src="jquery-3.2.1.min.js"></script>
+</head>
+
 <body>
 
 <h2>Convert a string written in JSON format, into a JavaScript object.</h2>
