@@ -1,3 +1,6 @@
+<?php
+$txt = "Hello World!"
+
 if (isset($_GET)) {
 	// open the file (just like we did above)
   	$get_vars = json_decode(stripslashes($_GET['var']), true);
@@ -23,5 +26,5 @@ if (isset($_GET)) {
 	// close the file
 }
 
-
+?>
 
