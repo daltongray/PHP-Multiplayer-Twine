@@ -2,7 +2,12 @@
 <html>
 
 <head>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script></head>
+	
+<script> 
+src="http://code.jquery.com/jquery-latest.min.js"> 
+</script>
+
+</head>
 
 <body>
 
@@ -11,26 +16,19 @@
 <p id="demo"></p>
 
 <script>
-	
-jQuery.ajax(
-  	url: "index.php",
-	method: "GET",
-  	data: {"var":"$txt"},
-	dataType: "json"
-  	success: function (data, status, jqXHR){
+	var data = {"var1":"hello world"}
+//jQuery.ajax(
+//  	url: "index.php",
+//	method: "GET",
+  //	data: {"var":"$txt"},
+//	dataType: "json"
+  //	success: function (data, status, jqXHR){
 		var myJSON = data;
 		var myObj = JSON.parse(myJSON);
+		var myVar = myObj.var1;
 		document.write(myObj.var1);
-		}
-});
-
-var myJSON = '{ "name":"John", "age":31, "city":"New York" }';
-var myObj = JSON.parse(myJSON);
-var name = myObj.city;
-
-document.write(name);
-
-
+//		}
+//});
 
 
 			   
@@ -70,6 +68,7 @@ jQuery.ajax({
 			}
 		})
 */
+
 </script>
 
 </body>
