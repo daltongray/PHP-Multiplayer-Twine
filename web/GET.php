@@ -7,7 +7,7 @@ $snakefound = false;
 
 // get the q parameter from URL
 $myJSON = $_REQUEST["q"];
-$myObj = json_decode($json, true)
+$myObj = json_decode($myJSON, true)
 
 if (myObj !== "") {
     echo $myObj[var]
