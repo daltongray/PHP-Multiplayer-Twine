@@ -16,7 +16,7 @@ src="http://code.jquery.com/jquery-latest.min.js">
 <p id="demo"></p>
 
 <script>
-	var data = {"var1":"hello world"}
+	var data = { "var1":"hello world" }
 //jQuery.ajax(
 //  	url: "index.php",
 //	method: "GET",
