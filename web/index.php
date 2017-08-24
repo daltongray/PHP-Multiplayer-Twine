@@ -1,6 +1,8 @@
 <?php
 // do php stuff
 
-include('Helloworld.html');
+include('macro.js');
+
+$txt = "Hello world!";
 
 ?>
