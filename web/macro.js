@@ -1,3 +1,5 @@
+
+/*
 function() {
     alert( 'JavaScript Loaded!' );
 });
@@ -26,3 +28,4 @@ jQuery.ajax({
 		console.log("Error Text status: ", status);
 	}
 })
+*/
