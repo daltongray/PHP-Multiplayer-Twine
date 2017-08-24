@@ -13,10 +13,7 @@ src="http://code.jquery.com/jquery-latest.min.js">
 
 <h2>Convert a string written in JSON format, into a JavaScript object.</h2>
 
-<p id="demo"></p>
-
 <script>
-
 	jQuery.ajax(
   	url: "GET.php",
 	method: "GET",
