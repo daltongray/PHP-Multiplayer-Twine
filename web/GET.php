@@ -3,8 +3,7 @@
 // get the q parameter from URL
 $q = $_REQUEST["q"];
 $hint = "";
-$filename = "vardb.txt";
-
+//$filename = "vardb.txt";
 
 if ($q !== "") {
     $decodedjson = json_decode($q, true);
@@ -40,9 +39,10 @@ if ($q !== "") {
     };
 };
 // Output, which is either an error message or the variable we were looking for
+*/
+
 echo $hint;
 
-*/
 /*
 
         
