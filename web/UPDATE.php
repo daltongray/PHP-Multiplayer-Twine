@@ -25,19 +25,17 @@ if ($q !== "") {
         $keyvar = $decodedjson["var"];
         $keyval = $decodedjson["val"];
         //then connect to the json.txt,
-        $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
+        $vardb = file_get_contents("$filename") or die("could not reach $filename");
         //decode it as a json
         $vardbjson = json_decode($vardb, true);
         $hint = $vardbjson;
+        return;
         
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
         $vardbjson["$keyvar"] = $keyvalue;
-        
-        //delete our old vardb.txt
-        unlink($filename);
-        
-        $fh = fopen("vardb.txt", 'w') or die("Error opening output file");
+                
+        $fh = fopen("$filename", 'w') or die("Error opening output file");
         fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
         fclose($fh);
         $hint = "success!";
