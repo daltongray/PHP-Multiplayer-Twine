@@ -8,6 +8,10 @@ $filename = "vardb.txt";
 
 //if what's sent from the client is not nothing...
 if ($q !== "") {
+    $hint = $q;
+    return;
+    
+    
     //then parse it as a json
     $decodedjson = json_decode($q, true);
     //if it's a poorly formed json it will come back as an error
