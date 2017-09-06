@@ -17,6 +17,13 @@ if ($q !== "") {
     // otherwise, we're assuming q was a good json
     } else { 
         $keyvar = $decodedjson['var'];
+        
+        //ANOTHER TEST
+        echo $keyvar;
+        return;
+        
+        
+        
         //open up our JSON file
         $vardb = file_get_contents("vardb.txt") or die('Cannot open file:  '.$filename);
         //if there's an error here
