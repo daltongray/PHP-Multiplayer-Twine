@@ -16,17 +16,17 @@ if ($q !== "") {
         retun;
     // otherwise, we're assuming q was a good json
     } else { 
-        $keyvar = $decodedjson[1];
+        $keyvar = "$decodedjson[1]";
         
         //ANOTHER TEST
-        $hint = $keyvar;
+        $hint = "$keyvar";
         return;
        
     }
 };
 // Output, which is either an error message or the variable we were looking for
 echo $hint;
-?>
+
 
 /*
 
@@ -56,3 +56,4 @@ echo $hint;
         //put it in hint so we can echo it back to the client later
         $hint = $vardbjson['var1'];
 */
+?>
