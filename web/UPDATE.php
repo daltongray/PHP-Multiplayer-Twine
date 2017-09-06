@@ -19,6 +19,7 @@ if ($q !== "") {
         $hint = "this JSON was mal formed";
         //otherwise...
     } else { 
+        $numeric_indexed_decodedjson = array_values($decodedjson);
         $hint = $decodedjson[0];
         /*
         //pull the value of "var" from the json that was sent
