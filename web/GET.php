@@ -31,7 +31,7 @@ if ($q !== "") {
             return;
         };
         //put it in hint so we can echo it back to the client later
-        $hint = $vardbjson['$keyvar'];
+        $hint = $vardbjson['var1"];
     };
 };
 // Output, which is either an error message or the variable we were looking for
