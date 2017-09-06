@@ -16,13 +16,20 @@ if ($q !== "") {
         retun;
     // otherwise, we're assuming q was a good json
     } else { 
-        $keyvar = "$decodedjson["var"]";
+        $keyvar = $decodedjson["var"];
         
         //ANOTHER TEST
         $hint = "$keyvar";
         return;
-        
-        
+       
+    };
+};
+// Output, which is either an error message or the variable we were looking for
+echo $hint;
+?>
+
+/*
+
         
         //open up our JSON file
         $vardb = file_get_contents("vardb.txt") or die('Cannot open file:  '.$filename);
@@ -48,8 +55,4 @@ if ($q !== "") {
         };
         //put it in hint so we can echo it back to the client later
         $hint = $vardbjson['var1'];
-    };
-};
-// Output, which is either an error message or the variable we were looking for
-echo $hint;
-?>
+*/
