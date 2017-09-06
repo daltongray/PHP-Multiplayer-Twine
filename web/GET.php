@@ -14,7 +14,7 @@ if ($q !== "") {
         $hint = $keyvar;
         
         //$vardb = file_get_contents("vardb.txt") or 
-        function() {
+        function functionname() {
             $hint = "cannot open file";
             return;
         };
