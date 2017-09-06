@@ -42,6 +42,7 @@ if ($q !== "") {
         $hint = "this JSON was mal formed" + $q;
     } else { 
         $hint = "this JSON was correctly formed" + $decodedjson['var'];
+    };
 };
 
 // Output "no suggestion" if no hint was found or output correct values 
