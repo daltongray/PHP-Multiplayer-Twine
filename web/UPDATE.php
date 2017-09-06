@@ -28,10 +28,11 @@ if ($q !== "") {
         $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
         //decode it as a json
         $vardbjson = json_decode($vardb, true);
+        $hint = $vardbjson;
         
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
-        $vardbjson[$keyvar] = $keyvalue;
+        $vardbjson["$keyvar"] = $keyvalue;
         
         $fh = fopen("json.txt", 'w') or die("Error opening output file");
         fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
