@@ -13,11 +13,12 @@ JSON: <input type="text" id="txt1" onkeyup="showHint(this.value)">
 
 <p>Suggestions: <span id="txtHint"></span></p> 
 
-<form action="GET.php?q=" method="get">
-  JSON 0 = variable, 1 = value: <input type="text" name="fname"><br>
-  <button type="submit" value="Submit">Submit</button>
-  <button type="reset" value="Reset">Reset</button>
+<form action=""> 
+JSON: <input type="text" id="txt2" onkeyup="updatejson(this.value)">
 </form>
+
+<p>Output: <span id="updatejsonoutput"></span></p> 
+
   
   
 <script>
@@ -49,6 +50,35 @@ function showHint(str) {
   xhttp.open("GET", "GET.php?q="+str, true);
   xhttp.send();   
 }
+  
+  
+function updatejson(str) {
+  //create a var for our xhttp object
+  var xhttp;
+  //if there's nothing in the text box...
+  if (str.length == 0) { 
+    //set the txthint to nothing and terminate the function
+    document.getElementById("updatejsonoutput").innerHTML = "nothing is written here!";
+    return;
+  }
+  //an implied else, if there is text in the field,
+  //create a new XML request
+  xhttp = new XMLHttpRequest();
+  //some xml thing I don't fully understant
+  xhttp.onreadystatechange = function() {
+    //when ready state ==4 & this status =200 -- also don't fully understand this
+    if (this.readyState == 4 && this.status == 200) {
+      //then set txt hint to whatever comes back from the GET request
+      document.getElementById("updatejsonoutput").innerHTML = this.responseText;
+    }
+  };
+  //finally open an xml request, via GET protocol to GET.php
+  //with the additional q= protocol which adds any txt from the field to the url
+  //ie: how we send jsons!
+  xhttp.open("GET", "UPDATE.php?q="+str, true);
+  xhttp.send();   
+}
+  
 </script>
 
 </body>
