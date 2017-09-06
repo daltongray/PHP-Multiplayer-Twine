@@ -16,12 +16,22 @@ if ($q !== "") {
         retun;
     // otherwise, we're assuming q was a good json
     } else { 
+        $keyvar = $decodedjson['var'];
         //open up our JSON file
-        $vardb = fopen($filename, "r");
+        $vardb = file_get_contents('$filename');
+        //if there's an error here
+        if ($vardb = FALSE) {
+            $hint = "there was an error with get_contents";
+            return;
+        };
         // decode it into something PHP can read
         $vardbjson = json_decode($vardb, true);
+        if ($vardbjson = NULL) {
+            $hint = "vardb.txt was not a properly formed json";
+            return;
+        };
         //put it in hint so we can echo it back to the client later
-        $hint = $vardbjson['$decodedjson['var']'];
+        $hint = $vardbjson['$keyvar'];
     };
 };
 // Output, which is either an error message or the variable we were looking for
