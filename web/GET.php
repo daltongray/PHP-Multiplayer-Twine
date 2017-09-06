@@ -19,7 +19,7 @@ if ($q !== "") {
         $keyvar = $decodedjson['var'];
         
         //ANOTHER TEST
-        echo $keyvar;
+        $hint = $keyvar;
         return;
         
         
@@ -34,7 +34,7 @@ if ($q !== "") {
        
         //temporary test
         
-        echo $vardb;
+        $hint = $vardb;
         return;
         
         
