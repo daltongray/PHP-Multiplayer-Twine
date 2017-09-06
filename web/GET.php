@@ -10,7 +10,8 @@ if ($q !== "") {
     if ($decodedjson == NULL) {
         $hint = "this JSON was mal formed";
     } else { 
-        $hint = $decodedjson['var'];
+        $keyvar = $decodedjson['var'];
+        $hint = $keyvar;
     };
 };
 
