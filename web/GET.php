@@ -1,48 +1,26 @@
 <?php
-// Array with names
-$a[] = "Anna";
-$a[] = "Brittany";
-$a[] = "Cinderella";
-$a[] = "Diana";
-$a[] = "Eva";
-$a[] = "Fiona";
-$a[] = "Gunda";
-$a[] = "Hege";
-$a[] = "Inga";
-$a[] = "Johanna";
-$a[] = "Kitty";
-$a[] = "Linda";
-$a[] = "Nina";
-$a[] = "Ophelia";
-$a[] = "Petunia";
-$a[] = "Amanda";
-$a[] = "Raquel";
-$a[] = "Cindy";
-$a[] = "Doris";
-$a[] = "Eve";
-$a[] = "Evita";
-$a[] = "Sunniva";
-$a[] = "Tove";
-$a[] = "Unni";
-$a[] = "Violet";
-$a[] = "Liza";
-$a[] = "Elizabeth";
-$a[] = "Ellen";
-$a[] = "Wenche";
-$a[] = "Vicky";
 
 // get the q parameter from URL
 $q = $_REQUEST["q"];
 
+// if q is not nothing
 if ($q !== "") {
+    // decode q as if it were a json and turn it into a useable php json
     $decodedjson = json_decode($q, true);
+    // if q is not a json, it will err and return null, if so...
     if ($decodedjson == NULL) {
+        // tell me i did it wrong
         $hint = "this JSON was mal formed";
+    // otherwise, we're assuming q was a good json
     } else { 
-        $hint = $decodedjson['var'];
+        //open up our JSON file
+        $vardb = fopen("vardb.txt", "r");
+        // decode it into something PHP can read
+        $vardbjson = json_decode($vardb, true);
+        //put it in hint so we can echo it back to the client later
+        $hint = $vardbjson['$decodedjson['var']'];
     };
 };
-
-// Output "no suggestion" if no hint was found or output correct values 
+// Output, which is either an error message or the variable we were looking for
 echo $hint;
 ?>
