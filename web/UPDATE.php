@@ -20,7 +20,7 @@ if ($q !== "") {
         //otherwise...
     } else { 
         $numeric_indexed_decodedjson = array_values($decodedjson);
-        $hint = $decodedjson[0];
+        $hint = $numeric_indexed_decodedjson[0];
         /*
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
