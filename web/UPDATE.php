@@ -29,8 +29,7 @@ if ($q !== "") {
         //decode it as a json
         $vardbjson = json_decode($vardb, true);
         $hint = $vardbjson;
-        return;
-        
+        /*
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
         $vardbjson["$keyvar"] = $keyvalue;
@@ -40,7 +39,7 @@ if ($q !== "") {
         fclose($fh);
         $hint = "success!";
         //send either the correct var back to the client, or an error message
-       
+       */
     }
 };
 
