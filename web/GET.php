@@ -19,7 +19,7 @@ if ($q !== "") {
         $keyvar = $decodedjson['var'];
         
         //ANOTHER TEST
-        $hint = $keyvar;
+        $hint = '$keyvar';
         return;
         
         
