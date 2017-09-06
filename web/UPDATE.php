@@ -41,7 +41,7 @@ if ($q !== "") {
         // Modify the value, and write the structure to a file
         $vardbjson["$keyvar"] = "$keyval"; 
         
-        $hint = $vardbjson["keyvar"];
+        $hint = $vardbjson["$keyvar"];
         
         if (is_writable($filename)) {
         $fh = fopen("$filename", 'w') or die("Error opening output file");
