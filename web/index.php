@@ -2,12 +2,12 @@
 <html>
 <body>
 
-<h1>The XMLHttpRequest Object</h1>
+<h1>USing an XMLHTTP GET Request to get a variable out of an external JSON</h1>
 
-<h3>Start typing a name in the input field below:</h3>
+<h3>Type a JSON in the field below. set var to either "var1" or "var2"</h3>
 
 <form action=""> 
-First name: <input type="text" id="txt1" onkeyup="showHint(this.value)">
+JSON: <input type="text" id="txt1" onkeyup="showHint(this.value)">
 </form>
 
 <p>Suggestions: <span id="txtHint"></span></p> 
