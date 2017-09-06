@@ -39,16 +39,22 @@ if ($q !== "") {
         
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
-        $vardbjson[0]["$keyvar"] = "$keyval"; 
-               
+        $vardbjson["$keyvar"] = "$keyval"; 
+        
+        $hint = $vardbjson["keyvar"];
+        
+        if (is_writable($filename)) {
         $fh = fopen("$filename", 'w') or die("Error opening output file");
         fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
         fclose($fh);
-        //send either the correct var back to the client, or an error message
+        } else {
+            $hint = "$filename is not writeable";
+        }
       
     }
 };
 
+//send either the correct var back to the client, or an error message
 echo $hint;
 
 ?>
