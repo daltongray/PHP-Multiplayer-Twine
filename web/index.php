@@ -10,7 +10,7 @@
 <script>
 function showHint(str) {
     if (str.length == 0) { 
-        document.getElementById("txtHint").innerHTML = "";
+        document.getElementById("txtHint").innerHTML = "nothing is in the text box.";
         return;
     } else {
         var xmlhttp = new XMLHttpRequest();
