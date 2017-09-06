@@ -1,9 +1,9 @@
 <?php
-echo $_REQUEST["q"];
 
 // get the q parameter from URL
-/*
 $q = $_REQUEST["q"];
+$hint = $q;
+/*
 $hint = "";
 //set the location of our json full of variables
 $filename = "vardb.txt";
