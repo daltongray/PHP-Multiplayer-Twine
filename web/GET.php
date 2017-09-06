@@ -3,76 +3,33 @@
 // get the q parameter from URL
 $q = $_REQUEST["q"];
 $hint = "";
+//set the location of our json full of variables
 $filename = "vardb.txt";
 
+//if what's sent from the client is not nothing...
 if ($q !== "") {
+    //then parse it as a json
     $decodedjson = json_decode($q, true);
+    //if it's a poorly formed json it will come back as an error
     if ($decodedjson == NULL) {
+        //if so, set hint to an err message so that prints to the client
         $hint = "this JSON was mal formed";
+        //otherwise...
     } else { 
+        //pull the value of "var" from the json that was sent
+        //this assumes that all jsons sent here have the following structure:
+        //{"var":"value"}
         $keyvar = $decodedjson['var'];
-        //$hint = $keyvar;
-        $vardb = file_get_contents("vardb.txt") or die("could not reach $filename"); //possibly this isn't reaching the file
+        //then connect to the json.txt,
+        $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
+        //decode it as a json
         $vardbjson = json_decode($vardb, true);
+        //then pull the var that was sent here
         $hint = $vardbjson["$keyvar"];
     }
 };
 
-/*
-
-
-// if q is not nothing
-if ($q !== "") {
-    // decode q as if it were a json and turn it into a useable php json
-    $decodedjson = json_decode($q, true);
-    // if q is not a json, it will err and return null, if so...
-    if ($decodedjson == NULL) {
-        // tell me i did it wrong
-        $hint = "this JSON was mal formed";
-        retun;
-    // otherwise, we're assuming q was a good json
-    } else { 
-        $hint = "decodedjson['var']";
-        
-        //$keyvar = "$decodedjson[1]";
-        
-        //ANOTHER TEST
-        // $hint = "$keyvar";
-        return;
-       
-    };
-};
-// Output, which is either an error message or the variable we were looking for
-*/
-
+//send either the correct var back to the client, or an error message
 echo $hint;
 
-/*
-
-        
-        //open up our JSON file
-        $vardb = file_get_contents("vardb.txt") or die('Cannot open file:  '.$filename);
-        //if there's an error here
-        if ($vardb = FALSE) {
-            $hint = "there was an error with get_contents";
-            return;
-        };
-       
-        //temporary test
-        
-        $hint = $vardb;
-        return;
-        
-        
-    
-        
-        // decode it into something PHP can read
-        $vardbjson = json_decode($vardb, true);
-        if ($vardbjson = NULL) {
-            $hint = "vardb.txt was not a properly formed json";
-            return;
-        };
-        //put it in hint so we can echo it back to the client later
-        $hint = $vardbjson['var1'];
-*/
 ?>
