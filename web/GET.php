@@ -18,7 +18,7 @@ if ($q !== "") {
     } else { 
         $keyvar = $decodedjson['var'];
         //open up our JSON file
-        $vardb = file_get_contents('$filename') or die('Cannot open file:  '.$filename);
+        $vardb = file_get_contents("vardb.txt") or die('Cannot open file:  '.$filename);
         //if there's an error here
         if ($vardb = FALSE) {
             $hint = "there was an error with get_contents";
