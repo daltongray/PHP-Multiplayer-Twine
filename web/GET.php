@@ -2,6 +2,7 @@
 
 // get the q parameter from URL
 $q = $_REQUEST["q"];
+$hint = "";
 
 // if q is not nothing
 if ($q !== "") {
