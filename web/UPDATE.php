@@ -33,8 +33,8 @@ if ($q !== "") {
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
         $vardbjson["$keyvar"] = $keyvalue;
-        
-        $fh = fopen("json.txt", 'w') or die("Error opening output file");
+       
+        $fh = fopen("vardb.txt", 'w') or die("Error opening output file");
         fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
         fclose($fh);
         $hint = "success!";
