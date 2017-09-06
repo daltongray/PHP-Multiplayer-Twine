@@ -16,7 +16,7 @@ if ($q !== "") {
         retun;
     // otherwise, we're assuming q was a good json
     } else { 
-        $keyvar = $decodedjson['var'];
+        $keyvar = '$decodedjson["var"]';
         
         //ANOTHER TEST
         $hint = '$keyvar';
