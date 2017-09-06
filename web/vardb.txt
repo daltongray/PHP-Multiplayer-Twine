@@ -1,0 +1,5 @@
+{
+    "var1":"the first variable's value is 1",
+    "var2":"the second variable's value is 2"
+}
+    
