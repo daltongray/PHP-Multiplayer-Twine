@@ -28,7 +28,7 @@ if ($q !== "") {
         $vardb = file_get_contents("$filename") or die("could not reach $filename");
         //decode it as a json
         $vardbjson = json_decode($vardb, true);
-        $hint = $vardbjson;
+        $hint = $vardbjson["$keyvar"];
         /*
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
