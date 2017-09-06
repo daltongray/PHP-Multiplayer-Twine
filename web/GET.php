@@ -7,7 +7,6 @@ $filename = "vardb.txt";
 
 function fileopenerror() {
        $hint = "cannot open file";
-       return;
    };
 
 if ($q !== "") {
