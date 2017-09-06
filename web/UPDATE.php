@@ -22,19 +22,19 @@ if ($q !== "") {
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
         //{"var":"foo","val":"bar"}
-        $keyvar = $decodedjson[var];
-        $keyval = $decodedjson[val];
+        $keyvar = $decodedjson["var"];
+        $keyval = $decodedjson["val"];
         //then connect to the json.txt,
         $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
         //decode it as a json
         $vardbjson = json_decode($vardb, true);
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
-        $vardbjson["$keyvar"] = $keyvalue;
+        $vardbjson[$keyvar] = $keyvalue;
         
         $fh = fopen("json.txt", 'w')
               or die("Error opening output file");
-        fwrite($fh, json_encode($data,JSON_UNESCAPED_UNICODE));
+        fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
         fclose($fh);
         $hint = "success!";
         //send either the correct var back to the client, or an error message
