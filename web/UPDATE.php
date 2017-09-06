@@ -19,14 +19,11 @@ if ($q !== "") {
         $hint = "this JSON was mal formed";
         //otherwise...
     } else { 
-        $numeric_indexed_decodedjson = array_values($decodedjson);
-        $hint = $numeric_indexed_decodedjson[0];
-        /*
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
-        //{"var":"value"}
-        $keyvar = $decodedjson[0];
-        $keyvalue = $decodedjson[1];
+        //{"var":"foo","val":"bar"}
+        $keyvar = $decodedjson[var];
+        $keyval = $decodedjson[val];
         //then connect to the json.txt,
         $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
         //decode it as a json
