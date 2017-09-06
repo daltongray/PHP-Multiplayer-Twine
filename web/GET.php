@@ -24,6 +24,15 @@ if ($q !== "") {
             $hint = "there was an error with get_contents";
             return;
         };
+       
+        //temporary test
+        
+        echo $vardb;
+        return;
+        
+        
+    
+        
         // decode it into something PHP can read
         $vardbjson = json_decode($vardb, true);
         if ($vardbjson = NULL) {
