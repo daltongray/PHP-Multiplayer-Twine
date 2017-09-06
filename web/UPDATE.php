@@ -16,6 +16,8 @@ if ($q !== "") {
         $hint = "this JSON was mal formed";
         //otherwise...
     } else { 
+        $hint = $decodedjson + $decodedjson[0] + $decodedjson[1];
+        /*
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
         //{"var":"value"}
@@ -35,6 +37,7 @@ if ($q !== "") {
         fclose($fh);
         $hint = "success!";
         //send either the correct var back to the client, or an error message
+        */
     }
 };
 
