@@ -48,7 +48,7 @@ function showHint(str) {
 
   
 <form action=""> 
-JSON: <input type="text" id="txt2" onkeyup="updatejson(this.value)">
+JSON with form {"var":"varname","val":"value"}: <input type="text" id="txt2" onkeyup="updatejson(this.value)">
 </form>
 
 <p>Output: <span id="updatejsonoutput"></span></p> 
