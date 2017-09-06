@@ -2,18 +2,15 @@
 
 // get the q parameter from URL
 $q = $_REQUEST["q"];
-$hint = $q;
-/*
-$hint = "";
+//$hint = $q;
+
+//$hint = "";
 //set the location of our json full of variables
+
 $filename = "vardb.txt";
 
 //if what's sent from the client is not nothing...
 if ($q !== "") {
-    $hint = $q;
-    return;
-    
-    
     //then parse it as a json
     $decodedjson = json_decode($q, true);
     //if it's a poorly formed json it will come back as an error
@@ -22,7 +19,7 @@ if ($q !== "") {
         $hint = "this JSON was mal formed";
         //otherwise...
     } else { 
-        $hint = $decodedjson + $decodedjson[0] + $decodedjson[1];
+        $hint = $decodedjson[0];
         /*
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
@@ -43,10 +40,10 @@ if ($q !== "") {
         fclose($fh);
         $hint = "success!";
         //send either the correct var back to the client, or an error message
-        
+        */
     }
 };
-*/
+
 echo $hint;
 
 ?>
