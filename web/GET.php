@@ -12,8 +12,7 @@ if ($q !== "") {
     } else { 
         $keyvar = $decodedjson['var'];
         $hint = $keyvar;
-        //$vardb = file_get_contents("vardb.txt") or 
-
+        $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
     }
 };
 
