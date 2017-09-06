@@ -24,7 +24,7 @@ if ($q !== "") {
         // $hint = "$keyvar";
         return;
        
-    }
+    };
 };
 // Output, which is either an error message or the variable we were looking for
 echo $hint;
