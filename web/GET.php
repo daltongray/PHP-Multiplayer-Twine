@@ -14,7 +14,7 @@ if ($q !== "") {
         echo "this JSON was mal formed";
         retun;
     // otherwise, we're assuming q was a good json
-    /*} else { 
+    };/* else { 
         //open up our JSON file
         $vardb = fopen("vardb.txt", "r");
         // decode it into something PHP can read
