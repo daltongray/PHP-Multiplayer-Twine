@@ -6,9 +6,9 @@ $hint = "";
 $filename = "vardb.txt";
 
 function fileopenerror() {
-            $hint = "cannot open file";
-            return;
-        };
+       $hint = "cannot open file";
+       return;
+   };
 
 if ($q !== "") {
     $decodedjson = json_decode($q, true);
@@ -20,7 +20,7 @@ if ($q !== "") {
         fileopenerror();
         //$vardb = file_get_contents("vardb.txt") or 
 
-    };
+    }
 };
 
 /*
