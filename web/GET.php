@@ -1,10 +1,4 @@
 <?php
-// Our Variables
-
-$scene1 = false;
-$snakefound = false;
-
-
 // get the q parameter from URL
 $myJSON = $_REQUEST[q];
 // Decode the JSON we received from Q
@@ -16,7 +10,7 @@ if ($myObj !== "NULL") {
     //otherwise...
     } else {
     // tell us it's not a string and print the stuff we got
-    echo "this is not a JSON string, the value i got was" + $myJSON
+    echo "this is not a JSON string, the value i got was" + $myJSON};
 
 /*
 $hint = "";
