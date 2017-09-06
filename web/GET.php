@@ -5,18 +5,13 @@ $q = $_REQUEST["q"];
 $hint = "";
 $filename = "vardb.txt";
 
-function fileopenerror() {
-       $hint = "cannot open file";
-   };
-
 if ($q !== "") {
     $decodedjson = json_decode($q, true);
     if ($decodedjson == NULL) {
         $hint = "this JSON was mal formed";
     } else { 
-        //$keyvar = $decodedjson['var'];
-        //$hint = $keyvar;
-        fileopenerror();
+        $keyvar = $decodedjson['var'];
+        $hint = $keyvar;
         //$vardb = file_get_contents("vardb.txt") or 
 
     }
