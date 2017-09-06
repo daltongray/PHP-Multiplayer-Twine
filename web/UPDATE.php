@@ -19,6 +19,14 @@ if ($q !== "") {
         $hint = "this JSON was mal formed";
         //otherwise...
     } else { 
+        
+        
+        // the trouble seems to be in the following block of code
+        //if you deploy, you'll be able to call up the values on both forms
+        //but the update function won't make a lasting impact on the json called 
+        // by the get function. 
+        
+        
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
         //{"var":"foo","val":"bar"}
@@ -31,7 +39,7 @@ if ($q !== "") {
         
         //then pull the 1st var that was sent here
         // Modify the value, and write the structure to a file
-        $vardbjson[0]["$keyvar"] = "$keyval";
+        $vardbjson[0]["$keyvar"] = "$keyval"; 
                
         $fh = fopen("$filename", 'w') or die("Error opening output file");
         fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
