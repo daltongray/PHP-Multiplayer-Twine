@@ -13,6 +13,13 @@ JSON: <input type="text" id="txt1" onkeyup="showHint(this.value)">
 
 <p>Suggestions: <span id="txtHint"></span></p> 
 
+<form action="GET.php" method="get">
+  JSON 0 = variable, 1 = value: <input type="text" name="fname"><br>
+  <button type="submit" value="Submit">Submit</button>
+  <button type="reset" value="Reset">Reset</button>
+</form>
+  
+  
 <script>
   //this function runs whatever's entered in the txt box above
   
