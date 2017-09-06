@@ -16,10 +16,12 @@ if ($q !== "") {
         retun;
     // otherwise, we're assuming q was a good json
     } else { 
-        $keyvar = "$decodedjson[1]";
+        $hint = "decodedjson[0]['var']";
+        
+        //$keyvar = "$decodedjson[1]";
         
         //ANOTHER TEST
-        $hint = "$keyvar";
+        // $hint = "$keyvar";
         return;
        
     }
