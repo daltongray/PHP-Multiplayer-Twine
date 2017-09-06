@@ -3,6 +3,7 @@
 // get the q parameter from URL
 $q = $_REQUEST["q"];
 $hint = "";
+$filename = "vardb.txt";
 
 // if q is not nothing
 if ($q !== "") {
@@ -16,7 +17,7 @@ if ($q !== "") {
     // otherwise, we're assuming q was a good json
     } else { 
         //open up our JSON file
-        $vardb = fopen("vardb.txt", "r");
+        $vardb = fopen($filename, "r");
         // decode it into something PHP can read
         $vardbjson = json_decode($vardb, true);
         //put it in hint so we can echo it back to the client later
