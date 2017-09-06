@@ -1,6 +1,8 @@
 <?php
+echo $_REQUEST["q"];
 
 // get the q parameter from URL
+/*
 $q = $_REQUEST["q"];
 $hint = "";
 //set the location of our json full of variables
@@ -41,10 +43,10 @@ if ($q !== "") {
         fclose($fh);
         $hint = "success!";
         //send either the correct var back to the client, or an error message
-        */
+        
     }
 };
-
+*/
 echo $hint;
 
 ?>
