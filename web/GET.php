@@ -34,17 +34,15 @@ $a[] = "Vicky";
 // get the q parameter from URL
 $q = $_REQUEST["q"];
 
-$hint = "";
-
 if ($q !== "") {
     $decodedjson = json_decode($q, true);
     if ($decodedjson == NULL) {
-        $hint = "this JSON was mal formed" + $q;
+        $hint = "this JSON was mal formed";
     } else { 
-        $hint = "this JSON was correctly formed" + $decodedjson['var'];
+        $hint = $decodedjson['var'];
     };
 };
 
 // Output "no suggestion" if no hint was found or output correct values 
-echo $hint === "" ? "Nothing" : $hint;
+echo $hint;
 ?>
