@@ -36,21 +36,14 @@ $q = $_REQUEST["q"];
 
 $hint = "";
 
-// lookup all hints from array if $q is different from "" 
 if ($q !== "") {
-    $q = strtolower($q);
-    $len=strlen($q);
-    foreach($a as $name) {
-        if (stristr($q, substr($name, 0, $len))) {
-            if ($hint === "") {
-                $hint = $name;
-            } else {
-                $hint .= ", $name";
-            }
-        }
-    }
-}
+    $decodedjson = json_decode($q, true);
+    if ($decodedjson == NULL) {
+        $hint = "this JSON was mal formed" + $q;
+    } else { 
+        $hint = "this JSON was correctly formed" + $decodedjson['var'];
+};
 
 // Output "no suggestion" if no hint was found or output correct values 
-echo $hint === "" ? "no suggestion" : $hint;
+echo $hint === "" ? "Nothing" : $hint;
 ?>
