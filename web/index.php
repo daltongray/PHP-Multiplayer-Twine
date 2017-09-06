@@ -13,13 +13,6 @@ JSON: <input type="text" id="txt1" onkeyup="showHint(this.value)">
 
 <p>Suggestions: <span id="txtHint"></span></p> 
 
-<form action=""> 
-JSON: <input type="text" id="txt2" onkeyup="updatejson(this.value)">
-</form>
-
-<p>Output: <span id="updatejsonoutput"></span></p> 
-
-  
   
 <script>
   //this function runs whatever's entered in the txt box above
@@ -50,8 +43,19 @@ function showHint(str) {
   xhttp.open("GET", "GET.php?q="+str, true);
   xhttp.send();   
 }
+</script>
+ 
+
+  
+<form action=""> 
+JSON: <input type="text" id="txt2" onkeyup="updatejson(this.value)">
+</form>
+
+<p>Output: <span id="updatejsonoutput"></span></p> 
+
   
   
+<script>
 function updatejson(str) {
   //create a var for our xhttp object
   var xhttp;
