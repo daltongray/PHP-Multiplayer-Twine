@@ -5,6 +5,19 @@ $q = $_REQUEST["q"];
 $hint = "";
 $filename = "vardb.txt";
 
+
+if ($q !== "") {
+    $decodedjson = json_decode($q, true);
+    if ($decodedjson == NULL) {
+        $hint = "this JSON was mal formed";
+    } else { 
+        $hint = $decodedjson['var'];
+    };
+};
+
+/*
+
+
 // if q is not nothing
 if ($q !== "") {
     // decode q as if it were a json and turn it into a useable php json
@@ -16,7 +29,7 @@ if ($q !== "") {
         retun;
     // otherwise, we're assuming q was a good json
     } else { 
-        $hint = "decodedjson[0]['var']";
+        $hint = "decodedjson['var']";
         
         //$keyvar = "$decodedjson[1]";
         
@@ -29,7 +42,7 @@ if ($q !== "") {
 // Output, which is either an error message or the variable we were looking for
 echo $hint;
 
-
+*/
 /*
 
         
