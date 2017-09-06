@@ -3,7 +3,7 @@
 // get the q parameter from URL
 $q = $_REQUEST["q"];
 $hint = "";
-//$filename = "vardb.txt";
+$filename = "vardb.txt";
 
 if ($q !== "") {
     $decodedjson = json_decode($q, true);
@@ -12,6 +12,13 @@ if ($q !== "") {
     } else { 
         $keyvar = $decodedjson['var'];
         $hint = $keyvar;
+        
+        //$vardb = file_get_contents("vardb.txt") or 
+        function() {
+            $hint = "cannot open file";
+            return;
+        };
+
     };
 };
 
