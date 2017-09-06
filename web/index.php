@@ -107,7 +107,7 @@ Macro.add("mytest", {
     handler  : function () {
 		//First lets create the JSON markup of our variable
 	  var varfromtwine = this.args[0];
-    var str = '{"var":"'varfromtwine'"}';
+    var str = '{"var":"'+varfromtwine+'"}';
 			
 		//create a var for our xhttp object
     var xhttp;
