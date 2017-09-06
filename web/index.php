@@ -25,7 +25,7 @@ function showHint(str) {
       document.getElementById("txtHint").innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "gethint.php?q="+str, true);
+  xhttp.open("GET", "GET.php?q="+str, true);
   xhttp.send();   
 }
 </script>
