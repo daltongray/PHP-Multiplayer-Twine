@@ -10,7 +10,8 @@ if ($q !== "") {
     // if q is not a json, it will err and return null, if so...
     if ($decodedjson == NULL) {
         // tell me i did it wrong
-        $hint = "this JSON was mal formed";
+        echo "this JSON was mal formed";
+        retun;
     // otherwise, we're assuming q was a good json
     } else { 
         //open up our JSON file
