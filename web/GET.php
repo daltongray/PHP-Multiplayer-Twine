@@ -11,8 +11,9 @@ if ($q !== "") {
         $hint = "this JSON was mal formed";
     } else { 
         $keyvar = $decodedjson['var'];
-        $hint = $keyvar;
-        $vardb = file_get_contents("vardb.txt") or die("could not reach $filename");
+        //$hint = $keyvar;
+        $vardb = file_get_contents("vardb.txt") or die("could not reach $filename"); //possibly this isn't reaching the file
+        $hint = $vardb["$keyvar"];
     }
 };
 
