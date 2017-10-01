@@ -127,8 +127,6 @@ window.DialogueUpdateGetCheck = function(passagename, dialoguetitle){
 	}
 }
 
-window.DialogueUpdate('PlayerFileNew','New Players, fill this stuff out','PlayerFileNameChecker.php','PlayerName','taken')">
-
 window.TwineVarWrap = function (element, twinevar){
 	var content = document.getElementById(element).value;
 	variables()[twinevar] = content;
@@ -515,7 +513,7 @@ Dialog.addClickHandler(&quot;startbutton&quot;, null,
 	}
 );
 &lt;&lt;/script&gt;&gt;
-</tw-passagedata><tw-passagedata pid="5" name="Open-or-New-PlayerFile" tags="" position="536,353">if$open-or-new is &quot;open&quot;
+</tw-passagedata><tw-passagedata pid="5" name="Open-or-New-PlayerFile" tags="" position="544,355">if$open-or-new is &quot;open&quot;
 
 Playername &lt;input&gt;
 passcode &lt;input&gt;
