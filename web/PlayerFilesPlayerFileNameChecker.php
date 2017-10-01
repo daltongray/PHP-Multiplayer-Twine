@@ -18,7 +18,7 @@ if ($q !== "") {
         //pull the value of "var" from the json that was sent
         //this assumes that all jsons sent here have the following structure:
         //{"var":"value"}
-        $filename = $decodedjson['playername'];
+        $filename = $decodedjson['var'];
         //then connect to the json.txt,
         $vardb = file_get_contents($filename,".txt") or die("DED");
         if ($vardb = "DED") {
