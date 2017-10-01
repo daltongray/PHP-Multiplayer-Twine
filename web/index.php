@@ -638,7 +638,8 @@ Is this information correct? &lt;button type=button id=&quot;signup-button&quot;
 
 &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete3&#x27;,&#x27;Who knows&#x27;)&quot;&gt;Check to see if your username is available.&lt;/button&gt;
 </tw-passagedata><tw-passagedata pid="16" name="PlayerFileNewNameSuccess" tags="" position="1231,293">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="17" name="PlayerFileLoginConfirm" tags="" position="908,287">&lt;&lt;script&gt;&gt;
-	var PlayerFileLoginConfirm = variable().PlayerName+&quot;.php&quot;;
+	variables().PlayerFileLoginConfirm = variables().PlayerName+&quot;.php&quot;;
+	var PlayerFileLoginConfirm = variables().PlayerFileLoginConfirm;
 	window.get(&#x27;PlayerFileLoginConfirm&#x27;,&#x27;PlayerName&#x27;,&#x27;login&#x27;);
 	window.DialogueUpdate(&#x27;PlayerFileLoginConfirm2&#x27;);
 &lt;&lt;/script&gt;&gt;
