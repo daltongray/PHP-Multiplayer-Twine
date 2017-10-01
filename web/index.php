@@ -116,7 +116,8 @@ window.DialogueUpdate = function(passagename, dialoguetitle){
 
 window.DialogueUpdateGetCheck = function(passagename, dialoguetitle){
 	Dialog.close();
-	while (variables().AreWeGetting = true) {
+	while (variables().AreWeFetching = true) {
+		
 }	if (variables().AreWeGetting = false) {
 		Dialog.setup(dialoguetitle);
 		Dialog.wiki(Story.get(passagename).processText()); 
@@ -607,12 +608,12 @@ $PlayerName
 And your Passcode is:
 $PlayerPasscode
 
-Is this information correct? &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;yes, continue&lt;/button&gt; &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdateGetCheck(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;no, let me change it&lt;/button&gt;
+Is this information correct? &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;yes, continue&lt;/button&gt; &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;no, let me change it&lt;/button&gt;
 
 
 </tw-passagedata><tw-passagedata pid="13" name="PlayerFileComplete" tags="" position="1008,401">&lt;&lt;script&gt;&gt;
 	window.fetchFunction(&quot;PlayerFileNameChecker.php&quot;,&quot;PlayerName&quot;,&quot;taken&quot;);
-	window.DialogueUpdate(&#x27;PlayerFileComplete2&#x27;);
+	window.DialogueUpdateGetCheck(&#x27;PlayerFileComplete2&#x27;);
 &lt;&lt;/script&gt;&gt;
 	
 
