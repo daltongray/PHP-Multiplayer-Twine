@@ -136,7 +136,6 @@ window.get = function(url,FetchInput,FetchOutput) {
 	
   /* First we'll tell Twine that a fetch is in progress      */
   /* this is so the client can keep any dynamic text active  */
-  variables().AreWeFetching = "true";
 	var jsFetchInput = variables()[FetchInput];
 	
   /*  Then we'll create the JSON markup to fetch the input var  */ 
@@ -177,6 +176,53 @@ window.get = function(url,FetchInput,FetchOutput) {
   xhttp.open("GET", fullstrtosend, true);
   xhttp.send();   
 };
+
+
+
+window.fetchFunction = function(FetchInput,FetchOutput) {
+	
+  /* First we'll tell Twine that a fetch is in progress      */
+  /* this is so the client can keep any dynamic text active  */
+  variables().AreWeFetching = "true";
+  
+  /*  Then we'll create the JSON markup to fetch the input var  */ 
+  var str = '{"var":"'+FetchInput+'"}';
+   
+  /*   create a var for our xhttp object            */
+  var xhttp;
+  
+  /* create a new XML request & do something 
+     I don't totally understand               */
+  xhttp = new XMLHttpRequest();  
+  xhttp.onreadystatechange = function() {
+  
+    /*     when ready state ==4 & this status =200   */
+	/*     also don't fully understand this          */
+	
+    if (this.readyState == 4 && this.status == 200) {
+
+       //then set our output var to whatever 
+	     //comes back from the GET request
+      
+		variables()[FetchOutput] = this.responseText;
+    }
+		/*else { 
+		variables()[FetchOutput] = "There was an error";
+		} */
+		
+  }
+  /*  Finally open an xml request, via GET protocol to GET.php
+      with the additional q= protocol which 
+      adds our created JSON to the URL                         */
+  xhttp.open("GET", "GET.php?q="+str, true);
+  xhttp.send();   
+};
+
+
+
+
+
+
 
 window.editspecific = function (url,UpdateVar,UpdateVal,UpdateOutput) {
   if (UpdateOutput === undefined) {
