@@ -117,7 +117,9 @@ window.DialogueUpdate = function(passagename, dialoguetitle){
 window.DialogueUpdateGetCheck = function(passagename, dialoguetitle){
 	Dialog.close();
 	while (variables().AreWeFetching = true) {
-		
+		var delayMillis = 1000; //1 second
+		setTimeout(function() {  //your code to be executed after 1 second
+		}, delayMillis);
 }	if (variables().AreWeGetting = false) {
 		Dialog.setup(dialoguetitle);
 		Dialog.wiki(Story.get(passagename).processText()); 
