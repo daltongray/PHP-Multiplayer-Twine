@@ -127,10 +127,58 @@ window.DialogueUpdateGetCheck = function(passagename, dialoguetitle){
 	}
 }
 
+window.DialogueUpdate('PlayerFileNew','New Players, fill this stuff out','PlayerFileNameChecker.php','PlayerName','taken')">
+
 window.TwineVarWrap = function (element, twinevar){
 	var content = document.getElementById(element).value;
 	variables()[twinevar] = content;
 }
+
+window.DialogueUpdateAndGet = function(passagename, dialoguetitle,url,FetchInput,FetchOutput){
+	
+  /* First we'll tell Twine that a fetch is in progress      */
+  /* this is so the client can keep any dynamic text active  */
+  variables().AreWeFetching = "true";
+  var jsFetchInput = variables()[FetchInput];
+  /*  Then we'll create the JSON markup to fetch the input var  */ 
+  var str = '{"var":"'+jsFetchInput+'"}';
+   
+  /*   create a var for our xhttp object            */
+  var xhttp;
+  
+  /* create a new XML request & do something 
+     I don't totally understand               */
+  xhttp = new XMLHttpRequest();  
+  xhttp.onreadystatechange = function() {
+  
+    /*     when ready state ==4 & this status =200   */
+	/*     also don't fully understand this          */
+	
+    if (this.readyState == 4 && this.status == 200) {
+
+       //then set our output var to whatever 
+	     //comes back from the GET request
+      
+				variables()[FetchOutput] = this.responseText;
+	    	variables().AreWeFetching = "false";
+    } else { 
+			  variables()[FetchOutput] = "There was an error";
+	    	variables().AreWeFetching = "false";
+		}
+		
+  }
+  /*  Finally open an xml request, via GET protocol to GET.php
+      with the additional q= protocol which 
+      adds our created JSON to the URL                         */
+  xhttp.open("GET", "PlayerFileNameChecker.php?q="+str, true);
+  xhttp.send();   
+	Dialog.close();
+	Dialog.setup(dialoguetitle);
+	Dialog.wiki(Story.get(passagename).processText()); 
+	Dialog.open();
+};
+
+
 
 
 /*
@@ -610,7 +658,7 @@ $PlayerName
 And your Passcode is:
 $PlayerPasscode
 
-Is this information correct? &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;yes, continue&lt;/button&gt; &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;no, let me change it&lt;/button&gt;
+Is this information correct? &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdateAndGet(&#x27;PlayerFileComplete&#x27;,&#x27;New Players, fill this stuff out&#x27;,&#x27;PlayerFileNameChecker.php&#x27;,&#x27;PlayerName&#x27;,&#x27;taken&#x27;)&quot;&gt;yes, continue&lt;/button&gt; &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdateAndGet(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;no, let me change it&lt;/button&gt;
 
 
 </tw-passagedata><tw-passagedata pid="13" name="PlayerFileComplete" tags="" position="1008,401">&lt;&lt;script&gt;&gt;
