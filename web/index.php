@@ -591,13 +591,13 @@ echo $hint;</tw-passagedata><tw-passagedata pid="6" name="PlayerFilePicker" tags
 &lt;button onclick=&quot;window.PlayerFileFunction()&quot;&gt;Click me to close&lt;/button&gt;
 </tw-passagedata><tw-passagedata pid="7" name="StoryInit	" tags="" position="418,228">&lt;&lt;set $PlayerFileStatus to &quot;unloaded&quot;&gt;&gt;
 
-[[Start]]</tw-passagedata><tw-passagedata pid="8" name="PlayerFileNew" tags="" position="802,401">What&#x27;s your name? &lt;input id=&quot;PlayerFileNewName&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileNewName&#x27;,&#x27;PlayerName&#x27;)&quot; maxlength=&quot;8&quot;&gt;
+[[Start]]</tw-passagedata><tw-passagedata pid="8" name="PlayerFileNew" tags="" position="802,401">What&#x27;s your name? &lt;input id=&quot;PlayerFileNewName&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileNewName&#x27;,&#x27;PlayerName&#x27;)&quot; maxlength=&quot;8&quot; autofocus&gt;
 
 What&#x27;s your passcode? &lt;input id=&quot;PlayerFileNewPasscode&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileNewPasscode&#x27;,&#x27;PlayerPasscode&#x27;)&quot; maxlength=&quot;8&quot;&gt;
 
 &lt;button type=button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNewConfirm&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Submit&lt;/button&gt;
 
-&lt;&lt;include &quot;FormCharLimiter&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileLogin" tags="" position="804,286">What&#x27;s your name? &lt;input id=&quot;PlayerFileLoginName&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileLoginName&#x27;,&#x27;PlayerName&#x27;)&quot; maxlength=&quot;8&quot;&gt;
+&lt;&lt;include &quot;FormCharLimiter&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileLogin" tags="" position="804,286">What&#x27;s your name? &lt;input id=&quot;PlayerFileLoginName&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileLoginName&#x27;,&#x27;PlayerName&#x27;)&quot; maxlength=&quot;8&quot; autofocus&gt;
 
 What&#x27;s your passcode? &lt;input id=&quot;PlayerFileLoginPasscode&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileLoginPasscode&#x27;,&#x27;PlayerPasscode&#x27;)&quot; maxlength=&quot;8&quot;&gt;
 
@@ -640,8 +640,7 @@ Is this information correct? &lt;button type=button id=&quot;signup-button&quot;
 </tw-passagedata><tw-passagedata pid="16" name="PlayerFileNewNameSuccess" tags="" position="1231,293">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="17" name="PlayerFileLoginConfirm" tags="" position="908,287">&lt;&lt;script&gt;&gt;
 	variables().PlayerFileLoginConfirm = variables().PlayerName+&quot;.php&quot;;
 	var PlayerFileLoginConfirm = variables().PlayerFileLoginConfirm;
-	window.get(&#x27;PlayerFileLoginConfirm&#x27;,&#x27;PlayerName&#x27;,&#x27;login&#x27;);
-	window.DialogueUpdate(&#x27;PlayerFileLoginConfirm2&#x27;);
+window.DialogueUpdateAndGet(&#x27;PlayerFileLoginConfirm2&#x27;,&#x27;Please Wait&#x27;,&#x27;PlayerFileLoginConfirm&#x27;,&#x27;PlayerName&#x27;,&#x27;login&#x27;);
 &lt;&lt;/script&gt;&gt;
 	
 </tw-passagedata><tw-passagedata pid="18" name="PlayerFileLoginConfirm3" tags="" position="1116,294">
