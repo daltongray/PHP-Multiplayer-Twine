@@ -107,9 +107,8 @@ if ($q !== "") {
           $hint="Good";
           echo $hint;
           return;
-       
+     */  
     }
-*/
 };
 
 //send either the correct var back to the client, or an error message
