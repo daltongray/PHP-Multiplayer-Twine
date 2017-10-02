@@ -106,7 +106,8 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">window.PlayerFileCheckAndCreate = function(PlayerName,Passcode,Output) {
   if (Output === "undefined") {var UpdateOutput = "TwinePseudoConsole";}
-  var str = '{"Method":"CheckAndCreate","PlayerName":"'+PlayerName+'","Passcode":"'+Passcode+'"}';
+  variables()[Output] = "No Response Received from the Server.";
+	var str = '{"Method":"CheckAndCreate","PlayerName":"'+PlayerName+'","Passcode":"'+Passcode+'"}';
   console.log("Here's our JSON-ified string:"+str);
 	var url = "PlayerFile.php";
 	console.log("Here's the URL we're sending it to"+url);
@@ -119,8 +120,9 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		if(this.readyState == 1) {console.log("XML ReadyStatus = 1");};
 		if(this.readyState == 2) {console.log("XML ReadyStatus = 2");};
 		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
-		if(this.readyState == 4) {console.log("XML ReadyStatus = 1"+this.status);};
+		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
+			console.log("Here's the response text from the server"+this.responseText);
 			if (this.responseText == "Taken") {
 			variables()[Output] = "The name was taken.";
 			}
@@ -550,7 +552,7 @@ if ($q !== &quot;&quot;) {
 echo $hint;
 
 ?&gt;
-</tw-passagedata><tw-passagedata pid="24" name="PlayerFile.php" tags="" position="199,413">&lt;?php
+</tw-passagedata><tw-passagedata pid="24" name="PlayerFile.php" tags="" position="195,462">&lt;?php
 
 //JSONs will come in after a q in the url. They will look like: 
 //
@@ -725,7 +727,9 @@ create modular server response passage with a live element
 TEST Console.Log in PlayerFileCheckAndCreate
 Check the comparison operator in PlayerFile.PHP if method ===
 How to Concatecate stings &amp; vars in php
-Test what the server response is from get file contents for non-existant files</tw-passagedata><tw-passagedata pid="27" name="PlayerFiles/PlayerFileTemplate.txt" tags="" position="66,423">{&quot;PlayerName&quot;:&quot;hold&quot;,&quot;Passcode&quot;:&quot;hold&quot;}</tw-passagedata><tw-passagedata pid="28" name="PlayerFileCheckAndCreate Test" tags="" position="188,581">window.PlayerFileCheckAndCreate = function(PlayerName,Passcode,Output) {
+Test what the server response is from get file contents for non-existant files</tw-passagedata><tw-passagedata pid="27" name="PlayerFiles/PlayerFileTemplate.txt" tags="" position="69,463">{&quot;PlayerName&quot;:&quot;hold&quot;,&quot;Passcode&quot;:&quot;hold&quot;}
+
+</tw-passagedata><tw-passagedata pid="28" name="PlayerFileCheckAndCreate Test" tags="" position="188,581">window.PlayerFileCheckAndCreate = function(PlayerName,Passcode,Output) {
 
 On this window, I&#x27;m sending Dalton, and password to PlayerFileCheck and Create. 
 
