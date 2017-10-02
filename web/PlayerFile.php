@@ -26,7 +26,7 @@ $q = $_REQUEST["q"];
 if ($q !== "") {
 	$decodedjson = json_decode($q, true);
 	
-    if ($decodedjson == NULL) {
+    if ($decodedjson === NULL) {
         $response = "The JSON sent to the server was mal formed.";
 		echo $response;
 		return;
@@ -57,7 +57,7 @@ if ($q !== "") {
   	  			  $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
 			   $PFTdecoded = json_decode($PFTJSON1, true);
 					  
-	if ($PFTdecoded = null) {
+	if ($PFTdecoded === null) {
 	$response = "Error connecting/decoding to the PlayerFile Template";
 	echo $response;
 	return;
@@ -85,7 +85,7 @@ if ($q !== "") {
 	
         //then connect to the json.txt,
         $vardb = file_get_contents($filename,".txt") or die("DED");
-        if ($vardb = "DED") {
+        if ($vardb === "DED") {
           $hint="Good";
           echo $hint;
           return;
