@@ -38,10 +38,10 @@ if ($q !== "") {
 	
 //	Check For Existing PlayerFiles With Same Name
 	
-$PlayerFileName = $decodedjson['PlayerName'];
-$PlayerFilePasscode = $decodedjson['Passcode'];
-$PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
-$CheckContents = file_get_contents('$PlayerFileurl');
+	$PlayerFileName = $decodedjson['PlayerName'];
+    $PlayerFilePasscode = $decodedjson['Passcode'];
+     	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
+	 $CheckContents = file_get_contents('$PlayerFileurl');
     
 	if ($CheckContents != "") {
 		$CheckContentsJSON = json_decode($CheckContents, true);
@@ -55,8 +55,8 @@ $CheckContents = file_get_contents('$PlayerFileurl');
 //	Create A PlayerFile & Populate With Template
 	
 	$PlayerFileTemplateurl = "PlayerFiles/PlayerFileTemplate.txt"; 
-  	  			  $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
-			   $PFTdecoded = json_decode($PFTJSON1, true);
+  	              $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
+		   $PFTdecoded = json_decode($PFTJSON, true);
 					  
 	if ($PFTdecoded === null) {
 	$response = "Error connecting/decoding to the PlayerFile Template";
