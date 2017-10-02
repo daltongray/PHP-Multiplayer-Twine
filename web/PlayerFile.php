@@ -30,7 +30,7 @@ if ($q !== "") {
        		$response = "The JSON sent to the server was mal formed.";
 		echo $response;
 		return;
-	} 
+	};
 	
     $method = $decodedjson['Method'];
 	
@@ -76,7 +76,7 @@ if ($q !== "") {
 		echo $response;
 		return;
 	
-	}
+	};
 
 	if ($method === "Access"){
 	
@@ -87,7 +87,7 @@ if ($q !== "") {
 		if ($PlayerFileAccessurl != "PlayerFiles/Dalton.txt") {
 			echo = $PlayerFileAccessurl;
 			return;
-		}
+		};
 		
 	  	$PlayerFileJSON = file_get_contents("$PlayerFileAccessurl");
 		$decodedPFJSON = json_decode($PlayerFileJSON, true);
@@ -96,13 +96,14 @@ if ($q !== "") {
 			$response = "There was an error accessing this player file" . $PlayerFileJSON;
 			echo $response;
 			return;
-		}
+		};
+		
 		if ($decodedPFJSON['Passcode'] == $decodedjson['Passcode']){
 			$PlayerFileVar1 = $decodedjson['Var1'];
 			$response = $decodedPFJSON['$PlayerFileVar1'];
 			echo $response;
 			return;
-		}
+		};
 		
 	/*
 	
@@ -119,7 +120,7 @@ if ($q !== "") {
           echo $hint;
           return;
      */  
-    }
+    };
 };
 
 //send either the correct var back to the client, or an error message
