@@ -32,7 +32,7 @@ if ($q !== "") {
 		return;
 	};
 	
-								//$response .= "The JSON sent to the server was well formed. ";
+								$response .= "The JSON sent to the server was well formed. ";
     	$method = $decodedjson['Method'];
 	
 	if ($method == "CheckAndCreate"){
