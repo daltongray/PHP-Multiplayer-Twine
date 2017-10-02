@@ -31,7 +31,7 @@ if ($q !== "") {
 		echo $response;
 		return;
 	} 
-	/*
+	
     $method = $decodedjson['Method'];
 	
 	if ($method === "CheckAndCreate"){
@@ -50,7 +50,7 @@ if ($q !== "") {
 		echo $response;
 		return;
 		};
-	
+	/*
 //	Create A PlayerFile & Populate With Template
 	
 	$PlayerFileTemplateurl = "PlayerFiles/PlayerFileTemplate.txt"; 
@@ -74,8 +74,9 @@ if ($q !== "") {
 		$response = "Success";
 		echo $response;
         } 
-	
+	*/
 	};
+/*
 	if ($method === "Access"){
 	
 	};
