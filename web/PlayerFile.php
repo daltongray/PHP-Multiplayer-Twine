@@ -93,7 +93,7 @@ if ($q !== "") {
 		$decodedPFJSON = json_decode($PlayerFileJSON, true);
 	
 		if ($decodedPFJSON == null) {
-			$response = "There was an error accessing this player file" . $PlayerFileJSON;
+			$response = "There was an error accessing this player file {$PlayerFileJSON}";
 			echo $response;
 			return;
 		};
