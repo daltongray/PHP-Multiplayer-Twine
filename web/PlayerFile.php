@@ -102,7 +102,7 @@ if ($q !== "") {
 		
 		if ($decodedPFJSON['Passcode'] == $decodedjson['Passcode']){
 			$PlayerFileVar1 = $decodedjson['Var1'];
-			$response = $decodedPFJSON['$PlayerFileVar1'];
+			$response .= $decodedPFJSON[$PlayerFileVar1];
 			echo $response;
 			return;
 		};
