@@ -84,7 +84,7 @@ if ($q !== "") {
 								//$response .= "The {$PFTdecoded['Passcode']} is $PFTdecoded['Passcode']. ";
 
 		
-        	$fh = fopen('$PlayerFileurl', 'w');
+        	$fh = fopen("$PlayerFileurl", 'w');
         	fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
         	fclose($fh);
 		$response .= "Success";
