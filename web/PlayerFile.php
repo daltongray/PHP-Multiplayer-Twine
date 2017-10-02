@@ -45,11 +45,12 @@ $CheckContents = file_get_contents('$PlayerFileurl');
     
 	if ($CheckContents != "") {
 		$CheckContentsJSON = json_decode($CheckContents, true);
-		if ($CheckContentsJSON['PlayerName'] == $PlayerFileName){
-		$response = "Taken";
-		echo $response;
-		return;
-		};
+			if ($CheckContentsJSON['PlayerName'] == $PlayerFileName){
+			$response = "Taken";
+			echo $response;
+			return;
+			};
+	};
 	/*
 //	Create A PlayerFile & Populate With Template
 	
