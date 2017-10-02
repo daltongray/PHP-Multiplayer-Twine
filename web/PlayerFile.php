@@ -95,8 +95,14 @@ if ($q !== "") {
 
 	if ($method === "Access"){
 		$PlayerFileName = $decodedjson['PlayerName'];
+					$response .= "PlayerFileName = $PlayerFileName";
+
 		$PlayerFilePasscode = $decodedJSON['Passcode'];
+					$response .= "PlayerFilePasscode = $PlayerFilePasscode";
+
      	 	$PlayerFileAccessurl = "PlayerFiles/".$PlayerFileName.".txt";
+					$response .= "PlayerFileAccessurl = $PlayerFileAccessurl";
+
 
 		/*
 		if ($PlayerFileAccessurl != "PlayerFiles/Dalton.txt") {
@@ -105,9 +111,11 @@ if ($q !== "") {
 		};
 		*/
 	  	$PlayerFileAccessJSON = file_get_contents($PlayerFileAccessurl);
-		$response .= "PlayerFileAccessJSON = $PlayerFileAccessJSON";
-
+					$response .= "PlayerFileAccessJSON = $PlayerFileAccessJSON";
+		
 		$decodedPFJSON = json_decode($PlayerFileAccessJSON, true);
+					$response .= "decodedPFJSON = $decodedPFJSON";
+
 	
 		if ($decodedPFJSON == null) {
 			$response .= "There was an error accessing this player file $PlayerFileAccessJSON url: {$PlayerFileAccessurl}";
