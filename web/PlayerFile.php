@@ -82,7 +82,7 @@ if ($q !== "") {
 	
 		$PlayerFileName = $decodedJSON['PlayerName'];
 		$PlayerFilePasscode = $decodedJSON['Passcode'];
-     	 	$PlayerFileAccessurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
+     	 	$PlayerFileAccessurl = "PlayerFiles/" . $PlayerFileName . ".txt";
 	  	$PlayerFileJSON = file_get_contents("$PlayerFileAccessurl");
 		$decodedPFJSON = json_decode($PlayerFileJSON, true);
 	
