@@ -25,8 +25,8 @@ $response = "";
 $q = $_REQUEST["q"];
 if ($q !== "") {
 	$decodedjson = json_decode($q, true);
-	
-    if ($decodedjson === NULL) {
+	/*
+    if ($decodedjson == NULL) {
         $response = "The JSON sent to the server was mal formed.";
 		echo $response;
 		return;
@@ -83,6 +83,7 @@ if ($q !== "") {
 	echo $reponse;
 	return;
 	
+	
         //then connect to the json.txt,
         $vardb = file_get_contents($filename,".txt") or die("DED");
         if ($vardb === "DED") {
@@ -91,6 +92,7 @@ if ($q !== "") {
           return;
        
     }
+*/
 };
 
 //send either the correct var back to the client, or an error message
