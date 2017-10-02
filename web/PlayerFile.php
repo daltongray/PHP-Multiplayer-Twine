@@ -80,11 +80,10 @@ if ($q !== "") {
 
 	if ($method === "Access"){
 		$PlayerFileName = $decodedjson['PlayerName'];
-		echo $PlayerFileName;
-		return;
-		
 		$PlayerFilePasscode = $decodedJSON['Passcode'];
-     	 	$PlayerFileAccessurl = "PlayerFiles/{$PlayerFileName}.txt";
+     	 	$PlayerFileAccessurl = "PlayerFiles/".$PlayerFileName.".txt";
+		echo $PlayerFileAccessurl;
+		return;
 		/*
 		if ($PlayerFileAccessurl != "PlayerFiles/Dalton.txt") {
 			echo = $PlayerFileAccessurl;
