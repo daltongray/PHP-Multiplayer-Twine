@@ -34,13 +34,13 @@ if ($q !== "") {
 	
     $method = $decodedjson['Method'];
 	
-	if ($method === "CheckAndCreate"){
+	if ($method == "CheckAndCreate"){
 	
 //	Check For Existing PlayerFiles With Same Name
 	
 	    $PlayerFileName = $decodedjson['PlayerName'];
 	$PlayerFilePasscode = $decodedjson['Passcode'];
-	     $PlayerFileurl = $PlayerFileName.".php";
+	    // $PlayerFileurl = $PlayerFileName.".php";
 	     $CheckContents = file_get_contents("$filename");
     
 	if ($CheckContents !== "") {
