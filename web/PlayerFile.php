@@ -55,7 +55,7 @@ if ($q !== "") {
 //	Create A PlayerFile & Populate With Template
 	
 	$PlayerFileTemplateurl = "PlayerFiles/PlayerFileTemplate.txt"; 
-  	              $PFTJSON = file_get_contents('$PlayerFileTemplateurl');
+  	              $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
 		   $PFTdecoded = json_decode($PFTJSON, true);
 					  
 		if ($PFTdecoded === null) {
