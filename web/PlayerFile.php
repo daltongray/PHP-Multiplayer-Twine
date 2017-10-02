@@ -64,12 +64,12 @@ if ($q !== "") {
 	return;
 	};
 	
- $PFTdecoded['PlayerName'] = $PlayerFileName
-   $PFTdecoded['Passcode'] = $PlayerFilePasscode
+ $PFTdecoded['PlayerName'] = $PlayerFileName;
+   $PFTdecoded['Passcode'] = $PlayerFilePasscode;
 
 	
 	if (is_writable($PlayerFileurl)) {
-        $fh = fopen("$PlayerFileurl", 'w');
+        $fh = fopen('$PlayerFileurl', 'w');
         fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
         fclose($fh);
 		$response = "Success";
