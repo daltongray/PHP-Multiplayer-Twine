@@ -26,8 +26,8 @@ $q = $_REQUEST["q"];
 if ($q !== "") {
 	$decodedjson = json_decode($q, true);
 
-    if ($decodedjson == NULL) {
-        $response = "The JSON sent to the server was mal formed.";
+	if ($decodedjson == NULL) {
+       		$response = "The JSON sent to the server was mal formed.";
 		echo $response;
 		return;
 	} 
@@ -43,14 +43,14 @@ if ($q !== "") {
      	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
 	 $CheckContents = file_get_contents('$PlayerFileurl');
     
-	if ($CheckContents != "") {
-		$CheckContentsJSON = json_decode($CheckContents, true);
+		if ($CheckContents != "") {
+			$CheckContentsJSON = json_decode($CheckContents, true);
 			if ($CheckContentsJSON['PlayerName'] == $PlayerFileName){
-			$response = "Taken";
-			echo $response;
-			return;
+				$response = "Taken";
+				echo $response;
+				return;
 			};
-	};
+		};
 	
 //	Create A PlayerFile & Populate With Template
 	
@@ -58,24 +58,26 @@ if ($q !== "") {
   	              $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
 		   $PFTdecoded = json_decode($PFTJSON, true);
 					  
-	if ($PFTdecoded === null) {
-	$response = "Error connecting/decoding to the PlayerFile Template";
-	echo $response;
-	return;
-	};
+		if ($PFTdecoded === null) {
+			$response = "Error connecting/decoding to the PlayerFile Template";
+			echo $response;
+			return;
+		};
 	
  $PFTdecoded['PlayerName'] = $PlayerFileName;
    $PFTdecoded['Passcode'] = $PlayerFilePasscode;
 
 	
-	if (is_writable($PlayerFileurl)) {
-        $fh = fopen('$PlayerFileurl', 'w');
-        fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
-        fclose($fh);
-		$response = "Success";
-		echo $response;
-		return;
-        } 
+		if (is_writable($PlayerFileurl)) {
+        		$fh = fopen('$PlayerFileurl', 'w');
+        		fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
+        		fclose($fh);
+			$response = "Success";
+			echo $response;
+			return;
+       		} 
+	$response = "playerfileurl was not writeable"
+	echo $response;
 	
 	}
 /*
