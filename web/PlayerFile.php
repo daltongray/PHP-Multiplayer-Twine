@@ -86,6 +86,11 @@ if ($q !== "") {
 	  	$PlayerFileJSON = file_get_contents('$PlayerFileurl');
 		$decodedPFJSON = json_decode($PlayerFileJSON, true);
 	
+		if ($decodedPFJSON == null) {
+			$response = "There was an error accessing this player file";
+			echo $response;
+			return;
+		}
 		if ($decodedPFJSON['Passcode'] == $decodedjson['Passcode']){
 			$PlayerFileVar1 = $decodedjson['Var1'];
 			$response = $decodedPFJSON['$PlayerFileVar1'];
