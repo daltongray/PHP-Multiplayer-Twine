@@ -40,7 +40,7 @@ if ($q !== "") {
 //	Check For Existing PlayerFiles With Same Name
 	
 	$PlayerFileName = $decodedjson['PlayerName'];
-								//$response .= "The {$PlayerFileName} is $PlayerFileName. ";
+								$response .= "The {$PlayerFileName} is $PlayerFileName. ";
     $PlayerFilePasscode = $decodedjson['Passcode'];
     								//$response .= "The {$PlayerFilePasscode} is $PlayerFilePasscode. ";
      	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
