@@ -5,9 +5,9 @@
 // 		   {"Method":"CheckAndCreate"|"Access",
 //		"PlayerName":"(PlayerName)",
 //		  "Passcode":"(Passcode)",
-//		      "var1":"(Var1Name)",
-//		      "var2":"(Var2Name)",
-//		      "var3":"(Var3Name)"}
+//		      "Var1":"(Var1Name)",
+//		      "Var2":"(Var2Name)",
+//		      "Var3":"(Var3Name)"}
 //
 //
 //JS will expect three types of responses
