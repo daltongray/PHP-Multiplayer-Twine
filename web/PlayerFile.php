@@ -90,8 +90,8 @@ if ($q !== "") {
 		};
 		*/
 	  	$PlayerFileJSON = file_get_contents("$PlayerFileAccessurl");
-		echo $PlayerFileJSON;
-		return;
+		$response .= '$PlayerFileJSON' . $PlayerFileJSON;
+
 		$decodedPFJSON = json_decode($PlayerFileJSON, true);
 	
 		if ($decodedPFJSON == null) {
