@@ -25,13 +25,13 @@ $response = "";
 $q = $_REQUEST["q"];
 if ($q !== "") {
 	$decodedjson = json_decode($q, true);
-	/*
+
     if ($decodedjson == NULL) {
         $response = "The JSON sent to the server was mal formed.";
 		echo $response;
 		return;
 	} 
-	
+	/*
     $method = $decodedjson['Method'];
 	
 	if ($method === "CheckAndCreate"){
