@@ -45,7 +45,7 @@ if ($q !== "") {
     								$response .= "The [PlayerFilePasscode] is $PlayerFilePasscode . ";
      	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
 								$response .= "The [PlayerFileurl] is $PlayerFileurl . ";
-	 $CheckContents = file_get_contents("$PlayerFileurl");
+	 $CheckContents = file_get_contents($PlayerFileurl);
 								$response .= "The [CheckContents] is $CheckContents . ";
 		
 		if ($CheckContents != "") {
@@ -110,7 +110,7 @@ if ($q !== "") {
 		$decodedPFJSON = json_decode($PlayerFileAccessJSON, true);
 	
 		if ($decodedPFJSON == null) {
-			$response .= "There was an error accessing this player file {$PlayerFileAccessJSON} url: {$PlayerFileAccessurl}";
+			$response .= "There was an error accessing this player file $PlayerFileAccessJSON url: {$PlayerFileAccessurl}";
 			echo $response;
 			return;
 		};
