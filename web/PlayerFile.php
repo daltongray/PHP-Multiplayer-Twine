@@ -32,21 +32,32 @@ if ($q !== "") {
 		return;
 	};
 	
-    $method = $decodedjson['Method'];
+	$response .= "The JSON sent to the server was well formed. |";
+	
+    	$method = $decodedjson['Method'];
 	
 	if ($method == "CheckAndCreate"){
 	
 //	Check For Existing PlayerFiles With Same Name
 	
 	$PlayerFileName = $decodedjson['PlayerName'];
+			$response .= "The {$PlayerFileName} is $PlayerFileName. |";
     $PlayerFilePasscode = $decodedjson['Passcode'];
+    			$response .= "The {$PlayerFilePasscode} is $PlayerFilePasscode. |";
+
      	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
+			$response .= "The {$PlayerFileurl} is $PlayerFileurl. |";
+
 	 $CheckContents = file_get_contents('$PlayerFileurl');
+			$response .= "The {$CheckContents} is $CheckContents. |";
+
     
 		if ($CheckContents != "") {
 			$CheckContentsJSON = json_decode($CheckContents, true);
+			$response .= "The {$CheckContentsJSON} is $CheckContentsJSON. |";
+
 			if ($CheckContentsJSON['PlayerName'] == $PlayerFileName){
-				$response = "Taken";
+				$response .= "Taken";
 				echo $response;
 				return;
 			};
@@ -55,24 +66,31 @@ if ($q !== "") {
 //	Create A PlayerFile & Populate With Template
 	
 	$PlayerFileTemplateurl = "PlayerFiles/PlayerFileTemplate.txt"; 
+					$response .= "The {$PlayerFileTemplateurl} is $PlayerFileTemplateurl. |";
+
   	              $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
+					$response .= "The {$PFTJSON} is $PFTJSON. |";
+
 		   $PFTdecoded = json_decode($PFTJSON, true);
 					  
 		if ($PFTdecoded === null) {
-			$response = "Error connecting/decoding to the PlayerFile Template";
+			$response .= "Error connecting/decoding to the PlayerFile Template";
 			echo $response;
 			return;
 		};
 	
  $PFTdecoded['PlayerName'] = $PlayerFileName;
+				$response .= "The {$PFTdecoded['PlayerName']} is $PFTdecoded['PlayerName']. |";
+
    $PFTdecoded['Passcode'] = $PlayerFilePasscode;
 
-	
+				$response .= "The {$PFTdecoded['Passcode']} is $PFTdecoded['Passcode']. |";
+
 		
         	$fh = fopen('$PlayerFileurl', 'w');
         	fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
         	fclose($fh);
-		$response = "Success";
+		$response .= "Success";
 		echo $response;
 		return;
 	
