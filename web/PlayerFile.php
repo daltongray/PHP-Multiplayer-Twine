@@ -104,10 +104,10 @@ if ($q !== "") {
 			return;
 		};
 		*/
-	  	$PlayerFileJSON = file_get_contents("$PlayerFileAccessurl");
-		$response .= '$PlayerFileJSON' . $PlayerFileJSON;
+	  	$PlayerFileAccessJSON = file_get_contents("$PlayerFileAccessurl");
+		$response .= '$PlayerFileAccessJSON' . $PlayerFileAccessJSON;
 
-		$decodedPFJSON = json_decode($PlayerFileJSON, true);
+		$decodedPFJSON = json_decode($PlayerFileAccessJSON, true);
 	
 		if ($decodedPFJSON == null) {
 			$response = "There was an error accessing this player file {$PlayerFileJSON} url: {$PlayerFileAccessurl}";
