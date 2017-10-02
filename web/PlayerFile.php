@@ -82,8 +82,7 @@ if ($q !== "") {
 		$PlayerFileName = $decodedjson['PlayerName'];
 		$PlayerFilePasscode = $decodedJSON['Passcode'];
      	 	$PlayerFileAccessurl = "PlayerFiles/".$PlayerFileName.".txt";
-		echo $PlayerFileAccessurl;
-		return;
+
 		/*
 		if ($PlayerFileAccessurl != "PlayerFiles/Dalton.txt") {
 			echo = $PlayerFileAccessurl;
@@ -91,6 +90,8 @@ if ($q !== "") {
 		};
 		*/
 	  	$PlayerFileJSON = file_get_contents("$PlayerFileAccessurl");
+		echo $PlayerFileJSON;
+		return;
 		$decodedPFJSON = json_decode($PlayerFileJSON, true);
 	
 		if ($decodedPFJSON == null) {
