@@ -102,256 +102,47 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<div id="store-area" hidden><tw-storydata name="Where&#x27;s the Secret" startnode="7" creator="Twine" creator-version="2.1.3" ifid="ED4BA928-1614-4C6A-9574-DE8A57E2EB6B" format="SugarCube" format-version="2.18.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
-</style><script role="script" id="twine-user-script" type="text/twine-javascript">window.newname = function (url,UpdateVar,UpdateVal,UpdateOutput) {
-  if (UpdateOutput === undefined) {UpdateOutput = "UpdateDefaultOutput";} 
-  var jsUpdateVal = variables()[UpdateVal];
-  var str = '{"var":"'+UpdateVar+'","val":"'+jsUpdateVal+'","filename":"+jsUpdateVal+"}';
-  var xhttp;
+	<div id="store-area" hidden><tw-storydata name="Where&#x27;s the Secret" startnode="28" creator="Twine" creator-version="2.1.3" ifid="ED4BA928-1614-4C6A-9574-DE8A57E2EB6B" format="SugarCube" format-version="2.18.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">window.PlayerFileCheckAndCreate = function(PlayerName,Passcode,Output) {
+  if (Output === "undefined") {var UpdateOutput = "TwinePseudoConsole";}
+  var str = '{"Method":"CheckAndCreate","PlayerName":"'+PlayerName+'","Passcode":"'+Passcode+'"}';
+  console.log("Here's our JSON-ified string:"+str);
+	var url = "PlayerFile.php";
+	console.log("Here's the URL we're sending it to"+url);
+	var payload = url+"?q="+str;
+	console.log("Here's the full payload, url and json");
+	
+	var xhttp;
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-   if (this.readyState == 4 && this.status == 200) {
-     variables()[UpdateOutput] = this.responseText;
-    }
-  };
-  xhttp.open("GET", url+"?q="+str, true);
-  xhttp.send();   
-}
-
-window.PlayerFileFunction = function (){
-Dialog.close();
-}
-
-window.DialogueUpdate = function(passagename, dialoguetitle){
-	Dialog.close();
-	Dialog.setup(dialoguetitle);
-	Dialog.wiki(Story.get(passagename).processText()); 
-	Dialog.open();
-}
-
-
-window.TwineVarWrap = function (element, twinevar){
-	var content = document.getElementById(element).value;
-	variables()[twinevar] = content;
-}
-
-window.DialogueUpdateAndGet = function(passagename, dialoguetitle,url,FetchInput,FetchOutput){
-	
-  variables().AreWeFetching = "true";
-  var jsFetchInput = variables()[FetchInput];
-  var str = '{"var":"'+jsFetchInput+'"}';
-  var xhttp;
-  xhttp = new XMLHttpRequest();  
-  xhttp.onreadystatechange = function() {
+		if(this.readyState == 1) {console.log("XML ReadyStatus = 1");};
+		if(this.readyState == 2) {console.log("XML ReadyStatus = 2");};
+		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
+		if(this.readyState == 4) {console.log("XML ReadyStatus = 1"+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
-			variables()[FetchOutput] = this.responseText;
-			variables().AreWeFetching = "false";
-		} else { 
-			variables()[FetchOutput] = "There was an error";
-			variables().AreWeFetching = "false";
-		}	
+			if (this.responseText == "Taken") {
+			variables()[Output] = "The name was taken.";
+			}
+			if (this.responseText == "Success") {
+			variables()[Output] = "PlayerFile Successfully Created!";
+			}
+		console.log(this.responseText);
+    }
   }
-  xhttp.open("GET", "PlayerFileNameChecker.php?q="+str, true);
-  xhttp.send();   
-	Dialog.close();
-	Dialog.setup(dialoguetitle);
-	Dialog.wiki(Story.get(passagename).processText()); 
-	Dialog.open();
+
+  xhttp.open("GET", payload, false);
+  xhttp.send();
 };
 
 
-
-
-/*
-This function takes 2 args: FetchInput & FetchOutput
-The first is what we're going to GET to the server
-ie: the Var we're interested in knowing more about.
-The second is what we'll be plugging the information we get back into.
-This is where our data will end up.
-
-During the course of this, our function will set a AreWeFetching to True
-This is so our twine engine can know when to keep a hook dynamic.
-
-*/
-
-
-window.get = function(url,FetchInput,FetchOutput) {
-	
-  /* First we'll tell Twine that a fetch is in progress      */
-  /* this is so the client can keep any dynamic text active  */
-	var jsFetchInput = variables()[FetchInput];
-	variables().AreWeGetting = true;
-	
-  /*  Then we'll create the JSON markup to fetch the input var  */ 
-  var str = '{"var":"'+jsFetchInput+'"}';
-   
-  /*   create a var for our xhttp object            */
-  var xhttp;
-  
-  /* create a new XML request & do something 
-     I don't totally understand               */
-  xhttp = new XMLHttpRequest();  
-  xhttp.onreadystatechange = function() {
-  
-    /*     when ready state ==4 & this status =200   */
-	/*     also don't fully understand this          */
-	
-    if (this.readyState == 4 && this.status == 200) {
-
-       /*then set our output var to whatever 
-	     comes back from the GET request*/
-      
-		    variables()[FetchOutput] = this.responseText;
-	    	variables().AreWeFetching = "false";
-    } else { 
-			  variables()[FetchOutput] = "There was an error connecting to the file";
-	    	variables().AreWeFetching = "false";
-		}
-		
-  }
-  /*  Finally open an xml request, via GET protocol to GET.php
-      with the additional q= protocol which 
-      adds our created JSON to the URL      
-			*/
-	var q = "?q=";
-	var fullstrtosend = url.concat(q, str);
-  xhttp.open("GET", fullstrtosend, true);
-  xhttp.send();   
-};
-
-
-/*
-This function takes 2 args: FetchInput & FetchOutput
-The first is what we're going to GET to the server
-ie: the Var we're interested in knowing more about.
-The second is what we'll be plugging the information we get back into.
-This is where our data will end up.
-
-During the course of this, our function will set a AreWeFetching to True
-This is so our twine engine can know when to keep a hook dynamic.
-
-*/
-
-
-window.fetchFunction = function(FetchInput,FetchOutput) {
-	
-  /* First we'll tell Twine that a fetch is in progress      */
-  /* this is so the client can keep any dynamic text active  */
-  variables().AreWeFetching = "true";
-  var jsFetchInput = variables()[FetchInput];
-  /*  Then we'll create the JSON markup to fetch the input var  */ 
-  var str = '{"var":"'+jsFetchInput+'"}';
-   
-  /*   create a var for our xhttp object            */
-  var xhttp;
-  
-  /* create a new XML request & do something 
-     I don't totally understand               */
-  xhttp = new XMLHttpRequest();  
-  xhttp.onreadystatechange = function() {
-  
-    /*     when ready state ==4 & this status =200   */
-	/*     also don't fully understand this          */
-	
-    if (this.readyState == 4 && this.status == 200) {
-
-       //then set our output var to whatever 
-	     //comes back from the GET request
-      
-		variables()[FetchOutput] = this.responseText;
-	    	variables().AreWeFetching = "false";
-    } else { 
-			  variables()[FetchOutput] = "There was an error";
-	    	variables().AreWeFetching = "false";
-			return;
-		}
-		
-  }
-  /*  Finally open an xml request, via GET protocol to GET.php
-      with the additional q= protocol which 
-      adds our created JSON to the URL                         */
-  xhttp.open("GET", "PlayerFileNameChecker.php?q="+str, true);
-  xhttp.send();   
-};
-
-
-window.editspecific = function (url,UpdateVar,UpdateVal,UpdateOutput) {
-  if (UpdateOutput === undefined) {
-          UpdateOutput = "UpdateDefaultOutput";
-    } 
-
-	variables().AreWeUpdating = true;
-  var str = '{"var":"'+UpdateVar+'","val":"'+UpdateVal+'"}';
-  
-  //create a var for our xhttp object
-  var xhttp;
-  
-  //create a new XML request
-  xhttp = new XMLHttpRequest();
+xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
    if (this.readyState == 4 && this.status == 200) {
      //then set txt hint to whatever comes back from the GET request
      variables()[UpdateOutput] = this.responseText;
 	   variables().AreWeUpdating = false;
-    } else { 
-			  variables()[UpdateOutput] = "There was an error";
-	    	variables().AreWeUpdating = "false";
-			return;
-		}
-  };
-  //finally open an xml request, via GET protocol to GET.php
-  //with the additional q= protocol which adds any txt from the field to the url
-  //ie: how we send jsons!
-
-  xhttp.open("GET", url+"?q="+str, true);
-  xhttp.send();   
-}
-
-
-/*
-This function takes 3 values. 1) a variable on the server we're going to update, 2) the new value for that variable, 3) the local variablename that we're going to put the success / fail
-*/
-window.editmain = function (UpdateVar,UpdateVal,UpdateOutput) {
-  if (UpdateOutput === undefined) {
-          UpdateOutput = "UpdateDefaultOutput";
-    } 
-	
-	variables().AreWeUpdating = true;
-  var str = '{"var":"'+UpdateVar+'","val":"'+UpdateVal+'"}';
-  
-  //create a var for our xhttp object
-  var xhttp;
-  
-  //create a new XML request
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-   if (this.readyState == 4 && this.status == 200) {
-     //then set txt hint to whatever comes back from the GET request
-     variables()[UpdateOutput] = this.responseText;
-	   variables().AreWeUpdating = false;
-    } else { 
-			  variables()[UpdateOutput] = "There was an error";
-	    	variables().AreWeUpdating = "false";
-			return;
-		}
-  };
-  //finally open an xml request, via GET protocol to GET.php
-  //with the additional q= protocol which adds any txt from the field to the url
-  //ie: how we send jsons!
-  xhttp.open("GET", "UPDATE.php?q="+str, true);
-  xhttp.send();   
-}
-
-
-
-window.jswrap = function (twinevar,jswrapname) {
-	window[jswrapname] = variables()[twinevar];
-}
-
-
-
-
-</script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Hide Your Secret&lt;/H1&gt;
+    }</script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Hide Your Secret&lt;/H1&gt;
 
 &lt;&lt;button &quot;Start&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
@@ -731,6 +522,455 @@ You&#x27;ve hidden your secret.
 Now, where are you? [dropdown Servername]
 
 [[Ready to MINGLE?!]]
+
+</tw-passagedata><tw-passagedata pid="23" name="GET.php" tags="" position="195,300">&lt;?php
+
+// get the q parameter from URL
+$q = $_REQUEST[&quot;q&quot;];
+$hint = &quot;&quot;;
+//set the location of our json full of variables
+$filename = &quot;vardb.txt&quot;;
+
+//if what&#x27;s sent from the client is not nothing...
+if ($q !== &quot;&quot;) {
+    //then parse it as a json
+    $decodedjson = json_decode($q, true);
+    //if it&#x27;s a poorly formed json it will come back as an error
+    if ($decodedjson == NULL) {
+        //if so, set hint to an err message so that prints to the client
+        $hint = &quot;this JSON was mal formed&quot;;
+        //otherwise...
+    } else { 
+        //pull the value of &quot;var&quot; from the json that was sent
+        //this assumes that all jsons sent here have the following structure:
+        //{&quot;var&quot;:&quot;value&quot;}
+        $keyvar = $decodedjson[&#x27;var&#x27;];
+        //then connect to the json.txt,
+        $vardb = file_get_contents(&quot;vardb.txt&quot;) or die(&quot;could not reach $filename&quot;);
+        //decode it as a json
+        $vardbjson = json_decode($vardb, true);
+        //then pull the var that was sent here
+        $hint = $vardbjson[&quot;$keyvar&quot;];
+    }
+};
+
+//send either the correct var back to the client, or an error message
+echo $hint;
+
+?&gt;
+</tw-passagedata><tw-passagedata pid="24" name="PlayerFile.php" tags="" position="199,413">&lt;?php
+
+//JSONs will come in after a q in the url. They will look like: 
+//
+// 		   {&quot;Method&quot;:&quot;CheckAndCreate&quot;|&quot;Access&quot;,
+//		&quot;PlayerName&quot;:&quot;(PlayerName)&quot;,
+//		  &quot;Passcode&quot;:&quot;(Passcode)&quot;,
+//		      &quot;var1&quot;:&quot;(Var1Name)&quot;,
+//		      &quot;var2&quot;:&quot;(Var2Name)&quot;,
+//		      &quot;var3&quot;:&quot;(Var3Name)&quot;}
+//
+//
+//JS will expect three types of responses
+//		
+//		Taken | Success | (Error)
+//
+//Given the method &quot;CheckAndCreate&quot;:
+//		Taken returns if there&#x27;s already a playerfile with that name
+//		Success returns if the check passes, after a new file is created
+//		Error returns if something unexpected happens. 
+//			This file creates the error message, 
+//			Which JS will print to the console log (hopefully)
+
+$response = &quot;&quot;;
+$q = $_REQUEST[&quot;q&quot;];
+if ($q !== &quot;&quot;) {
+	$decodedjson = json_decode($q, true);
+	
+    if ($decodedjson == NULL) {
+        $response = &quot;The JSON sent to the server was mal formed.&quot;;
+		echo $response;
+		return;
+	} 
+	
+    $method = $decodedjson[&#x27;Method&#x27;];
+	
+	if ($method === &quot;CheckAndCreate&quot;){
+	
+//	Check For Existing PlayerFiles With Same Name
+	
+	    $PlayerFileName = $decodedjson[&#x27;PlayerName&#x27;];
+	$PlayerFilePasscode = $decodedjson[&#x27;Passcode&#x27;];
+	     $PlayerFileurl = $PlayerFileName.&quot;.php&quot;;
+	     $CheckContents = file_get_contents(&quot;$filename&quot;);
+    
+	if ($CheckContents !== &quot;&quot;) {
+		$CheckContentsJSON = json_decode($CheckContents, true);
+		if ($CheckContentsJSON[&#x27;PlayerName&#x27;] === $PlayerFileName){
+		$response = &quot;Taken&quot;;
+		echo $response;
+		return;
+		};
+	
+//	Create A PlayerFile &amp; Populate With Template
+	
+	$PlayerFileTemplateurl = &quot;PlayerFiles/PlayerFileTemplate.txt&quot;; 
+  	  			  $PFTJSON = file_get_contents(&quot;$PlayerFileTemplateurl&quot;);
+			   $PFTdecoded = json_decode($PFTJSON1, true);
+					  
+	if ($PFTdecoded = null) {
+	$response = &quot;Error connecting/decoding to the PlayerFile Template&quot;;
+	echo $response;
+	return;
+	};
+	
+ $PFTdecoded[&#x27;PlayerName&#x27;] = $PlayerFileName
+   $PFTdecoded[&#x27;Passcode&#x27;] = $PlayerFilePasscode
+
+	
+	if (is_writable($PlayerFileurl)) {
+        $fh = fopen(&quot;$PlayerFileurl&quot;, &#x27;w&#x27;);
+        fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
+        fclose($fh);
+		$response = &quot;Success&quot;;
+		echo $response;
+        } 
+	
+	};
+	if ($method === &quot;Access&quot;){
+	
+	};
+	$response = &quot;Method Value Was Invalid&quot;;
+	echo $reponse;
+	return;
+	
+        //then connect to the json.txt,
+        $vardb = file_get_contents($filename,&quot;.txt&quot;) or die(&quot;DED&quot;);
+        if ($vardb = &quot;DED&quot;) {
+          $hint=&quot;Good&quot;;
+          echo $hint;
+          return;
+       
+    }
+};
+
+//send either the correct var back to the client, or an error message
+
+
+?&gt;
+</tw-passagedata><tw-passagedata pid="25" name="UPDATE.php" tags="" position="73,301">&lt;?php
+
+// get the q parameter from URL
+$q = $_REQUEST[&quot;q&quot;];
+//$hint = $q;
+
+//$hint = &quot;&quot;;
+//set the location of our json full of variables
+
+$filename = &quot;vardb.txt&quot;;
+
+//if what&#x27;s sent from the client is not nothing...
+if ($q !== &quot;&quot;) {
+    //then parse it as a json
+    $decodedjson = json_decode($q, true);
+    //if it&#x27;s a poorly formed json it will come back as an error
+    if ($decodedjson == NULL) {
+        //if so, set hint to an err message so that prints to the client
+        $hint = &quot;this JSON was mal formed&quot;;
+        //otherwise...
+    } else { 
+        
+        
+        // the trouble seems to be in the following block of code
+        //if you deploy, you&#x27;ll be able to call up the values on both forms
+        //but the update function won&#x27;t make a lasting impact on the json called 
+        // by the get function. 
+        
+        
+        //pull the value of &quot;var&quot; from the json that was sent
+        //this assumes that all jsons sent here have the following structure:
+        //{&quot;var&quot;:&quot;foo&quot;,&quot;val&quot;:&quot;bar&quot;}
+        $keyvar = $decodedjson[&quot;var&quot;];
+        $keyval = $decodedjson[&quot;val&quot;];
+        //then connect to the json.txt,
+        $vardb = file_get_contents(&quot;$filename&quot;) or die(&quot;could not reach $filename&quot;);
+        //decode it as a json
+        $vardbjson = json_decode($vardb, true);
+        
+        //then pull the 1st var that was sent here
+        // Modify the value, and write the structure to a file
+        $vardbjson[&quot;$keyvar&quot;] = &quot;$keyval&quot;; 
+        
+        $hint = $vardbjson[&quot;$keyvar&quot;];
+        
+        if (is_writable($filename)) {
+        $fh = fopen(&quot;$filename&quot;, &#x27;w&#x27;) or die(&quot;Error opening output file&quot;);
+        fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
+        fclose($fh);
+        } else {
+            $hint = &quot;$filename is not writeable&quot;;
+        }
+      
+    }
+};
+
+//send either the correct var back to the client, or an error message
+echo $hint;
+
+?&gt;
+</tw-passagedata><tw-passagedata pid="26" name="To Do" tags="" position="235,151">window.PlayerFileCheckAndCreate
+
+window.PlayerFileAccess 
+	using a synchronous xml 
+	XMLHttpRequest.open(method, url, async, user, password)
+
+Test to see if async fixes the problem where the following screen doesn&#x27;t have the data yet
+
+create modular server response passage with a live element
+
+
+
+
+TEST Console.Log in PlayerFileCheckAndCreate
+Check the comparison operator in PlayerFile.PHP if method ===
+How to Concatecate stings &amp; vars in php
+Test what the server response is from get file contents for non-existant files</tw-passagedata><tw-passagedata pid="27" name="PlayerFiles/PlayerFileTemplate.txt" tags="" position="66,423">{&quot;PlayerName&quot;:&quot;hold&quot;,&quot;Passcode&quot;:&quot;hold&quot;}</tw-passagedata><tw-passagedata pid="28" name="PlayerFileCheckAndCreate Test" tags="" position="188,581">window.PlayerFileCheckAndCreate = function(PlayerName,Passcode,Output) {
+
+On this window, I&#x27;m sending Dalton, and password to PlayerFileCheck and Create. 
+
+On the next screen we&#x27;ll see what output we got with TestOutput. You should see it in the console log too. 
+&lt;&lt;script&gt;&gt;
+window.PlayerFileCheckAndCreate(&quot;Dalton&quot;,&quot;password&quot;,&quot;TestOutput&quot;)
+&lt;&lt;/script&gt;&gt;
+[[Results]]</tw-passagedata><tw-passagedata pid="29" name="Results" tags="" position="188,731">$TestOutput</tw-passagedata><tw-passagedata pid="30" name="Other JS sheet stuff" tags="" position="58,586">
+window.PlayerFileFunction = function (){
+Dialog.close();
+}
+
+window.DialogueUpdate = function(passagename, dialoguetitle){
+	Dialog.close();
+	Dialog.setup(dialoguetitle);
+	Dialog.wiki(Story.get(passagename).processText()); 
+	Dialog.open();
+}
+
+
+window.TwineVarWrap = function (element, twinevar){
+	var content = document.getElementById(element).value;
+	variables()[twinevar] = content;
+}
+
+window.DialogueUpdateAndGet = function(passagename, dialoguetitle,url,FetchInput,FetchOutput){
+	
+  variables().AreWeFetching = &quot;true&quot;;
+  var jsFetchInput = variables()[FetchInput];
+  var str = &#x27;{&quot;var&quot;:&quot;&#x27;+jsFetchInput+&#x27;&quot;}&#x27;;
+  var xhttp;
+  xhttp = new XMLHttpRequest();  
+  xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 &amp;&amp; this.status == 200) {
+			variables()[FetchOutput] = this.responseText;
+			variables().AreWeFetching = &quot;false&quot;;
+		} else { 
+			variables()[FetchOutput] = &quot;There was an error&quot;;
+			variables().AreWeFetching = &quot;false&quot;;
+		}	
+  }
+  xhttp.open(&quot;GET&quot;, &quot;PlayerFileNameChecker.php?q=&quot;+str, true);
+  xhttp.send();   
+	Dialog.close();
+	Dialog.setup(dialoguetitle);
+	Dialog.wiki(Story.get(passagename).processText()); 
+	Dialog.open();
+};
+
+
+
+
+/*
+This function takes 2 args: FetchInput &amp; FetchOutput
+The first is what we&#x27;re going to GET to the server
+ie: the Var we&#x27;re interested in knowing more about.
+The second is what we&#x27;ll be plugging the information we get back into.
+This is where our data will end up.
+
+During the course of this, our function will set a AreWeFetching to True
+This is so our twine engine can know when to keep a hook dynamic.
+
+*/
+
+
+window.get = function(url,FetchInput,FetchOutput) {
+	
+  /* First we&#x27;ll tell Twine that a fetch is in progress      */
+  /* this is so the client can keep any dynamic text active  */
+	var jsFetchInput = variables()[FetchInput];
+	variables().AreWeGetting = true;
+	
+  /*  Then we&#x27;ll create the JSON markup to fetch the input var  */ 
+  var str = &#x27;{&quot;var&quot;:&quot;&#x27;+jsFetchInput+&#x27;&quot;}&#x27;;
+   
+  /*   create a var for our xhttp object            */
+  var xhttp;
+  
+  /* create a new XML request &amp; do something 
+     I don&#x27;t totally understand               */
+  xhttp = new XMLHttpRequest();  
+  xhttp.onreadystatechange = function() {
+  
+    /*     when ready state ==4 &amp; this status =200   */
+	/*     also don&#x27;t fully understand this          */
+	
+    if (this.readyState == 4 &amp;&amp; this.status == 200) {
+
+       /*then set our output var to whatever 
+	     comes back from the GET request*/
+      
+		    variables()[FetchOutput] = this.responseText;
+	    	variables().AreWeFetching = &quot;false&quot;;
+    } else { 
+			  variables()[FetchOutput] = &quot;There was an error connecting to the file&quot;;
+	    	variables().AreWeFetching = &quot;false&quot;;
+		}
+		
+  }
+  /*  Finally open an xml request, via GET protocol to GET.php
+      with the additional q= protocol which 
+      adds our created JSON to the URL      
+			*/
+	var q = &quot;?q=&quot;;
+	var fullstrtosend = url.concat(q, str);
+  xhttp.open(&quot;GET&quot;, fullstrtosend, true);
+  xhttp.send();   
+};
+
+
+/*
+This function takes 2 args: FetchInput &amp; FetchOutput
+The first is what we&#x27;re going to GET to the server
+ie: the Var we&#x27;re interested in knowing more about.
+The second is what we&#x27;ll be plugging the information we get back into.
+This is where our data will end up.
+
+During the course of this, our function will set a AreWeFetching to True
+This is so our twine engine can know when to keep a hook dynamic.
+
+*/
+
+
+window.fetchFunction = function(FetchInput,FetchOutput) {
+	
+  /* First we&#x27;ll tell Twine that a fetch is in progress      */
+  /* this is so the client can keep any dynamic text active  */
+  variables().AreWeFetching = &quot;true&quot;;
+  var jsFetchInput = variables()[FetchInput];
+  /*  Then we&#x27;ll create the JSON markup to fetch the input var  */ 
+  var str = &#x27;{&quot;var&quot;:&quot;&#x27;+jsFetchInput+&#x27;&quot;}&#x27;;
+   
+  /*   create a var for our xhttp object            */
+  var xhttp;
+  
+  /* create a new XML request &amp; do something 
+     I don&#x27;t totally understand               */
+  xhttp = new XMLHttpRequest();  
+  xhttp.onreadystatechange = function() {
+  
+    /*     when ready state ==4 &amp; this status =200   */
+	/*     also don&#x27;t fully understand this          */
+	
+    if (this.readyState == 4 &amp;&amp; this.status == 200) {
+
+       //then set our output var to whatever 
+	     //comes back from the GET request
+      
+		variables()[FetchOutput] = this.responseText;
+	    	variables().AreWeFetching = &quot;false&quot;;
+    } else { 
+			  variables()[FetchOutput] = &quot;There was an error&quot;;
+	    	variables().AreWeFetching = &quot;false&quot;;
+			return;
+		}
+		
+  }
+  /*  Finally open an xml request, via GET protocol to GET.php
+      with the additional q= protocol which 
+      adds our created JSON to the URL                         */
+  xhttp.open(&quot;GET&quot;, &quot;PlayerFileNameChecker.php?q=&quot;+str, true);
+  xhttp.send();   
+};
+
+
+window.editspecific = function (url,UpdateVar,UpdateVal,UpdateOutput) {
+  if (UpdateOutput === undefined) {
+          UpdateOutput = &quot;UpdateDefaultOutput&quot;;
+    } 
+
+	variables().AreWeUpdating = true;
+  var str = &#x27;{&quot;var&quot;:&quot;&#x27;+UpdateVar+&#x27;&quot;,&quot;val&quot;:&quot;&#x27;+UpdateVal+&#x27;&quot;}&#x27;;
+  
+  //create a var for our xhttp object
+  var xhttp;
+  
+  //create a new XML request
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 &amp;&amp; this.status == 200) {
+     //then set txt hint to whatever comes back from the GET request
+     variables()[UpdateOutput] = this.responseText;
+	   variables().AreWeUpdating = false;
+    } else { 
+			  variables()[UpdateOutput] = &quot;There was an error&quot;;
+	    	variables().AreWeUpdating = &quot;false&quot;;
+			return;
+		}
+  };
+  //finally open an xml request, via GET protocol to GET.php
+  //with the additional q= protocol which adds any txt from the field to the url
+  //ie: how we send jsons!
+
+  xhttp.open(&quot;GET&quot;, url+&quot;?q=&quot;+str, true);
+  xhttp.send();   
+}
+
+
+/*
+This function takes 3 values. 1) a variable on the server we&#x27;re going to update, 2) the new value for that variable, 3) the local variablename that we&#x27;re going to put the success / fail
+*/
+window.editmain = function (UpdateVar,UpdateVal,UpdateOutput) {
+  if (UpdateOutput === undefined) {
+          UpdateOutput = &quot;UpdateDefaultOutput&quot;;
+    } 
+	
+	variables().AreWeUpdating = true;
+  var str = &#x27;{&quot;var&quot;:&quot;&#x27;+UpdateVar+&#x27;&quot;,&quot;val&quot;:&quot;&#x27;+UpdateVal+&#x27;&quot;}&#x27;;
+  
+  //create a var for our xhttp object
+  var xhttp;
+  
+  //create a new XML request
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 &amp;&amp; this.status == 200) {
+     //then set txt hint to whatever comes back from the GET request
+     variables()[UpdateOutput] = this.responseText;
+	   variables().AreWeUpdating = false;
+    } else { 
+			  variables()[UpdateOutput] = &quot;There was an error&quot;;
+	    	variables().AreWeUpdating = &quot;false&quot;;
+			return;
+		}
+  };
+  //finally open an xml request, via GET protocol to GET.php
+  //with the additional q= protocol which adds any txt from the field to the url
+  //ie: how we send jsons!
+  xhttp.open(&quot;GET&quot;, &quot;UPDATE.php?q=&quot;+str, true);
+  xhttp.send();   
+}
+
+
+
+window.jswrap = function (twinevar,jswrapname) {
+	window[jswrapname] = variables()[twinevar];
+}
 
 </tw-passagedata></tw-storydata></div>
 	<script id="script-sugarcube" type="text/javascript">
