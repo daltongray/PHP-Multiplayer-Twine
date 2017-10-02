@@ -134,15 +134,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
   xhttp.open("GET", payload, false);
   xhttp.send();
 };
-
-
-xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-   if (this.readyState == 4 && this.status == 200) {
-     //then set txt hint to whatever comes back from the GET request
-     variables()[UpdateOutput] = this.responseText;
-	   variables().AreWeUpdating = false;
-    }</script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Hide Your Secret&lt;/H1&gt;
+</script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Hide Your Secret&lt;/H1&gt;
 
 &lt;&lt;button &quot;Start&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
