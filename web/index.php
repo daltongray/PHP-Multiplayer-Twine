@@ -131,7 +131,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
     }
   }
 
-  xhttp.open("GET", payload, false);
+  xhttp.open("GET", payload,);
   xhttp.send();
 };
 </script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Hide Your Secret&lt;/H1&gt;
