@@ -38,14 +38,14 @@ if ($q !== "") {
 	
 //	Check For Existing PlayerFiles With Same Name
 	
-	    $PlayerFileName = $decodedjson['PlayerName'];
-	$PlayerFilePasscode = $decodedjson['Passcode'];
-	     $PlayerFileurl = $PlayerFileName . '.php';
-	     $CheckContents = file_get_contents('$PlayerFileurl');
+$PlayerFileName = $decodedjson['PlayerName'];
+$PlayerFilePasscode = $decodedjson['Passcode'];
+$PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
+$CheckContents = file_get_contents('$PlayerFileurl');
     
-	if ($CheckContents !== "") {
+	if ($CheckContents != "") {
 		$CheckContentsJSON = json_decode($CheckContents, true);
-		if ($CheckContentsJSON['PlayerName'] === $PlayerFileName){
+		if ($CheckContentsJSON['PlayerName'] == $PlayerFileName){
 		$response = "Taken";
 		echo $response;
 		return;
@@ -75,7 +75,7 @@ if ($q !== "") {
 		echo $response;
         } 
 	*/
-	};
+	}
 /*
 	if ($method === "Access"){
 	
