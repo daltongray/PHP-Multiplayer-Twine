@@ -74,6 +74,7 @@ if ($q !== "") {
         fclose($fh);
 		$response = "Success";
 		echo $response;
+		return;
         } 
 	
 	}
