@@ -432,11 +432,10 @@ Is this information correct? &lt;button type=button id=&quot;signup-button&quot;
 </tw-passagedata><tw-passagedata pid="13" name="PlayerFileComplete" tags="" position="901,449">Currently checking and creating for the twine vars $Passcode &amp; Playername
 
 &lt;&lt;script&gt;&gt;
-	window.PlayerFileCheckAndCreate = function(&quot;PlayerName&quot;,&quot;Passcode&quot;,&quot;CheckAndCreateTest&quot;)
+	window.PlayerFileCheckAndCreate(&quot;PlayerName&quot;,&quot;Passcode&quot;,&quot;CheckAndCreateTest&quot;)
 &lt;&lt;/script&gt;&gt;
 	
-window.DialogueUpdate(&#x27;PlayerFileComplete2&#x27;,&#x27;New Players, fill this stuff out&#x27;)
-</tw-passagedata><tw-passagedata pid="14" name="PlayerFileNewNameTaken" tags="" position="1276,527">I&#x27;m Sorry that name is taken, try again!
+&lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete2&#x27;,&#x27;Upload confirmation&#x27;)&quot;&gt;yes, continue&lt;/button&gt;</tw-passagedata><tw-passagedata pid="14" name="PlayerFileNewNameTaken" tags="" position="1276,527">I&#x27;m Sorry that name is taken, try again!
 
 &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Retry&lt;/button&gt;</tw-passagedata><tw-passagedata pid="15" name="PlayerFileComplete2" tags="" position="1026,450">Your username has been uploaded to the server.
 
