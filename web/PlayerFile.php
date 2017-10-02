@@ -79,8 +79,10 @@ if ($q !== "") {
 	};
 
 	if ($method === "Access"){
-	
-		$PlayerFileName = $decodedJSON['PlayerName'];
+		$PlayerFileName = $decodedjson['PlayerName'];
+		echo $PlayerFileName;
+		return;
+		
 		$PlayerFilePasscode = $decodedJSON['Passcode'];
      	 	$PlayerFileAccessurl = "PlayerFiles/{$PlayerFileName}.txt";
 		/*
