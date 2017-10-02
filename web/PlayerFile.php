@@ -76,7 +76,7 @@ if ($q !== "") {
 			echo $response;
 			return;
        		} 
-	$response = "playerfileurl was not writeable"
+	$response = "playerfileurl was not writeable";
 	echo $response;
 	
 	}
