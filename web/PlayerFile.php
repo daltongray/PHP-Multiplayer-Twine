@@ -51,7 +51,7 @@ $CheckContents = file_get_contents('$PlayerFileurl');
 			return;
 			};
 	};
-	/*
+	
 //	Create A PlayerFile & Populate With Template
 	
 	$PlayerFileTemplateurl = "PlayerFiles/PlayerFileTemplate.txt"; 
@@ -63,7 +63,7 @@ $CheckContents = file_get_contents('$PlayerFileurl');
 	echo $response;
 	return;
 	};
-	
+	/*
  $PFTdecoded['PlayerName'] = $PlayerFileName
    $PFTdecoded['Passcode'] = $PlayerFilePasscode
 
