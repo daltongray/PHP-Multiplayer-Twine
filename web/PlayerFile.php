@@ -43,7 +43,7 @@ if ($q !== "") {
 								$response .= "The [PlayerFileName] is $PlayerFileName . ";
     $PlayerFilePasscode = $decodedjson['Passcode'];
     								$response .= "The [PlayerFilePasscode] is $PlayerFilePasscode . ";
-     	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
+     	 $PlayerFileurl = ".PlayerFiles/{$PlayerFileName}.txt";
 								$response .= "The [PlayerFileurl] is $PlayerFileurl . ";
 	 $CheckContents = file_get_contents("$PlayerFileurl");
 								$response .= "The [CheckContents] is $CheckContents . ";
