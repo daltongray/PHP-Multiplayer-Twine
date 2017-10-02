@@ -40,8 +40,8 @@ if ($q !== "") {
 	
 	    $PlayerFileName = $decodedjson['PlayerName'];
 	$PlayerFilePasscode = $decodedjson['Passcode'];
-	    // $PlayerFileurl = $PlayerFileName.".php";
-	     $CheckContents = file_get_contents("$filename");
+	     $PlayerFileurl = $PlayerFileName . '.php';
+	     $CheckContents = file_get_contents('$PlayerFileurl');
     
 	if ($CheckContents !== "") {
 		$CheckContentsJSON = json_decode($CheckContents, true);
