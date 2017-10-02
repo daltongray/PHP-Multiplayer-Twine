@@ -777,8 +777,8 @@ window.PlayerFileCheckAndCreate(&quot;Dalton&quot;,&quot;password&quot;,&quot;Te
 
 Now, we&#x27;ll set our PlayerName &amp; Passcode
 
-&lt;&lt;set $PlayerName to Dalton&gt;&gt;
-&lt;&lt;set $Passcode to password&gt;&gt;
+&lt;&lt;set $PlayerName to &quot;Dalton&quot;&gt;&gt;
+&lt;&lt;set $Passcode to &quot;password&quot;&gt;&gt;
 
 [[access test]]</tw-passagedata><tw-passagedata pid="30" name="Other JS sheet stuff" tags="" position="58,586">
 window.PlayerFileFunction = function (){
