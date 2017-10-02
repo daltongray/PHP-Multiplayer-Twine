@@ -63,7 +63,7 @@ if ($q !== "") {
 	echo $response;
 	return;
 	};
-	/*
+	
  $PFTdecoded['PlayerName'] = $PlayerFileName
    $PFTdecoded['Passcode'] = $PlayerFilePasscode
 
@@ -75,7 +75,7 @@ if ($q !== "") {
 		$response = "Success";
 		echo $response;
         } 
-	*/
+	
 	}
 /*
 	if ($method === "Access"){
