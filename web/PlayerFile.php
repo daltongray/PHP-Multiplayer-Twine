@@ -55,7 +55,7 @@ if ($q !== "") {
 //	Create A PlayerFile & Populate With Template
 	
 	$PlayerFileTemplateurl = "PlayerFiles/PlayerFileTemplate.txt"; 
-  	              $PFTJSON = file_get_contents("$PlayerFileTemplateurl");
+  	              $PFTJSON = file_get_contents('$PlayerFileTemplateurl');
 		   $PFTdecoded = json_decode($PFTJSON, true);
 					  
 		if ($PFTdecoded === null) {
@@ -77,8 +77,23 @@ if ($q !== "") {
 		return;
 	
 	}
-/*
+
 	if ($method === "Access"){
+	
+		$PlayerFileName = $decodedJSON['PlayerName'];
+		$PlayerFilePasscode = $decodedJSON['Passcode'];
+		$PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
+	  	$PlayerFileJSON = file_get_contents('$PlayerFileurl');
+		$decodedPFJSON = json_decode($PlayerFileJSON, true);
+	
+		if ($decodedPFJSON['Passcode'] == $decodedjson['Passcode']){
+			$PlayerFileVar1 = $decodedjson['Var1'];
+			$response = $decodedPFJSON['$PlayerFileVar1'];
+			echo $response;
+			return;
+		}
+		
+	/*
 	
 	};
 	$response = "Method Value Was Invalid";
