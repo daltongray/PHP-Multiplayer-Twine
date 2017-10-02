@@ -45,7 +45,7 @@ if ($q !== "") {
     								$response .= "The [PlayerFilePasscode] is $PlayerFilePasscode . ";
      	 $PlayerFileurl = 'PlayerFiles/' . $PlayerFileName . '.txt';
 								$response .= "The [PlayerFileurl] is $PlayerFileurl . ";
-	 $CheckContents = file_get_contents('$PlayerFileurl');
+	 $CheckContents = file_get_contents("$PlayerFileurl");
 								$response .= "The [CheckContents] is $CheckContents . ";
 		
 		if ($CheckContents != "") {
