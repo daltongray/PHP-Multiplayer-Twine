@@ -105,7 +105,7 @@ if ($q !== "") {
 		};
 		*/
 	  	$PlayerFileAccessJSON = file_get_contents($PlayerFileAccessurl);
-		$response .= '$PlayerFileAccessJSON' . $PlayerFileAccessJSON;
+		$response .= "PlayerFileAccessJSON = $PlayerFileAccessJSON";
 
 		$decodedPFJSON = json_decode($PlayerFileAccessJSON, true);
 	
