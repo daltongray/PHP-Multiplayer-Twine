@@ -85,7 +85,7 @@ if ($q !== "") {
 
 		
         	$fh = fopen("$PlayerFileurl", 'w');
-        	fwrite($fh, json_encode($PFTJSON,JSON_UNESCAPED_UNICODE));
+        	fwrite($fh, json_encode($PFTdecoded,JSON_UNESCAPED_UNICODE));
         	fclose($fh);
 		$response .= "Success";
 		echo $response;
