@@ -140,7 +140,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 
 window.PlayerFileAccess = function(Var1,Output1) {
   if (Output1 === "undefined") {console.log("No Output Defined");}
-  var PlayerName = variables()["PlayerName"];
+  var PlayerName = variables()['PlayerName'];
 	var Passcode = variables()['Passcode'];
 
 	var str = '{"Method":"Access","PlayerName":"'+PlayerName+'","Passcode":"'+Passcode+'","Var1":"'+Var1+'"}';
