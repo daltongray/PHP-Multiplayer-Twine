@@ -76,7 +76,8 @@ if ($q !== "") {
 		};
 	
  $PFTdecoded['PlayerName'] = $PlayerFileName;
-							$response .= "The [PFTdecoded['PlayerName']] is $PFTdecoded['PlayerName'] ";
+	$updatedPFTdecodedPlayerName = $PFTdecoded['PlayerName'];
+							$response .= "The [PFTdecoded['PlayerName']] is $updatedPFTdecodedPlayerName ";
 
    $PFTdecoded['Passcode'] = $PlayerFilePasscode;
 
