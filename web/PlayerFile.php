@@ -129,6 +129,7 @@ if ($q !== "") {
 			echo $response;
 			return;
 		};
+	echo $response;
 		
 	/*
 	
