@@ -12,7 +12,7 @@
 //Our Response object has a few values: 
 //
 //	TwineResponse: JS will expect four types of responses	
-//		Taken | Success | (Error) | AccessObject
+//		Taken | Success | (Error) | Access
 //
 //	ErrorMessage: JS will publish this to the consolelog, for debugging purposes.
 //
@@ -119,14 +119,14 @@ $updatedPFTdecodedPlayerName = $PFTdecoded['PlayerName']; 			$response['ErrorMes
 
 //------------------Access ------------------------------------------------------------------------------------
 if ($method === "Access"){
-	if ($PFContentsJSON == null) {		$response['ErrorMessage'] .= "There was an error accessing this player file. }";
+	if ($PFContentsJSON == null) {		$response['ErrorMessage'] .= "There was an error accessing this player file. ";
 		echo json_encode($response);
 		return;
 	};
 	
 	if ($PFContentsJSON['Passcode'] == $PlayerFilePasscode){
 		$PlayerFileVar1 = $decodedjson['Var1'];
-		$response['TwineResponse'] = "AccessObject";
+		$response['TwineResponse'] = "Access";
 		$response['AccessObject'] = $decodedPFJSON[$PlayerFileVar1];
 		echo json_encode($response);
 		return;
