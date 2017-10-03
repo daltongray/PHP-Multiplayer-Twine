@@ -183,14 +183,18 @@ window.PlayerFileAccess = function(Var1,Output1) {
 		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
 		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
-			console.log("Here's the response text from the server"+this.responseText);
-			if (this.responseText == "Invalid Passcode") {
+			var ResponseObject = JSON.parse(this.response);
+			console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
+	
+			/*
+			if (ResponseObject.AccessObject == "Invalid Passcode") {
 			variables()[Output1] = "Passcode was Invalid";
 			}
 			if (this.responseText != "Invalid Passcode") {
 			variables()[Output1] = this.responseText;
 			}
 		console.log(this.responseText);
+		*/
     }
   }
 
