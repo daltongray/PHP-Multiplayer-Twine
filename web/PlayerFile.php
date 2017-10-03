@@ -99,7 +99,7 @@ if ($method == "CheckAndCreate"){
     $PFTdecoded['PlayerName'] = $PlayerFileName;
 $updatedPFTdecodedPlayerName = $PFTdecoded['PlayerName']; 			$response['ErrorMessage'] .= "UPDATED JSON ['PlayerName'] is $updatedPFTdecodedPlayerName ";
      $PFTdecoded['Passcode'] = $PlayerFilePasscode;
-  $updatedPFTdecodedPasscode = $PFTdecoded['Passcode'] 				$response['ErrorMessage'] .= "UPDATED JSON ['Passcode'] is ${$updatedPFTdecodedPasscode}. ";
+  $updatedPFTdecodedPasscode = $PFTdecoded['Passcode'];				$response['ErrorMessage'] .= "UPDATED JSON ['Passcode'] is ${$updatedPFTdecodedPasscode}. ";
 	//----------------------------------------------------------------------------------------------------------------------------
 
 		
