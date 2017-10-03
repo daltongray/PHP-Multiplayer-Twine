@@ -39,7 +39,7 @@
 // ----------------SETUP-----------------------------------------------------------------------
 $response = array(
 	"TwineResponse"=>"Error",  // Taken | Success | Error | AccessObject
-	"ErrorMessage"=>"The Response Object has been setup. "
+	"ErrorMessage"=>"The Response Object has been setup. ",
 	"AccessObject"=>"null");
 //----------------------------------------------------------------------------------------------------------------------------
 
