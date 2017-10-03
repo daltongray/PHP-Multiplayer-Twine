@@ -144,7 +144,9 @@ window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
 		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
 		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
-			console.log("Here's the response text from the server"+this.responseText);
+			var ResponseObject = JSON.parse(this.response);
+			console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
+			/*
 			if (this.responseText == "Taken") {
 			variables()[Output] = "The name was taken.";
 			}
@@ -152,6 +154,7 @@ window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
 			variables()[Output] = "PlayerFile Successfully Created!";
 			}
 		console.log(this.responseText);
+		*/
     }
   }
 
@@ -198,9 +201,11 @@ window.PlayerFileAccess = function(Var1,Output1) {
 
 </script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Welcome to the Adventure Society!&lt;/H1&gt;
 
+&lt;&lt;if $PlayerSetup eq &quot;true&quot;&gt;&gt; 
+
+&lt;&lt;else&gt;&gt;
 &lt;&lt;include &quot;PlayerFilePicker&quot;&gt;&gt;
-
-
+&lt;&lt;/if&gt;&gt;
 </tw-passagedata><tw-passagedata pid="2" name="Ready to MINGLE?!" tags="" position="399,684">&lt;H1&gt;MINGLE&lt;/H1&gt;
 
 Their Name...[ psst. go talk to people ]
@@ -533,7 +538,7 @@ or	\
 			&quot;CheckAndCreateTest&quot;
 		);
 &lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="PlayerFileComplete" tags="" position="901,449">if taken, dialogue update, 
-&lt;&lt;if $PlayerFileCheckAndCreateResult = &quot;Taken&quot;&gt;&gt;
+&lt;&lt;if $PlayerFileCheckAndCreateResult eq &quot;Taken&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
@@ -543,14 +548,14 @@ or	\
 	&lt;&lt;/script&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;if $PlayerFileCheckAndCreateResult = &quot;Success&quot;&gt;&gt;
+&lt;&lt;if $PlayerFileCheckAndCreateResult eq &quot;Success&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
 			&#x27;PlayerFileComplete2&#x27;,
 			&#x27;Success!&#x27;
 			)
-	&lt;&lt;/script&gt;&gt;
+&lt;&lt;/script&gt;&gt;
 </tw-passagedata><tw-passagedata pid="13" name="PlayerFileNewNameTaken" tags="" position="1276,527">I&#x27;m Sorry that name is taken, try again!
 
 &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Retry&lt;/button&gt;</tw-passagedata><tw-passagedata pid="14" name="PlayerFileComplete2" tags="" position="1026,450">You now have an account &amp; you are logged in! 
@@ -567,14 +572,13 @@ You can find your account credentials in your \
 		&quot;
 	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
 
-
-&lt;button 
-	onclick=
-		&quot;
-		window.PlayerFileFunction();
-		state.display(&#x27;Start&#x27;, this);
-		&quot;
-	&gt;Click me to close&lt;/button&gt;</tw-passagedata><tw-passagedata pid="15" name="PlayerFileNewNameSuccess" tags="" position="1276,400">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="16" name="PlayerFileLoginConfirm" tags="" position="778,325">Player name: $PlayerName,
+&lt;&lt;button &quot;Let&#x27;s get Started!&quot;&gt;&gt;
+	&lt;&lt;script&gt;
+			window.PlayerFileFunction();
+	&lt;&lt;/script&gt;&gt;
+	&lt;&lt;goto &quot;Start&quot;&gt;&gt;
+&lt;&lt;/button&gt;&gt;
+</tw-passagedata><tw-passagedata pid="15" name="PlayerFileNewNameSuccess" tags="" position="1276,400">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="16" name="PlayerFileLoginConfirm" tags="" position="778,325">Player name: $PlayerName,
 Passcode: $Passcode
 
 &lt;&lt;script&gt;&gt;
