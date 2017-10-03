@@ -21,16 +21,21 @@
 //			This file creates the error message, 
 //			Which JS will print to the console log (hopefully)
 
-$response = "";
-$q = $_REQUEST["q"];
-if ($q !== "") {
-	$decodedjson = json_decode($q, true);
 
-	if ($decodedjson == NULL) {
-       		$response .= "The JSON sent to the server was mal formed.";
-		echo $response;
-		return;
-	};
+$response = array(
+	"TwineResponse"=>"Error",  // Taken | Success | Error
+	"ErrorMessage"=>"The Response Object has been setup. ");
+       	$response['ErrorMessage'] .= "As a test, I've added something to it. ";
+	echo json_encode($response);
+	return;
+
+$q = $_REQUEST["q"];
+$decodedjson = json_decode($q, true);
+if ($decodedjson == NULL) {
+       	$response['ErrorMessage'] .= "The JSON sent to the server was mal formed.";
+	echo json_encode($response);
+	return;
+};
 	
 								$response .= "The JSON sent to the server was well formed. ";
     	$method = $decodedjson['Method'];
@@ -146,7 +151,6 @@ if ($q !== "") {
           echo $hint;
           return;
      */  
-    };
 };
 
 //send either the correct var back to the client, or an error message
