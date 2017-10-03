@@ -55,7 +55,7 @@ if ($decodedjson == NULL) {
        	$response['ErrorMessage'] .= "The JSON sent to the server was mal formed. ";
 	echo json_encode($response);
 	return;
-};								$response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
+}; 								$response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
     $PlayerFileName = $decodedjson['PlayerName'];		$response['ErrorMessage'] .= "[PlayerFileName] is ${PlayerFileName}. ";
 $PlayerFilePasscode = $decodedjson['Passcode'];			$response['ErrorMessage'] .= "[PlayerFilePasscode] is ${PlayerFilePasscode}. ";
 	    $method = $decodedjson['Method'];			$response['ErrorMessage'] .= "[Method] is ${method}. ";
