@@ -567,12 +567,14 @@ You can find your account credentials in your \
 		&quot;
 	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
 
+
 &lt;button 
 	onclick=
 		&quot;
-		window.PlayerFileFunction()
+		window.PlayerFileFunction();
+		state.display(&#x27;Start&#x27;, this);
 		&quot;
-	&gt;Let&#x27;s Get Started!&lt;/button&gt;</tw-passagedata><tw-passagedata pid="15" name="PlayerFileNewNameSuccess" tags="" position="1276,400">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="16" name="PlayerFileLoginConfirm" tags="" position="778,325">Player name: $PlayerName,
+	&gt;Click me to close&lt;/button&gt;</tw-passagedata><tw-passagedata pid="15" name="PlayerFileNewNameSuccess" tags="" position="1276,400">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="16" name="PlayerFileLoginConfirm" tags="" position="778,325">Player name: $PlayerName,
 Passcode: $Passcode
 
 &lt;&lt;script&gt;&gt;
@@ -1214,7 +1216,7 @@ window.jswrap = function (twinevar,jswrapname) {
 window.PlayerFileAccess(&quot;PlayerName&quot;,&quot;AccessTest&quot;)
 &lt;&lt;/script&gt;&gt;
 
-[[Access Test Results]]</tw-passagedata><tw-passagedata pid="31" name="Access Test Results" tags="" position="188,1031">$AccessTest</tw-passagedata><tw-passagedata pid="32" name="Ref: Dialogue Box" tags="" position="173.5,0">&lt;h1&gt;Have you created an account before?&lt;/h1&gt;
+[[Access Test Results]]</tw-passagedata><tw-passagedata pid="31" name="Access Test Results" tags="" position="188,1031">$AccessTest</tw-passagedata><tw-passagedata pid="32" name="Ref: Dialogue Box" tags="" position="173.5,1">&lt;h1&gt;Have you created an account before?&lt;/h1&gt;
 
 &lt;button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileLogin&#x27;,&#x27;Enter your Login Credentials&#x27;)&quot; type=button id=&quot;login-button&quot;&gt;login&lt;/button&gt; or &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Sign Up&lt;/button&gt;
 
