@@ -25,9 +25,7 @@
 $response = array(
 	"TwineResponse"=>"Error",  // Taken | Success | Error
 	"ErrorMessage"=>"The Response Object has been setup. ");
-       	$response['ErrorMessage'] .= "As a test, I've added something to it. ";
-	echo json_encode($response);
-	return;
+
 
 $q = $_REQUEST["q"];
 $decodedjson = json_decode($q, true);
@@ -38,7 +36,9 @@ if ($decodedjson == NULL) {
 };							$response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
     $PlayerFileName = $decodedjson['PlayerName'];	$response['ErrorMessage'] .= "[PlayerFileName] is ${PlayerFileName}. ";
 $PlayerFilePasscode = $decodedjson['Passcode'];		$response['ErrorMessage'] .= "[PlayerFilePasscode] is ${PlayerFilePasscode}. ";
-
+       	$response['ErrorMessage'] .= "I'm testing to see if I can declare response on the same line as a directive. ";
+	echo json_encode($response);
+	return;
 
 $method = $decodedjson['Method'];
 if ($method == "CheckAndCreate"){
