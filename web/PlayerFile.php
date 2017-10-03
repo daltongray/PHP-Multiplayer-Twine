@@ -32,29 +32,26 @@ $response = array(
 $q = $_REQUEST["q"];
 $decodedjson = json_decode($q, true);
 if ($decodedjson == NULL) {
-       	$response['ErrorMessage'] .= "The JSON sent to the server was mal formed.";
+       	$response['ErrorMessage'] .= "The JSON sent to the server was mal formed. ";
 	echo json_encode($response);
 	return;
-};
-	
-								$response .= "The JSON sent to the server was well formed. ";
-    	$method = $decodedjson['Method'];
-	
-	if ($method == "CheckAndCreate"){
-	
+};							$response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
+    $PlayerFileName = $decodedjson['PlayerName'];	$response['ErrorMessage'] .= "[PlayerFileName] is ${PlayerFileName}. ";
+$PlayerFilePasscode = $decodedjson['Passcode'];		$response['ErrorMessage'] .= "[PlayerFilePasscode] is ${PlayerFilePasscode}. ";
+
+
+$method = $decodedjson['Method'];
+if ($method == "CheckAndCreate"){
+	$response['ErrorMessage'] .= "The Method was Check And Create. ";
+
+
 //	Check For Existing PlayerFiles With Same Name
 	
-	$PlayerFileName = $decodedjson['PlayerName'];
-								$response .= "The [PlayerFileName] is $PlayerFileName . ";
-    $PlayerFilePasscode = $decodedjson['Passcode'];
-    								$response .= "The [PlayerFilePasscode] is $PlayerFilePasscode . ";
-     	 $PlayerFileurl = "PlayerFiles/{$PlayerFileName}.txt";
-								$response .= "The [PlayerFileurl] is $PlayerFileurl . ";
-	 $CheckContents = file_get_contents("$PlayerFileurl");
-								$response .= "The [CheckContents] is $CheckContents . ";
+	     $PlayerFileurl = "PlayerFiles/{$PlayerFileName}.txt";	$response['ErrorMessage'] .= "[PlayerFileurl] is ${PlayerFileurl}. ";
+	     $CheckContents = file_get_contents("$PlayerFileurl");	$response['ErrorMessage'] .= "[CheckContents] is ${CheckContents}. ";
 		
-		if ($CheckContents != "") {
-			$CheckContentsJSON = json_decode($CheckContents, true);
+	if ($CheckContents != "") {
+		$CheckContentsJSON = json_decode($CheckContents, true);
 								$response .= "The [CheckContentsJSON] is $CheckContentsJSON. ";
 
 			if ($CheckContentsJSON['PlayerName'] == $PlayerFileName){
@@ -99,11 +96,11 @@ if ($decodedjson == NULL) {
 	};
 
 	if ($method === "Access"){
-		$PlayerFileName = $decodedjson['PlayerName'];
-					$response .= "PlayerFileName = $PlayerFileName";
+		// $PlayerFileName = $decodedjson['PlayerName'];
+		//			$response .= "PlayerFileName = $PlayerFileName";
 
-		$PlayerFilePasscode = $decodedJSON['Passcode'];
-					$response .= "PlayerFilePasscode = $PlayerFilePasscode";
+	// refactored out		$PlayerFilePasscode = $decodedJSON['Passcode'];
+	//				$response .= "PlayerFilePasscode = $PlayerFilePasscode";
 
      	 	$PlayerFileAccessurl = "PlayerFiles/".$PlayerFileName.".txt";
 					$response .= "PlayerFileAccessurl = $PlayerFileAccessurl";
