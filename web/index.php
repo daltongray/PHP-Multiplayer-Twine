@@ -135,7 +135,7 @@ for (i = 1; i < arguments.length; i++) {
 
 
 
-window.DialogueClose = function(){
+window.DialogClose = function(){
 			
 Dialog.close();
 	
@@ -452,13 +452,13 @@ xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 		var ResponseObject = JSON.parse(this.response);
 		console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
-		if (ResponseObject.AccessObject == "Wrong Passcode") {
+		if (ResponseObject.TwineResponse == "Wrong Passcode") {
 		variables()[Output1] = "Passcode was Invalid";
 	}
 	
-	variables()[Output1] = ResponseObject.AccessObject;
-	variables().LocalDimFile = ResponseObject.TwineResponse;
-	console.log("Twine output var gets "+ResponseObject.AccessObject);	
+	variables()[Output1] = ResponseObject.TwineResponse;
+	variables().LocalDimFile = ResponseObject.AccessObject;
+	console.log("Twine output var gets "+ResponseObject.TwineResponse);	
 	}
 }
 xhttp.open("GET", payload,);
@@ -721,7 +721,7 @@ or	\
 			&#x27;Success!&#x27;
 			)
 	&lt;&lt;/script&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="PlayerFileComplete2" tags="" position="1401,200">You now have an account &amp; you are logged in! 
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="PlayerFileComplete2" tags="" position="1400,197">You now have an account &amp; you are logged in! 
 
 &lt;&lt;button &quot;Let&#x27;s get Started!&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
@@ -760,7 +760,7 @@ or	\
 			&#x27;Welcome Back! Enter your Login Info&#x27;
 			)
 		&quot; 
-	&gt;wait, let me go back&lt;/button&gt; 			</tw-passagedata><tw-passagedata pid="12" name="PlayerFileLoginConfirm3" tags="" position="1402,79">
+	&gt;wait, let me go back&lt;/button&gt; 			</tw-passagedata><tw-passagedata pid="12" name="PlayerFileLoginConfirm3" tags="" position="1553,58">
 $login
 
 
@@ -794,18 +794,7 @@ You can find your account credentials in your \
 	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
 </tw-passagedata><tw-passagedata pid="14" name="PlayerFileLoginConfirm2" tags="" position="1278,81">Your login credentials have been sent to the server.
 
-This is the return $LoginTest
-
-&lt;button 
-	type=button
-	onclick=
-		&quot;
-			window.DialogueUpdate(
-			&#x27;PlayerFileLoginConfirm3&#x27;
-			)
-		&quot;
-	&gt;continue&lt;/button&gt;
-	
+This is the return $LoginTest	
 	
 &lt;&lt;if $LoginTest eq &quot;Passcode was Invalid&quot;&gt;&gt;
 
@@ -828,13 +817,12 @@ Looks like your passcode was invalid,
 
 You&#x27;re all set!
 &lt;&lt;set $PlayerSetup to &quot;true&quot;&gt;&gt;
-&lt;button 
-    type=button
-    onclick=
-        &quot;   
-            Dialog.close();
-        &quot;
-    &gt;continue&lt;/button&gt;
+&lt;&lt;button &quot;continue&quot;&gt;&gt;
+	&lt;&lt;script&gt;&gt;
+		Dialog.close();
+	&lt;&lt;/script&gt;&gt;
+	&lt;&lt;goto &quot;Start&quot;&gt;&gt;
+&lt;&lt;/button&gt;&gt;
     
 &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="Start Pseudo Code" tags="" position="0,982">	
 /* Open &quot;PlayerFile-Picker&quot; */
@@ -1713,7 +1701,7 @@ Passcode: \
 Passcode: $DimPasscode
 
 &lt;&lt;script&gt;&gt;
-	window.DimFileAccess(&#x27;DimName&#x27;,&#x27;JoinTest&#x27;)
+	window.DimFileAccess(&#x27;DimName&#x27;,&#x27;JoinTest&#x27;);
 &lt;&lt;/script&gt;&gt;
 	
 &lt;button 
