@@ -349,7 +349,7 @@ variables()[Output] = "No Response Received from the Server.";
 	var DimName = variables()[TwDimName];
        var Passcode = variables()[TwPasscode];
 	    var str = '{"Method":"CheckAndCreate","DimName":"';
-	   var str += DimName+'","Passcode":"'+Passcode+'"}'';
+	   var str += DimName+'","Passcode":"'+Passcode+'"}';
 	    var url = "DimFile.php";
 	var payload = url+"?q="+str;
 	  var xhttp = new XMLHttpRequest();
