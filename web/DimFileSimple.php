@@ -1,24 +1,33 @@
-window.DFAccess = function (VarToCheck,VarToOutput){
-	var url = "DimFile.php"
-	var payload = url+"?q="+VarToCheck;
-	console.log("Here's the full payload, url and json");
-	
-	var xhttp;
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-		if(this.readyState == 1) {console.log("XML ReadyStatus = 1");};
-		if(this.readyState == 2) {console.log("XML ReadyStatus = 2");};
-		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
-		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
-		if (this.readyState == 4 && this.status == 200) {
-			var ResponseObject = this.response;
-			console.log("Here's the response text from the server"+ResponseObject);
-			variables()[VarToOutput] = ResponseObject;
-			console.log("Here's the tw Output"+variables()[VarToOutput]);
-			}
-    }
-  }
+<?php
+//
+//	One Var will come in on a GET Request
+//	This will open the DIMFILE, Decode the JSON and return the value of the Var
+//
 
-  xhttp.open("GET", payload,);
-  xhttp.send();
-}
+
+
+// ----------------SETUP-----------------------------------------------------------------------
+ $response = array(
+	"Var"=>"Error",  // Taken | Success | Error | AccessObject
+	"ErrorMessage"=>"The Response Object has been setup. ";
+//----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+// ----------------SETUP-----------------------------------------------------------------------
+              $q = $_REQUEST["q"]; 		$response['ErrorMessage'] .= "The Var is ${q}. ";
+    $DimFileName = "AlphaQ";				$response['ErrorMessage'] .= "[DimFileName] is ${DimFileName}. ";
+     $DimFileurl = "DimFiles/{$DimFileName}.txt";	$response['ErrorMessage'] .= "[DimFileurl] is ${DimFileurl}. ";
+     $DFContents = file_get_contents("$DimFileurl");	$response['ErrorMessage'] .= "[DFContents] is ${DFContents}. ";
+ $DFContentsJSON = json_decode($DFContents, true); 	$response['ErrorMessage'] .= "The [DFContentsJSON] is $DFContentsJSON. ";
+     $VarToTwine = $DFContentsJSON[$q];			$response['ErrorMessage'] .= "The [VarToTwine] is ${VarToTwine}. ";
+	$response['Var'] = $VarToTwine;
+	echo $response;
+	return;
+//----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+?>
