@@ -58,11 +58,11 @@ if ($decodedjson == NULL) {       $response['ErrorMessage'] .= "The JSON sent to
 
 
     $DimFileName = $decodedjson['DimName'];		$response['ErrorMessage'] .= "[DimFileName] is ${DimFileName}. ";
-$DimFilePasscode = $decodedjson['Passcode'];			$response['ErrorMessage'] .= "[DimFilePasscode] is ${DimFilePasscode}. ";
-	          $method = $decodedjson['Method'];			$response['ErrorMessage'] .= "[Method] is ${method}. ";
+$DimFilePasscode = $decodedjson['Passcode'];		$response['ErrorMessage'] .= "[DimFilePasscode] is ${DimFilePasscode}. ";
+	 $method = $decodedjson['Method'];		$response['ErrorMessage'] .= "[Method] is ${method}. ";
      $DimFileurl = "DimFiles/{$DimFileName}.txt";	$response['ErrorMessage'] .= "[DimFileurl] is ${DimFileurl}. ";
-        $DFContents = file_get_contents("$DimFileurl");	$response['ErrorMessage'] .= "[DFContents] is ${DFContents}. ";
-    $DFContentsJSON = json_decode($DFContents, true); 		$response['ErrorMessage'] .= "The [DFContentsJSON] is $DFContentsJSON. ";
+     $DFContents = file_get_contents("$DimFileurl");	$response['ErrorMessage'] .= "[DFContents] is ${DFContents}. ";
+ $DFContentsJSON = json_decode($DFContents, true); 	$response['ErrorMessage'] .= "The [DFContentsJSON] is $DFContentsJSON. ";
 
 //----------------------------------------------------------------------------------------------------------------------------
 
@@ -127,16 +127,16 @@ if ($method === "Access"){
 	
 	if ($DFContentsJSON['Passcode'] == $DimFilePasscode){
 		$DimFileVar1 = $decodedjson['Var1'];
-		$response['TwineResponse'] = $decodedjson;
-		$response['AccessObject'] = $decodedDFJSON[$DimFileVar1];
+		$response['TwineResponse'] = $decodedDFJSON['$DimFileVar1'];
+		$response['AccessObject'] = $DFContentsJSON;
 		echo json_encode($response);
 		return;
 	};
 	
 	if ($DFContentsJSON['Passcode'] != $DimFilePasscode){
 		$DimFileVar1 = $decodedjson['Var1'];
-		$response['TwineResponse'] = "Access";
-		$response['AccessObject'] = "Wrong Passcode";
+		$response['TwineResponse'] = "Wrong Passcode";
+		$response['AccessObject'] = null;
 		echo json_encode($response);
 		return;
 	};
