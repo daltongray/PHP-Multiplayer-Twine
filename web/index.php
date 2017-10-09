@@ -458,7 +458,7 @@ xhttp.onreadystatechange = function() {
 	
 	variables()[Output1] = ResponseObject.TwineResponse;
 	variables().LocalDimFile = ResponseObject.AccessObject;
-	console.log("Twine output var gets "+JSON.strigify(ResponseObject.TwineResponse));	
+	console.log("Twine output var gets "+JSON.stringify(ResponseObject.TwineResponse));	
 	}
 }
 xhttp.open("GET", payload,);
