@@ -1645,7 +1645,7 @@ If players choose to watch,
 
 [[W]]	[[C]]	[[E]]
 
-[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="39" name="DimFile Picker" tags="" position="908,350">Now that you&#x27;re logged in, lets get you and your team-mate on the same server. 
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="39" name="DimFilePicker" tags="" position="908,350">Now that you&#x27;re logged in, lets get you and your team-mate on the same server. 
 
 &lt;button 
 	type=button 
