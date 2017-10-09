@@ -1653,8 +1653,8 @@ If players choose to watch,
 		window.DialogueUpdate
 			(
 			&#x27;DimFileJoin&#x27;,
-			&#x27;Enter The Server You&#x27;d Like To Join&#x27;
-			)
+			&#x27;Enter The Server You would Like To Join&#x27;
+			);
 		&quot; 
 	&gt;join&lt;/button&gt; 					\
 or 										\
@@ -1667,7 +1667,7 @@ or 										\
 			(
 			&#x27;PlayerFileNew&#x27;,
 			&#x27;New Players, Fill This Stuff Out&#x27;
-			)
+			);
 		&quot;
 	&gt;create&lt;/button&gt; 
 </tw-passagedata><tw-passagedata pid="40" name="001" tags="" position="602,325">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="41" name="DimFileJoin" tags="" position="1030,356">Please enter your information below. 
