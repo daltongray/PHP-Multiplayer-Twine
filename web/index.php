@@ -102,7 +102,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<div id="store-area" hidden><tw-storydata name="What&#x27;s the Secret - GOOD" startnode="29" creator="Twine" creator-version="2.1.3" ifid="ED4BA928-1614-4C6A-9574-DE8A57E2EB6B" format="SugarCube" format-version="2.18.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+	<div id="store-area" hidden><tw-storydata name="What&#x27;s the Secret - GOOD" startnode="1" creator="Twine" creator-version="2.1.3" ifid="ED4BA928-1614-4C6A-9574-DE8A57E2EB6B" format="SugarCube" format-version="2.18.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
 
 
 
