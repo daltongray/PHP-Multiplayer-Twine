@@ -443,6 +443,7 @@ var OnResponse = function(){
 	if (ResponseObject.AccessObject != "Wrong Passcode") {
 		variables()[Output1] = ResponseObject.AccessObject;
 		variables().LocalDimFile = ResponseObject.TwineResponse;
+		console.log("Twine output var gets "+ResponseObject.AccessObject);
 	}
 };
 //-----------------------------------------------------------------------
