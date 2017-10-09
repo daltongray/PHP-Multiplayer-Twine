@@ -461,7 +461,7 @@ xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 		var ResponseObject = JSON.parse(this.response);
 		console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
-		OnResponse;	
+		OnResponse();	
 	}
 }
 xhttp.open("GET", payload,);
@@ -810,7 +810,7 @@ This is the return $LoginTest
 	&gt;continue&lt;/button&gt;
 	
 	
-&lt;&lt;if $LoginTest eq &quot;Wrong Passcode&quot;&gt;&gt;
+&lt;&lt;if $LoginTest eq &quot;Passcode was Invalid&quot;&gt;&gt;
 
 Looks like your passcode was invalid,
 
