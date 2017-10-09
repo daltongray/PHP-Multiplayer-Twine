@@ -733,19 +733,7 @@ or	\
 	&lt;&lt;goto &quot;Start&quot;&gt;&gt;
 &lt;&lt;/button&gt;&gt;
 
-&lt;&lt;silent&gt;&gt;
-You can find your account credentials in your \
-&lt;button 
-	type=button 
-	onclick=
-		&quot;
-		window.DialogueUpdate(
-			&#x27;PlayerJournal&#x27;,
-			&#x27;Adventurer&#x27;s Journal&#x27;
-			)
-		&quot;
-	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
-&lt;&lt;/silent&gt;&gt; 
+&lt;&lt;set $PlayerSetup to &quot;true&quot;&gt;&gt;
 
 </tw-passagedata><tw-passagedata pid="11" name="PlayerFileLoginConfirm" tags="" position="1152,80">Player name: $PlayerName,
 Passcode: $Passcode
@@ -788,7 +776,26 @@ This is your Adventurer&#x27;s Journal. Key information will be logged here for 
 
 Then stow that tooltip neatly away in our journal
 include &quot;The Adventurer&#x27;s Journal&quot;
-include player credentials</tw-passagedata><tw-passagedata pid="14" name="PlayerFileLoginConfirm2" tags="" position="1278,81">Your login credentials have been sent to the server.
+include player credentials
+
+
+
+
+HOLDINH
+
+
+You can find your account credentials in your \
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;PlayerJournal&#x27;,
+			&#x27;Adventurer&#x27;s Journal&#x27;
+			)
+		&quot;
+	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
+</tw-passagedata><tw-passagedata pid="14" name="PlayerFileLoginConfirm2" tags="" position="1278,81">Your login credentials have been sent to the server.
 
 This is the return $LoginTest
 
