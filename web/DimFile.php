@@ -126,15 +126,14 @@ if ($method === "Access"){
 	};
 	
 	if ($DFContentsJSON['Passcode'] == $DimFilePasscode){
-		$DimFileVar1 = $decodedjson['Var1'];
-		$response['TwineResponse'] = $decodedDFJSON['$DimFileVar1'];
-		$response['AccessObject'] = $DFContentsJSON;
+		$DimFileVar1 = $decodedjson['Var1']; 	$response['ErrorMessage'] .= "DimFileVar1 = ${DimFileVar1}. ";
+		$response['TwineResponse'] = $decodedDFJSON['$DimFileVar1'];	$response['ErrorMessage'] .= "The Var 1 form the DF JSON = ${decodedDFJSON['$DimFileVar1']}. ";
+		$response['AccessObject'] = $DFContentsJSON; 	$response['ErrorMessage'] .= "The DFContentsJSON form the DF JSON = ${DFContentsJSON}. ";
 		echo json_encode($response);
 		return;
 	};
 	
 	if ($DFContentsJSON['Passcode'] != $DimFilePasscode){
-		$DimFileVar1 = $decodedjson['Var1'];
 		$response['TwineResponse'] = "Wrong Passcode";
 		$response['AccessObject'] = null;
 		echo json_encode($response);
