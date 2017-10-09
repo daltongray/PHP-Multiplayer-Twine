@@ -503,7 +503,7 @@ xhttp.send();
 
 </script><tw-passagedata pid="1" name="Start" tags="" position="602,198">&lt;H1&gt;Welcome to the Adventure Society!&lt;/H1&gt;
 
-&lt;&lt;if (($PlayerSetup == &quot;true&quot;)&gt;&gt;
+&lt;&lt;if ($PlayerSetup == &quot;true&quot;)&gt;&gt;
 	[[001]]
 &lt;&lt;else&gt;&gt;
 	&lt;&lt;include &quot;PlayerFilePicker&quot;&gt;&gt;
