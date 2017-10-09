@@ -105,14 +105,55 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 	<div id="store-area" hidden><tw-storydata name="What&#x27;s the Secret - GOOD" startnode="1" creator="Twine" creator-version="2.1.3" ifid="ED4BA928-1614-4C6A-9574-DE8A57E2EB6B" format="SugarCube" format-version="2.18.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
 
 
-</style><script role="script" id="twine-user-script" type="text/twine-javascript">window.PlayerFileFunction = function (){
-Dialog.close();
+
+
+
+
+
+
+
+
+
+
+
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">window.JSONToServerTest = function(print){
+var JSONToServer = '{';  
+var i;  
+var arg = arguments.length - 1;
+for (i = 1; i < arguments.length; i++) { 
+   JSONToServer += '"var' + i + '":"' + arguments[i] + '"';
+		if (i == arg) {
+		JSONToServer += '}';
+		} else {
+		JSONToServer += ',';
+		} 
+	}	
+	variables().JSONToServerTest = JSONToServer;
 }
 
-window.TwineVarWrap = function(element, twinevar){
-	var content = document.getElementById(element).value;
-	variables()[twinevar] = content;
-};
+//_____DIALOGUE FUNCTIONS_____________________
+
+
+
+window.DialogueClose = function(){
+			
+Dialog.close();
+	
+}
+			
+
+
+
+
+
+//____________DIALOGUE UPDATE____________________
+//			
+//	This function takes a passagename and a title. 
+// 	it closes the current dialogue box, 
+//	then generates a new one, pulling from the passagename
+//	and titling it with the title given. 
+//
+//
 
 window.DialogueUpdate = function(passagename, dialoguetitle){
 	Dialog.close();
@@ -120,6 +161,68 @@ window.DialogueUpdate = function(passagename, dialoguetitle){
 	Dialog.wiki(Story.get(passagename).processText()); 
 	Dialog.open();
 }
+
+//----------------------------------------------------
+
+
+
+
+
+
+
+//_____UTILITY FUNCTIONS________________________
+
+
+
+
+//____________TWINE VAR WRAP____________________
+//          
+//  This function takes an html element   
+//  and the name of a twine var. It gets 
+//  the HTML element ID and turns it into 
+//  A twine variable. Great for input fields. 
+//
+//
+
+window.TwineVarWrap = function(element, twinevar){
+	var content = document.getElementById(element).value;
+	variables()[twinevar] = content;
+};
+
+//----------------------------------------------------
+
+
+
+
+
+//	DEBUG FEATURE	TO ADD!!
+//	
+//	to save time and catch bugs client-side
+//	before having to upload twine files to 
+//	the server, I'm adding a debug switch.
+//	any functions that interact with the
+//	server, will check the debug var, which
+//	is twine side, before executing an xml
+//	request. It will instead plug the request
+//	they would send to the server into a debug
+//	variable or object.
+
+
+
+
+//_____PLAYERFILE FUNCTIONS_____________________
+
+
+
+//____________CHECK AND CREATE____________________
+//          
+//  This function takes a player name, and a player passcode
+//  and an output. It connects to the server, where the server
+//  checks to see if a file with the playername exists. Then 
+//  If it doesn't it creates a file and outputs success. 
+//
+//
+
 
 window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
   if (Output === "undefined") {var UpdateOutput = "TwinePseudoConsole";}
@@ -142,14 +245,14 @@ window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
 		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
 		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
-			console.log("Here's the response text from the server"+this.responseText);
-			if (this.responseText == "Taken") {
-			variables()[Output] = "The name was taken.";
+			var ResponseObject = JSON.parse(this.response);
+			console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
+			if (ResponseObject.TwineResponse == "Taken") {
+			variables()[Output] = "Taken";
 			}
-			if (this.responseText == "Success") {
-			variables()[Output] = "PlayerFile Successfully Created!";
+			if (ResponseObject.TwineResponse == "Success") {
+			variables()[Output] = "Success";
 			}
-		console.log(this.responseText);
     }
   }
 
@@ -158,10 +261,30 @@ window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
 };
 
 
+//----------------------------------------------------
+
+
+
+
+
+
+
+
+//____________ACCESS____________________
+//          
+//  
+//  
+//   
+//    
+//
+//
+
+
 window.PlayerFileAccess = function(Var1,Output1) {
   if (Output1 === "undefined") {console.log("No Output Defined");}
   var PlayerName = variables()['PlayerName'];
 	var Passcode = variables()['Passcode'];
+	if (Var1 === "undefined") {Var1 = PlayerName;};
 
 	var str = '{"Method":"Access","PlayerName":"'+PlayerName+'","Passcode":"'+Passcode+'","Var1":"'+Var1+'"}';
   console.log("Here's our JSON-ified string:"+str);
@@ -178,14 +301,16 @@ window.PlayerFileAccess = function(Var1,Output1) {
 		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
 		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
-			console.log("Here's the response text from the server"+this.responseText);
-			if (this.responseText == "Invalid Passcode") {
+			var ResponseObject = JSON.parse(this.response);
+			console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
+	
+		
+			if (ResponseObject.AccessObject == "Wrong Passcode") {
 			variables()[Output1] = "Passcode was Invalid";
 			}
-			if (this.responseText != "Invalid Passcode") {
-			variables()[Output1] = this.responseText;
+			if (ResponseObject.AccessObject != "Wrong Passcode") {
+			variables()[Output1] = ResponseObject.AccessObject;
 			}
-		console.log(this.responseText);
     }
   }
 
@@ -193,18 +318,176 @@ window.PlayerFileAccess = function(Var1,Output1) {
   xhttp.send();
 };
 
-</script><tw-passagedata pid="1" name="Start" tags="" position="400,397">&lt;H1&gt;Hide Your Secret&lt;/H1&gt;
 
-&lt;&lt;button &quot;Start&quot;&gt;&gt;
-	&lt;&lt;script&gt;&gt;
-		Dialog.setup(); 		
-		Dialog.wiki(Story.get(&quot;PlayerFilePicker&quot;).processText()); 
-		Dialog.open();
-	&lt;&lt;/script&gt;&gt;
-&lt;&lt;/button&gt;&gt;
 
-	
-</tw-passagedata><tw-passagedata pid="2" name="Ready to MINGLE?!" tags="" position="399,684">&lt;H1&gt;MINGLE&lt;/H1&gt;
+
+
+
+//_____DIMFILE FUNCTIONS_____________________
+
+
+
+
+//____________CHECK AND CREATE____________________
+//          
+//  This function takes a Dim name, and a Dim passcode
+//  and an output. It connects to the server, where the server
+//  checks to see if a file with the playername exists. Then 
+//  If it doesn't it creates a file and outputs success. 
+//
+//
+
+
+window.DimFileCheckAndCreate = function(TwDimName,TwPasscode,Output) {
+
+
+
+// ----------------SETUP-------------------------------------------------
+if (Output === "undefined") {var UpdateOutput = "TwinePseudoConsole";}
+
+variables()[Output] = "No Response Received from the Server.";
+	var DimName = variables()[TwDimName];
+       var Passcode = variables()[TwPasscode];
+	    var str = '{"Method":"CheckAndCreate","DimName":"';
+	       str += DimName+'","Passcode":"'+Passcode+'"}';
+	    var url = "DimFile.php";
+	var payload = url+"?q="+str;
+	  var xhttp = new XMLHttpRequest();
+
+  	console.log("Here's our JSON-ified string:"+str);
+	console.log("Here's the URL we're sending it to"+url);
+	console.log("Here's the full payload, url and json");
+//-----------------------------------------------------------------------
+
+
+
+
+// ----------------ON RESPONSE-------------------------------------------
+var OnResponse = function(){
+	if (ResponseObject.TwineResponse == "Taken") {
+		variables()[Output] = "The name was taken.";
+		}
+	if (ResponseObject.TwineResponse == "Success") {
+		variables()[Output] = "DimFile Successfully Created!";
+		}
+};
+//-----------------------------------------------------------------------
+
+
+
+
+
+// ----------------XML REQUEST-------------------------------------------
+xhttp.onreadystatechange = function() {
+	if(this.readyState == 1) {console.log("XML ReadyStatus = 1");};
+	if(this.readyState == 2) {console.log("XML ReadyStatus = 2");};
+	if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
+	if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
+	if(this.readyState == 4 && this.status == 200) {
+		var ResponseObject = JSON.parse(this.response);
+		console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
+		OnResponse;}
+}
+
+  xhttp.open("GET", payload,);
+  xhttp.send();
+};
+
+
+//----------------------------------------------------
+
+
+
+
+
+
+
+
+//____________ACCESS____________________
+//          
+//  
+//  
+//   
+//    
+//
+//
+
+
+window.DimFileAccess = function(Var1,Output1) {
+
+// ----------------SETUP-------------------------------------------------
+if (Output1 === "undefined") {console.log("No Output Defined");}
+if (Var1 === "undefined") {Var1 = DimName;};
+
+   var DimName = variables()['DimName'];
+	var Passcode = variables()['DimPasscode'];
+	     var str = '{"Method":"Access","DimName":"'+DimName+'",';
+	        str += '"Passcode":"'+Passcode+'","Var1":"'+Var1+'"}';
+	     var url = "DimFile.php";
+	 var payload = url+"?q="+str;
+	   var xhttp = new XMLHttpRequest();
+
+console.log("Here's our JSON-ified string:"+str);
+console.log("Here's the URL we're sending it to"+url);
+console.log("Here's the full payload, url and json");
+//-----------------------------------------------------------------------
+
+
+
+
+// ----------------ON RESPONSE-------------------------------------------
+var OnResponse = function(){
+	if (ResponseObject.AccessObject == "Wrong Passcode") {
+		variables()[Output1] = "Passcode was Invalid";
+	}
+	if (ResponseObject.AccessObject != "Wrong Passcode") {
+		variables()[Output1] = ResponseObject.AccessObject;
+		variables().LocalDimFile = ResponseObject.TwineResponse;
+		console.log("Twine output var gets "+ResponseObject.AccessObject);
+	}
+};
+//-----------------------------------------------------------------------
+
+
+
+
+
+// ----------------XML REQUEST-------------------------------------------
+xhttp.onreadystatechange = function() {
+	if(this.readyState == 1) {console.log("XML ReadyStatus = 1");};
+	if(this.readyState == 2) {console.log("XML ReadyStatus = 2");};
+	if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
+	if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
+	if (this.readyState == 4 && this.status == 200) {
+		var ResponseObject = JSON.parse(this.response);
+		console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
+		OnResponse;	
+	}
+}
+xhttp.open("GET", payload,);
+xhttp.send();
+};
+//-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+</script><tw-passagedata pid="1" name="Start" tags="" position="602,198">&lt;H1&gt;Welcome to the Adventure Society!&lt;/H1&gt;
+
+&lt;&lt;if (($PlayerSetup == &quot;true&quot;) &amp;&amp; ($DimSetup == &quot;true&quot;))&gt;&gt;
+	[[001]]
+&lt;&lt;elseif (($PlayerSetup == &quot;true&quot;) &amp;&amp; ($DimSetup != &quot;true&quot;))&gt;&gt;
+	&lt;&lt;include &quot;DimFilePicker&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;
+	&lt;&lt;include &quot;PlayerFilePicker&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Ready to MINGLE?!" tags="" position="0,1116">&lt;H1&gt;MINGLE&lt;/H1&gt;
 
 Their Name...[ psst. go talk to people ]
 
@@ -234,13 +517,7 @@ On button press,
 						$player.antagonist.secret
 [[Back button|mingle]]
 					
-		</tw-passagedata><tw-passagedata pid="3" name="Untitled Passage" tags="" position="599,1">Server Files
-- Get
-- Update
-
-Player Files
-- by username
-</tw-passagedata><tw-passagedata pid="4" name="scrartch" tags="" position="799,3">
+		</tw-passagedata><tw-passagedata pid="3" name="scrartch" tags="" position="727,52">
 
 
 &lt;&lt;set $PlayerFileStatus to &quot;unloaded&quot;&gt;&gt; 
@@ -281,130 +558,111 @@ Dialog.addClickHandler(&quot;startbutton&quot;, null,
 	}
 );
 &lt;&lt;/script&gt;&gt;
-</tw-passagedata><tw-passagedata pid="5" name="Open-or-New-PlayerFile" tags="" position="498,1">if$open-or-new is &quot;open&quot;
+</tw-passagedata><tw-passagedata pid="4" name="PlayerFilePicker" tags="" position="899,198">Let&#x27;s setup your playerfile / account.
 
-Playername &lt;input&gt;
-passcode &lt;input&gt;
+&lt;button 
+	type=button 
+	id=&quot;LoginButton&quot;
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileLogin&#x27;,
+			&#x27;Welcome Back! Enter your Login Info&#x27;
+			)
+		&quot; 
+	&gt;login&lt;/button&gt; 					\
+or 										\
+&lt;button 
+	type=button 
+	id=&quot;SignupButton&quot; 
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileNew&#x27;,
+			&#x27;New Players, Fill This Stuff Out&#x27;
+			)
+		&quot;
+	&gt;sign up&lt;/button&gt; 
+</tw-passagedata><tw-passagedata pid="5" name="PlayerFileNew" tags="" position="1026,203">You may only use A-Z; please note the passcode is not terribly secure, so don&#x27;t use your banking password, ok?
 
-Button submit
+Player Name: \
+	&lt;input 
+		id=&quot;PlayerFileNewName&quot; 
+		type=&quot;text&quot;
+		onkeyup=
+			&quot;
+			window.TwineVarWrap(
+				&#x27;PlayerFileNewName&#x27;,
+				&#x27;PlayerName&#x27;)
+			&quot; 
+		maxlength=&quot;8&quot; 
+		autofocus&gt;
 
-&lt;&lt;silent&gt;&gt;
-Char limiters
+Passcode: \
+	&lt;input 
+		id=&quot;PlayerFileNewPasscode&quot; 
+		type=&quot;text&quot; 	
+		onkeyup=
+			&quot;
+			window.TwineVarWrap(
+				&#x27;PlayerFileNewPasscode&#x27;,
+				&#x27;Passcode&#x27;)
+			&quot; 
+		maxlength=&quot;8&quot;&gt;
 
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+		&#x27;PlayerFileNewConfirm&#x27;,
+		&#x27;Confirm Your Info&#x27;)
+	&quot;
+	&gt;submit&lt;/button&gt;
 
+&lt;&lt;include &quot;FormCharLimiter&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="PlayerFileLogin" tags="" position="1027,82">Please enter your information below. 
+Remember, you can only use letters A-Z.
 
-On the server: 
-&lt;php 
+Playername: \
+	&lt;input 
+		id=&quot;PlayerFileLoginName&quot; 
+		type=&quot;text&quot; 
+		onkeyup=
+			&quot;
+			window.TwineVarWrap(
+				&#x27;PlayerFileLoginName&#x27;,
+				&#x27;PlayerName&#x27;)
+			&quot; 
+		maxlength=&quot;8&quot; 
+		autofocus&gt;
 
-pull request out of url
-	[variable] = dejsonify
-		         method : new / open
-				   name : ...
-				passcode: ...
-		variable to get : ...
+Passcode: \
+	&lt;input 
+		id=&quot;PlayerFileLoginPasscode&quot; 
+		type=&quot;password&quot; 
+		onkeyup=
+			&quot;
+			window.TwineVarWrap(
+				&#x27;PlayerFileLoginPasscode&#x27;,
+				&#x27;Passcode&#x27;)
+			&quot; 
+			maxlength=&quot;8&quot;&gt;
+
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;PlayerFileLoginConfirm&#x27;,
+			&#x27;Confirm Your Info&#x27;)
+		&quot;
+	&gt;submit&lt;/button&gt;
 	
-	if method is open
-		open name.txt
-		if null, 
-			echo &quot;playerfile not found&quot;
-			return;
-		if passcode = variable.url.passcode
-			output = variable.name
-			echo output
-		else
-			echo bad-password
+&lt;&lt;include &quot;FormCharLimiter&quot;&gt;&gt;
 
-?&gt;
-
-
------
-else { 
-    }
-		         method : new / open
-				   name : ...
-				passcode: ...
-		variable to get : ...
-	
-	if method is open
-		open name.txt
-		if null, 
-			echo &quot;playerfile not found&quot;
-			return;
-		if passcode = variable.url.passcode
-			output = variable.name
-			echo output
-		else
-			echo bad-password
-
-
-
-//set the location of our json full of variables
-//and the location of our playerfiles folder / directory
-$filename = &quot;vardb.txt&quot;;
-$dir = &quot;/PlayerFiles/&quot;
-
-//if what&#x27;s sent from the client is not nothing...
-if ($q !== &quot;&quot;) {
-  
-  
-    //then parse it as a json
-    $decodedjson = json_decode($q, true);
-    //if it&#x27;s a poorly formed json it will come back as an error
-    if ($decodedjson == NULL) {
-        //if so, set hint to an err message so that prints to the client
-        $response = &quot;this JSON was mal formed&quot;;
-        //otherwise...
-    } else { 
-        
-      // 
-        
-        //pull the value of &quot;var&quot; from the json that was sent
-        //this assumes that all jsons sent here have the following structure:
-        //{&quot;var&quot;:&quot;foo&quot;,&quot;val&quot;:&quot;bar&quot;}
-        $keyvar = $decodedjson[&quot;var&quot;];
-        $keyval = $decodedjson[&quot;val&quot;];
-        //then connect to the json.txt,
-        $vardb = file_get_contents(&quot;$filename&quot;) or die(&quot;could not reach $filename&quot;);
-        //decode it as a json
-        $vardbjson = json_decode($vardb, true);
-        
-        //then pull the 1st var that was sent here
-        // Modify the value, and write the structure to a file
-        $vardbjson[&quot;$keyvar&quot;] = &quot;$keyval&quot;; 
-        
-        $hint = $vardbjson[&quot;$keyvar&quot;];
-        
-        if (is_writable($filename)) {
-        $fh = fopen(&quot;$filename&quot;, &#x27;w&#x27;) or die(&quot;Error opening output file&quot;);
-        fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
-        fclose($fh);
-        } else {
-            $hint = &quot;$filename is not writeable&quot;;
-        }
-      
-    }
-};
-//send either the correct var back to the client, or an error message
-echo $hint;</tw-passagedata><tw-passagedata pid="6" name="PlayerFilePicker" tags="" position="527,399">&lt;h1&gt;Have you created an account before?&lt;/h1&gt;
-
-&lt;button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileLogin&#x27;,&#x27;Enter your Login Credentials&#x27;)&quot; type=button id=&quot;login-button&quot;&gt;login&lt;/button&gt; or &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Sign Up&lt;/button&gt;
-
-&lt;button onclick=&quot;window.PlayerFileFunction()&quot;&gt;Click me to close&lt;/button&gt;
-</tw-passagedata><tw-passagedata pid="7" name="StoryInit	" tags="" position="399,201">&lt;&lt;set $PlayerFileStatus to &quot;unloaded&quot;&gt;&gt;
-
-[[Start]]</tw-passagedata><tw-passagedata pid="8" name="PlayerFileNew" tags="" position="651,449">What&#x27;s your name? &lt;input id=&quot;PlayerFileNewName&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileNewName&#x27;,&#x27;PlayerName&#x27;)&quot; maxlength=&quot;8&quot; autofocus&gt;
-
-What&#x27;s your passcode? &lt;input id=&quot;PlayerFileNewPasscode&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileNewPasscode&#x27;,&#x27;Passcode&#x27;)&quot; maxlength=&quot;8&quot;&gt;
-
-&lt;button type=button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNewConfirm&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Submit&lt;/button&gt;
-
-&lt;&lt;include &quot;FormCharLimiter&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileLogin" tags="" position="653,323">What&#x27;s your name? &lt;input id=&quot;PlayerFileLoginName&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileLoginName&#x27;,&#x27;PlayerName&#x27;)&quot; maxlength=&quot;8&quot; autofocus&gt;
-
-What&#x27;s your passcode? &lt;input id=&quot;PlayerFileLoginPasscode&quot; type=&quot;text&quot; onkeyup=&quot;window.TwineVarWrap(&#x27;PlayerFileLoginPasscode&#x27;,&#x27;Passcode&#x27;)&quot; maxlength=&quot;8&quot;&gt;
-
-&lt;button type=button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileLoginConfirm&#x27;,&#x27;Login Confirm&#x27;)&quot;&gt;Submit&lt;/button&gt;
-
-</tw-passagedata><tw-passagedata pid="10" name="FormCharLimiter" tags="" position="300,0">&lt;script&gt;
+</tw-passagedata><tw-passagedata pid="7" name="FormCharLimiter" tags="" position="302,0">&lt;script&gt;
 
 $(&#x27;input&#x27;).on(&#x27;keypress&#x27;, function (e) {
     if (/^[a-zA-Z\b]+$/.test(String.fromCharCode(e.keyCode))) {
@@ -418,113 +676,170 @@ $(&#x27;input&#x27;).on(&#x27;keypress&#x27;, function (e) {
 if a char isn&#x27;t a-z or A-Z, it refuses to print it. 
 the regex allows backspace*/
 
-&lt;/script&gt;</tw-passagedata><tw-passagedata pid="11" name="test" tags="" position="1096,2">$PlayerName
-$PlayerPasscode
-</tw-passagedata><tw-passagedata pid="12" name="PlayerFileNewConfirm" tags="" position="778,450">Your name is:
-$PlayerName
+&lt;/script&gt;</tw-passagedata><tw-passagedata pid="8" name="PlayerFileNewConfirm" tags="" position="1153,201">Player name: $PlayerName
 
-And your Passcode is:
-$PlayerPasscode
+Passcode: $Passcode
 
-Is this information correct? &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;yes, continue&lt;/button&gt; &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;no, let me change it&lt;/button&gt;
-
-
-</tw-passagedata><tw-passagedata pid="13" name="PlayerFileComplete" tags="" position="901,449">Currently checking and creating for the twine vars $Passcode &amp; Playername
-
-&lt;&lt;script&gt;&gt;
-	window.PlayerFileCheckAndCreate(&quot;PlayerName&quot;,&quot;Passcode&quot;,&quot;CheckAndCreateTest&quot;)
-&lt;&lt;/script&gt;&gt;
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;PlayerFileComplete&#x27;)
+		&quot;
+	&gt;yup, that&#x27;s right&lt;/button&gt;   \
+or	\
+&lt;button 
+	type=button 
+	id=&quot;LoginReturnButton&quot;
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileNew&#x27;,
+			&#x27;New Players, Fill This Stuff Out&#x27;
+			)
+		&quot;
+	&gt;wait, let me go back&lt;/button&gt; 	
 	
-&lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileComplete2&#x27;,&#x27;Upload confirmation&#x27;)&quot;&gt;yes, continue&lt;/button&gt;</tw-passagedata><tw-passagedata pid="14" name="PlayerFileNewNameTaken" tags="" position="1276,527">I&#x27;m Sorry that name is taken, try again!
+&lt;&lt;script&gt;&gt;
+		window.PlayerFileCheckAndCreate(
+			&quot;PlayerName&quot;,
+			&quot;Passcode&quot;,
+			&quot;CheckAndCreateTest&quot;
+		);
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileComplete" tags="" position="1277,202">&lt;&lt;if $CheckAndCreateTest eq &quot;Taken&quot;&gt;&gt;
+	&lt;&lt;script&gt;&gt;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileNew&#x27;,
+			&#x27;Sorry, that name was taken.&#x27;
+			)
+	&lt;&lt;/script&gt;&gt;
+&lt;&lt;elseif $CheckAndCreateTest eq &quot;Success&quot;&gt;&gt;
+	&lt;&lt;script&gt;&gt;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileComplete2&#x27;,
+			&#x27;Success!&#x27;
+			)
+	&lt;&lt;/script&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="PlayerFileComplete2" tags="" position="1401,200">You now have an account &amp; you are logged in! 
 
-&lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Retry&lt;/button&gt;</tw-passagedata><tw-passagedata pid="15" name="PlayerFileComplete2" tags="" position="1026,450">Your username has been uploaded to the server.
+&lt;&lt;button &quot;Let&#x27;s get Started!&quot;&gt;&gt;
+	&lt;&lt;script&gt;&gt;
+		Dialog.close();
+	&lt;&lt;/script&gt;&gt;
+	&lt;&lt;goto &quot;Start&quot;&gt;&gt;
+&lt;&lt;/button&gt;&gt;
 
-Here&#x27;s the result $CheckAndCreateTest
-</tw-passagedata><tw-passagedata pid="16" name="PlayerFileNewNameSuccess" tags="" position="1276,400">You have successfully created a player profile.</tw-passagedata><tw-passagedata pid="17" name="PlayerFileLoginConfirm" tags="" position="778,325">PlayerName = $PlayerName
-Passcode = $Passcode
+&lt;&lt;set $PlayerSetup to &quot;true&quot;&gt;&gt;
 
-Doing an access check now to see if we can get a return on our username. 
+</tw-passagedata><tw-passagedata pid="11" name="PlayerFileLoginConfirm" tags="" position="1152,80">Player name: $PlayerName,
+Passcode: $Passcode
+
 &lt;&lt;script&gt;&gt;
 	window.PlayerFileAccess(&#x27;PlayerName&#x27;,&#x27;LoginTest&#x27;)
 &lt;&lt;/script&gt;&gt;
 	
-&lt;button type=button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileLoginConfirm2&#x27;,&#x27;Login Confirm&#x27;)&quot;&gt;Continue&lt;/button&gt;</tw-passagedata><tw-passagedata pid="18" name="PlayerFileLoginConfirm3" tags="" position="1027,324">
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;PlayerFileLoginConfirm2&#x27;,
+			&#x27;Login Confirm&#x27;)
+		&quot;
+	&gt;yup, that&#x27;s right&lt;/button&gt;   \
+or	\
+&lt;button 
+	type=button 
+	id=&quot;LoginReturnButton&quot;
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileLogin&#x27;,
+			&#x27;Welcome Back! Enter your Login Info&#x27;
+			)
+		&quot; 
+	&gt;wait, let me go back&lt;/button&gt; 			</tw-passagedata><tw-passagedata pid="12" name="PlayerFileLoginConfirm3" tags="" position="1402,79">
 $login
 
 
 	
-</tw-passagedata><tw-passagedata pid="19" name="PlayerFileComplete3" tags="" position="1153,452">&lt;&lt;if $taken is &quot;DED&quot;&gt;&gt;
-	&lt;&lt;script&gt;&gt;
-	window.newname(&quot;PlayerFileNameCreator.php&quot;,&quot;PlayerName&quot;,&quot;PlayerName&quot;,&quot;updatetest&quot;); 
-	window.newname(&quot;PlayerFileNameCreator.php&quot;,&quot;PlayerPasscode&quot;,&quot;PlayerPasscode&quot;); 
-	window.DialogueUpdate(&#x27;PlayerFileNewNameSuccess&#x27;,&#x27;Success!&#x27;);
+</tw-passagedata><tw-passagedata pid="13" name="PlayerJournal" tags="" position="1574,170">If this is your first time opening the journal, 
+	Open the Journal Tooltip:
 
-	&lt;&lt;/script&gt;&gt;
-&lt;&lt;else&gt;&gt;
-	&lt;&lt;script&gt;&gt;
-		window.DialogueUpdate(&#x27;PlayerFileNewNameTaken&#x27;,&#x27;NameTaken&#x27;);
-	&lt;&lt;/script&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+This is your Adventurer&#x27;s Journal. Key information will be logged here for reference. If you&#x27;re ever feeling lost or stuck, check back here for guidance!
 
-	
-	
 
-window.newname = function (url,UpdateVar,UpdateVal,UpdateOutput) {
-  if (UpdateOutput === undefined) {UpdateOutput = &quot;UpdateDefaultOutput&quot;;} 
-  var jsUpdateVal = variables()[UpdateVal];
-  var str = &#x27;{&quot;var&quot;:&quot;&#x27;+UpdateVar+&#x27;&quot;,&quot;val&quot;:&quot;&#x27;+jsUpdateVal+&#x27;&quot;,&quot;filename&quot;:&quot;+jsUpdateVal+&quot;}&#x27;;
-  var xhttp;
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-   if (this.readyState == 4 &amp;&amp; this.status == 200) {
-     variables()[UpdateOutput] = this.responseText;
-    }
-  };
-  xhttp.open(&quot;GET&quot;, url+&quot;?q=&quot;+str, true);
-  xhttp.send();   
-}
+Then stow that tooltip neatly away in our journal
+include &quot;The Adventurer&#x27;s Journal&quot;
+include player credentials
 
 
 
-$filename = &quot;vardb.txt&quot;;
+
+HOLDINH
 
 
-&lt;?php
-
-$q = $_REQUEST[&quot;q&quot;];
-if ($q !== &quot;&quot;) {
-    $decodedjson = json_decode($q, true);
-    if ($decodedjson == NULL) {
-        $hint = &quot;this JSON was mal formed&quot;;
-		return;
-    }
-	$filename = $decodedjson[&quot;filename&quot;]; 
-    $keyvar = $decodedjson[&quot;var&quot;];
-	$keyval = $decodedjson[&quot;val&quot;];
-	
-	$vardb = file_get_contents(&quot;$filename&quot;);
-        $vardbjson = json_decode($vardb, true);
-        $vardbjson[&quot;$keyvar&quot;] = &quot;$keyval&quot;;         
-        if (is_writable($filename)) {
-        $fh = fopen(&quot;$filename&quot;, &#x27;w&#x27;);
-        fwrite($fh, json_encode($vardbjson,JSON_UNESCAPED_UNICODE));
-        fclose($fh);
-        } else {
-            $hint = &quot;$filename is not writeable&quot;;
-        }
-      
-    }
-};
-
-//send either the correct var back to the client, or an error message
-echo $hint;
-
-?&gt;
-</tw-passagedata><tw-passagedata pid="20" name="Untitled Passage 2" tags="" position="972,7">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="21" name="PlayerFileLoginConfirm2" tags="" position="900,325">Your login credentials have been sent to the server.
+You can find your account credentials in your \
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;PlayerJournal&#x27;,
+			&#x27;Adventurer&#x27;s Journal&#x27;
+			)
+		&quot;
+	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
+</tw-passagedata><tw-passagedata pid="14" name="PlayerFileLoginConfirm2" tags="" position="1278,81">Your login credentials have been sent to the server.
 
 This is the return $LoginTest
 
-&lt;button type=button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileLoginConfirm3&#x27;)&quot;&gt;Continue&lt;/button&gt;</tw-passagedata><tw-passagedata pid="22" name="Start Pseudo Code" tags="" position="402,550">	
+&lt;button 
+	type=button
+	onclick=
+		&quot;
+			window.DialogueUpdate(
+			&#x27;PlayerFileLoginConfirm3&#x27;
+			)
+		&quot;
+	&gt;continue&lt;/button&gt;
+	
+	
+&lt;&lt;if $LoginTest eq &quot;Wrong Passcode&quot;&gt;&gt;
+
+Looks like your passcode was invalid,
+
+&lt;button 
+    type=button 
+    id=&quot;LoginReturnButton&quot;
+    onclick=
+        &quot;
+        window.DialogueUpdate
+            (
+            &#x27;PlayerFileLogin&#x27;,
+            &#x27;Welcome Back! Enter The Your Credentials.&#x27;
+            )
+        &quot; 
+    &gt;try again!&lt;/button&gt;    
+
+&lt;&lt;else&gt;&gt;
+
+You&#x27;re all set!
+&lt;&lt;set $PlayerSetup to &quot;true&quot;&gt;&gt;
+&lt;button 
+    type=button
+    onclick=
+        &quot;   
+            Dialog.close();
+        &quot;
+    &gt;continue&lt;/button&gt;
+    
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="Start Pseudo Code" tags="" position="0,982">	
 /* Open &quot;PlayerFile-Picker&quot; */
 &lt;&lt;include &quot;PlayerFile-Picker&quot; &quot;playerfile-picker&quot;&gt;&gt;
 
@@ -580,7 +895,7 @@ Now, where are you? [dropdown Servername]
 
 [[Ready to MINGLE?!]]
 
-</tw-passagedata><tw-passagedata pid="23" name="GET.php" tags="" position="195,300">&lt;?php
+</tw-passagedata><tw-passagedata pid="16" name="REF: GET.php" tags="" position="98,252">&lt;?php
 
 // get the q parameter from URL
 $q = $_REQUEST[&quot;q&quot;];
@@ -615,7 +930,7 @@ if ($q !== &quot;&quot;) {
 echo $hint;
 
 ?&gt;
-</tw-passagedata><tw-passagedata pid="24" name="PlayerFile.php" tags="" position="195,462">&lt;?php
+</tw-passagedata><tw-passagedata pid="17" name="REF PlayerFile.php" tags="" position="0,249">&lt;?php
 
 //JSONs will come in after a q in the url. They will look like: 
 //
@@ -714,7 +1029,7 @@ if ($q !== &quot;&quot;) {
 
 
 ?&gt;
-</tw-passagedata><tw-passagedata pid="25" name="UPDATE.php" tags="" position="73,301">&lt;?php
+</tw-passagedata><tw-passagedata pid="18" name="REF: UPDATE.php" tags="" position="101,126">&lt;?php
 
 // get the q parameter from URL
 $q = $_REQUEST[&quot;q&quot;];
@@ -774,7 +1089,7 @@ if ($q !== &quot;&quot;) {
 echo $hint;
 
 ?&gt;
-</tw-passagedata><tw-passagedata pid="26" name="To Do" tags="" position="235,151">window.PlayerFileCheckAndCreate
+</tw-passagedata><tw-passagedata pid="19" name="To Do" tags="" position="600,52">window.PlayerFileCheckAndCreate
 
 window.PlayerFileAccess 
 	using a synchronous xml 
@@ -790,9 +1105,13 @@ create modular server response passage with a live element
 TEST Console.Log in PlayerFileCheckAndCreate
 Check the comparison operator in PlayerFile.PHP if method ===
 How to Concatecate stings &amp; vars in php
-Test what the server response is from get file contents for non-existant files</tw-passagedata><tw-passagedata pid="27" name="PlayerFiles/PlayerFileTemplate.txt" tags="" position="69,463">{&quot;PlayerName&quot;:&quot;hold&quot;,&quot;Passcode&quot;:&quot;hold&quot;}
+Test what the server response is from get file contents for non-existant files
 
-</tw-passagedata><tw-passagedata pid="28" name="PlayerFileCheckAndCreate Test" tags="" position="188,581">[[Start]]
+
+Refactor twine js
+make both those functions smaller, more of a package</tw-passagedata><tw-passagedata pid="20" name="REF: PlayerFiles/PlayerFileTemplate.txt" tags="" position="100,374">{&quot;PlayerName&quot;:&quot;hold&quot;,&quot;Passcode&quot;:&quot;hold&quot;}
+
+</tw-passagedata><tw-passagedata pid="21" name="TEST PlayerFileCheckAndCreate" tags="" position="100,602">[[Start]]
 
 
 window.PlayerFileCheckAndCreate = function(PlayerName,Passcode,Output) {
@@ -803,14 +1122,14 @@ On the next screen we&#x27;ll see what output we got with TestOutput. You should
 &lt;&lt;script&gt;&gt;
 window.PlayerFileCheckAndCreate(&quot;Dalton&quot;,&quot;password&quot;,&quot;TestOutput&quot;)
 &lt;&lt;/script&gt;&gt;
-[[Results]]</tw-passagedata><tw-passagedata pid="29" name="Results" tags="" position="188,731">$TestOutput
+[[Results]]</tw-passagedata><tw-passagedata pid="22" name="Results" tags="" position="103,729">$TestOutput
 
 Now, we&#x27;ll set our PlayerName &amp; Passcode
 
 &lt;&lt;set $PlayerName to &quot;Dalton&quot;&gt;&gt;
 &lt;&lt;set $Passcode to &quot;password&quot;&gt;&gt;
 
-[[access test]]</tw-passagedata><tw-passagedata pid="30" name="Other JS sheet stuff" tags="" position="58,586">
+[[access test]]</tw-passagedata><tw-passagedata pid="23" name="Other JS sheet stuff" tags="" position="0,488">
 window.PlayerFileFunction = function (){
 Dialog.close();
 }
@@ -1041,12 +1360,422 @@ window.jswrap = function (twinevar,jswrapname) {
 	window[jswrapname] = variables()[twinevar];
 }
 
-</tw-passagedata><tw-passagedata pid="31" name="access test" tags="" position="188,881">Now lets attempt to access our playerfile, and get the playername back
+</tw-passagedata><tw-passagedata pid="24" name="access test" tags="" position="104,849">Now lets attempt to access our playerfile, and get the playername back
 &lt;&lt;script&gt;&gt;
 window.PlayerFileAccess(&quot;PlayerName&quot;,&quot;AccessTest&quot;)
 &lt;&lt;/script&gt;&gt;
 
-[[Access Test Results]]</tw-passagedata><tw-passagedata pid="32" name="Access Test Results" tags="" position="188,1031">$AccessTest</tw-passagedata></tw-storydata></div>
+[[Access Test Results]]</tw-passagedata><tw-passagedata pid="25" name="Access Test Results" tags="" position="104,981">$AccessTest</tw-passagedata><tw-passagedata pid="26" name="Ref: Dialogue Box" tags="" position="98,0">&lt;h1&gt;Have you created an account before?&lt;/h1&gt;
+
+&lt;button onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileLogin&#x27;,&#x27;Enter your Login Credentials&#x27;)&quot; type=button id=&quot;login-button&quot;&gt;login&lt;/button&gt; or &lt;button type=button id=&quot;signup-button&quot; onclick=&quot;window.DialogueUpdate(&#x27;PlayerFileNew&#x27;,&#x27;New Players, fill this stuff out&#x27;)&quot;&gt;Sign Up&lt;/button&gt;
+
+//close dialogue boxes
+&lt;button 
+	onclick=
+		&quot;
+		window.PlayerFileFunction()
+		&quot;
+	&gt;Click me to close&lt;/button&gt;
+
+
+//Simple get function
+&lt;&lt;button &quot;button text&quot;&gt;&gt;
+	&lt;&lt;script&gt;&gt;
+		Dialog.setup(); 		
+		Dialog.wiki(Story.get(&quot;passagename&quot;).processText()); 
+		Dialog.open();
+	&lt;&lt;/script&gt;&gt;
+&lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="27" name="HOLD JS Oct 3" tags="" position="242,1274">window.PlayerFileFunction = function (){
+Dialog.close();
+}
+
+window.TwineVarWrap = function(element, twinevar){
+	var content = document.getElementById(element).value;
+	variables()[twinevar] = content;
+};
+
+window.DialogueUpdate = function(passagename, dialoguetitle){
+	Dialog.close();
+	Dialog.setup(dialoguetitle);
+	Dialog.wiki(Story.get(passagename).processText()); 
+	Dialog.open();
+}
+
+
+window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
+  if (Output === &quot;undefined&quot;) {var UpdateOutput = &quot;TwinePseudoConsole&quot;;}
+  variables()[Output] = &quot;No Response Received from the Server.&quot;;
+	var PlayerName = variables()[TwPlayerName];
+	var Passcode = variables()[TwPasscode];
+	
+	var str = &#x27;{&quot;Method&quot;:&quot;CheckAndCreate&quot;,&quot;PlayerName&quot;:&quot;&#x27;+PlayerName+&#x27;&quot;,&quot;Passcode&quot;:&quot;&#x27;+Passcode+&#x27;&quot;}&#x27;;
+  console.log(&quot;Here&#x27;s our JSON-ified string:&quot;+str);
+	var url = &quot;PlayerFile.php&quot;;
+	console.log(&quot;Here&#x27;s the URL we&#x27;re sending it to&quot;+url);
+	var payload = url+&quot;?q=&quot;+str;
+	console.log(&quot;Here&#x27;s the full payload, url and json&quot;);
+	
+	var xhttp;
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+		if(this.readyState == 1) {console.log(&quot;XML ReadyStatus = 1&quot;);};
+		if(this.readyState == 2) {console.log(&quot;XML ReadyStatus = 2&quot;);};
+		if(this.readyState == 3) {console.log(&quot;XML ReadyStatus = 3&quot;);};
+		if(this.readyState == 4) {console.log(&quot;XML ReadyStatus = &quot;+this.status);};
+		if (this.readyState == 4 &amp;&amp; this.status == 200) {
+			var ResponseObject = JSON.parse(this.response);
+			console.log(&quot;Here&#x27;s the response text from the server&quot;+ResponseObject.ErrorMessage);
+			/*
+			if (this.responseText == &quot;Taken&quot;) {
+			variables()[Output] = &quot;The name was taken.&quot;;
+			}
+			if (this.responseText == &quot;Success&quot;) {
+			variables()[Output] = &quot;PlayerFile Successfully Created!&quot;;
+			}
+		console.log(this.responseText);
+		*/
+    }
+  }
+
+  xhttp.open(&quot;GET&quot;, payload,);
+  xhttp.send();
+};
+
+
+window.PlayerFileAccess = function(Var1,Output1) {
+  if (Output1 === &quot;undefined&quot;) {console.log(&quot;No Output Defined&quot;);}
+  var PlayerName = variables()[&#x27;PlayerName&#x27;];
+	var Passcode = variables()[&#x27;Passcode&#x27;];
+	if (Var1 === &quot;undefined&quot;) {Var1 = PlayerName;};
+
+	var str = &#x27;{&quot;Method&quot;:&quot;Access&quot;,&quot;PlayerName&quot;:&quot;&#x27;+PlayerName+&#x27;&quot;,&quot;Passcode&quot;:&quot;&#x27;+Passcode+&#x27;&quot;,&quot;Var1&quot;:&quot;&#x27;+Var1+&#x27;&quot;}&#x27;;
+  console.log(&quot;Here&#x27;s our JSON-ified string:&quot;+str);
+	var url = &quot;PlayerFile.php&quot;;
+	console.log(&quot;Here&#x27;s the URL we&#x27;re sending it to&quot;+url);
+	var payload = url+&quot;?q=&quot;+str;
+	console.log(&quot;Here&#x27;s the full payload, url and json&quot;);
+	
+	var xhttp;
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+		if(this.readyState == 1) {console.log(&quot;XML ReadyStatus = 1&quot;);};
+		if(this.readyState == 2) {console.log(&quot;XML ReadyStatus = 2&quot;);};
+		if(this.readyState == 3) {console.log(&quot;XML ReadyStatus = 3&quot;);};
+		if(this.readyState == 4) {console.log(&quot;XML ReadyStatus = &quot;+this.status);};
+		if (this.readyState == 4 &amp;&amp; this.status == 200) {
+			var ResponseObject = JSON.parse(this.response);
+			console.log(&quot;Here&#x27;s the response text from the server&quot;+ResponseObject.ErrorMessage);
+	
+			/*
+			if (ResponseObject.AccessObject == &quot;Invalid Passcode&quot;) {
+			variables()[Output1] = &quot;Passcode was Invalid&quot;;
+			}
+			if (this.responseText != &quot;Invalid Passcode&quot;) {
+			variables()[Output1] = this.responseText;
+			}
+		console.log(this.responseText);
+		*/
+    }
+  }
+
+  xhttp.open(&quot;GET&quot;, payload,);
+  xhttp.send();
+};
+
+
+
+</tw-passagedata><tw-passagedata pid="28" name="PlayerFile Pseudo Code" tags="" position="132,1274">So, how will our game pull stuff from the server &amp; interact with it? I think these are my guidelines. 
+
+Interactions between client and server should be as small and few as possible. Whenever possible the twine client or the server should do all the processing and modifications of variables. 
+
+This means that:
+- Only the required variables are sent to the server when updating or accessing files. 
+- Twine should have a local Playerfile so it doesn&#x27;t need to pull vars every time we need one. 
+- We need to be very clear about which variables move to the server, and how often. 
+
+
+Class 1 variables - Never leave twine. These are things that have no relationship to player input / choices. 
+Class 2 variables - Leave twine in large batches akin to a game save. This happens every so often at important parts of the game. Not likely to be influenced by other players, so it&#x27;s more an issue of allowing our players to pick up where they left off, should they get disconnected. 
+Class 3 variables - Variables that are influenced by other players actions or the game as a whole, but are only pulled at key moments &amp; times. Basically - if this hasn&#x27;t changed by this time - it never will. 
+Class 4 variables - highly volatile, may change at any time. Things like game-wide alerts, likely these files are constantly being checked in the footer of a game. 
+
+what should i focus on and why  / how?
+
+
+
+within twine
+- journal / trackr
+- location-based narrative  &lt;-- procedural
+- players looking at players xtrs / stuff
+	- look, 
+
+
+ACCESS
+for arg past the 1st, or w.e
+	create json named var#, with value being that value
+	
+	for (i = 0; i &lt; cars.length; i++) { 
+    text += cars[i] + &quot;&lt;br&gt;&quot;;
+	}	
+
+
+function JSONToServerTest(print){
+var JSONToServer = &#x27;{&#x27;;
+	for (i = 1; i &lt;= arguments.length; i++) { 
+    JSONToServer += &#x27;&quot;var&#x27; + i + &#x27;&quot;:&quot;&#x27; + arguements[i] + &#x27;&quot;&#x27;;
+	if (i = arguments.length) {
+		JSONToServer += &#x27;}&#x27;;
+		} else {
+		JSONToServer += &#x27;,&#x27;
+		}
+	}	
+	console.log(JSONToServer);
+}
+
+
+SERVERSIDE ACCESS
+Pull playerfile, 	
+for each var, 
+	pull playerfiles that match
+	create access object with ech Var#, 
+	their values are from the playerfile
+package accessobject, send back to twine
+	
+
+a = dejsonify this.responsetext
+for each a.accessobject that matches playerfile, 
+	update playerfile with new vals
+	update twinevars of those vars
+
+
+UPDATE - (&#x27;location: PlayerFile|Dimension&#x27; Var, val, var,val etc...
+	js_update()
+	tw_update
+		for each var in local playerfile, set value. 
+		
+
+
+JS update
+// translate args into single json, add necessary stuff
+if playerfile, add playerfile url
+if dimension, add dimension url
+	
+add pw, username, method
+	Create associative array, from args,
+	jsonify, send to server
+
+	SERVERSIDE Playerfile
+	dejsonify
+	pull playerfile
+	----------
+	if method - update	
+	for each var, update playerfile
+	write playerfile
+return success
+	
+
+
+UPDATE - DimensionUpdate
+foreach var in dim.txt, 
+	update
+	write
+
+
+
+
+
+The goal here is absolute ease of use &amp; reliability between the client and the server. 
+</tw-passagedata><tw-passagedata pid="29" name="JSON to server test" tags="" position="22,1274">&lt;&lt;script&gt;&gt;
+window.JSONToServerTest(&quot;true&quot;,&quot;PlayerName&quot;,&quot;PlayerPasscode&quot;);
+&lt;&lt;/script&gt;&gt;
+
+[[JSON to server test]]
+
+$JSONToServerTest</tw-passagedata><tw-passagedata pid="30" name="NW" tags="" position="898,500">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]
+
+Update player location, 
+	tell playerfile you&#x27;re in NW
+	
+Access who&#x27;s here.
+	connect to dimlist. 
+	for each var in location
+		send to player, playernames
+
+LIVE: print who players find
+
+IF players click into any of them
+	access that playerfile&#x27;s public info
+		description, current activity, etc.
+		load into local doc
+
+If players choose to watch, 
+	LIVE: feed on player&#x27;s activity. </tw-passagedata><tw-passagedata pid="31" name="N" tags="" position="1101,500">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="32" name="NE" tags="" position="1303,497">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="33" name="W" tags="" position="900,700">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="34" name="E" tags="" position="1301,698">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="35" name="SW" tags="" position="899,901">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="36" name="S" tags="" position="1102,899">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="37" name="SE" tags="" position="1301,900">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="38" name="C" tags="" position="1100,701">[[NW]]	[[N]]	[[NE]]
+
+[[W]]	[[C]]	[[E]]
+
+[[SW]]	[[S]]	[[SW]]</tw-passagedata><tw-passagedata pid="39" name="DimFilePicker" tags="" position="908,350">Now that you&#x27;re logged in, lets get you and your team-mate on the same server. 
+
+&lt;button 
+	type=button 
+	id=&quot;DimJoinButton&quot;
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;DimFileJoin&#x27;,
+			&#x27;Enter The Server You would Like To Join&#x27;
+			);
+		&quot; 
+	&gt;join&lt;/button&gt; 					\
+or 										\
+&lt;button 
+	type=button 
+	id=&quot;SignupButton&quot; 
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;PlayerFileNew&#x27;,
+			&#x27;New Players, Fill This Stuff Out&#x27;
+			);
+		&quot;
+	&gt;create&lt;/button&gt; 
+</tw-passagedata><tw-passagedata pid="40" name="001" tags="" position="602,325">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="41" name="DimFileJoin" tags="" position="1030,356">Please enter your information below. 
+Remember, you can only use letters A-Z.
+
+Server Name: \
+	&lt;input 
+		id=&quot;DimFileJoinName&quot; 
+		type=&quot;text&quot; 
+		onkeyup=
+			&quot;
+			window.TwineVarWrap(
+				&#x27;DimFileJoinName&#x27;,
+				&#x27;DimName&#x27;)
+			&quot; 
+		maxlength=&quot;8&quot; 
+		autofocus&gt;
+
+Passcode: \
+	&lt;input 
+		id=&quot;DimFileJoinPasscode&quot; 
+		type=&quot;password&quot; 
+		onkeyup=
+			&quot;
+			window.TwineVarWrap(
+				&#x27;DimFileJoinPasscode&#x27;,
+				&#x27;DimPasscode&#x27;)
+			&quot; 
+			maxlength=&quot;8&quot;&gt;
+
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;DimFileJoinConfirm&#x27;,
+			&#x27;Confirm Your Info&#x27;)
+		&quot;
+	&gt;submit&lt;/button&gt;
+	
+&lt;&lt;include &quot;FormCharLimiter&quot;&gt;&gt;
+
+</tw-passagedata><tw-passagedata pid="42" name="DimFileJoinConfirm" tags="" position="1171,348">Server name: $DimName,
+Passcode: $DimPasscode
+
+&lt;&lt;script&gt;&gt;
+	window.DimFileAccess(&#x27;DimName&#x27;,&#x27;JoinTest&#x27;)
+&lt;&lt;/script&gt;&gt;
+	
+&lt;button 
+	type=button 
+	onclick=
+		&quot;
+		window.DialogueUpdate(
+			&#x27;DimFileJoinConfirm2&#x27;,
+			&#x27;Join Confirm&#x27;)
+		&quot;
+	&gt;yup, that&#x27;s right&lt;/button&gt;   \
+or	\
+&lt;button 
+	type=button 
+	id=&quot;JoinReturnButton&quot;
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;DimFileJoin&#x27;,
+			&#x27;Enter The Server You&#x27;d Like To Join&#x27;
+			)
+		&quot; 
+	&gt;wait, let me go back&lt;/button&gt; 			</tw-passagedata><tw-passagedata pid="43" name="DimFileJoinConfirm2" tags="" position="1295,346">Your server credentials have been sent to the server.
+
+&lt;&lt;if $JoinTest eq &quot;Passcode was Invalid&quot;&gt;&gt;
+
+Looks like your passcode was invalid,
+
+&lt;button 
+	type=button 
+	id=&quot;JoinReturnButton&quot;
+	onclick=
+		&quot;
+		window.DialogueUpdate
+			(
+			&#x27;DimFileJoin&#x27;,
+			&#x27;Enter The Server You&#x27;d Like To Join&#x27;
+			)
+		&quot; 
+	&gt;try again!&lt;/button&gt; 	
+
+&lt;&lt;elseif $JoinTest eq $DimName&gt;&gt;
+
+You&#x27;re all set!
+&lt;&lt;set $DimSetup to &quot;true&quot;&gt;&gt;
+&lt;button 
+	type=button
+	onclick=
+		&quot;	
+			window.DialogClose();
+		&quot;
+	&gt;continue&lt;/button&gt;
+
+&lt;&lt;else&gt;&gt;
+
+There was an error, please try again.
+
+&lt;&lt;/if&gt;&gt;</tw-passagedata></tw-storydata></div>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
 	if(document.documentElement.getAttribute("data-init")==="loading"){!function(window,document,jQuery,undefined){"use strict";function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,r=Array(e.length);t<e.length;t++)r[t]=e[t];return r}return Array.from(e)}var _createClass=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),_slicedToArray=function(){function e(e,t){var r=[],n=!0,a=!1,i=undefined;try{for(var o,s=e[Symbol.iterator]();!(n=(o=s.next()).done)&&(r.push(o.value),!t||r.length!==t);n=!0);}catch(e){a=!0,i=e}finally{try{!n&&s.return&&s.return()}finally{if(a)throw i}}return r}return function(t,r){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return e(t,r);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},Alert=function(){function e(e,t,r,n){var a="fatal"===e,i="Apologies! "+(a?"A fatal":"An")+" error has occurred.";i+=a?" Aborting.":" You may be able to continue, but some parts may not work properly.",null==t&&null==r||(i+="\n\nError",null!=t&&(i+=" ["+t+"]"),i+=null!=r?": "+r.replace(/^(?:(?:uncaught\s+(?:exception:\s+)?)?error:\s+)+/i,"")+".":": unknown error."),n&&n.stack&&(i+="\n\nStack Trace:\n"+n.stack),window.alert(i)}function t(t,r,n){e(null,t,r,n)}function r(t,r,n){e("fatal",t,r,n)}return function(e){window.onerror=function(n,a,i,o,s){"complete"===document.readyState?t(null,n,s):(r(null,n,s),window.onerror=e,"function"==typeof window.onerror&&window.onerror.apply(this,arguments))}}(window.onerror),Object.freeze(Object.defineProperties({},{error:{value:t},fatal:{value:r}}))}();!function(){function e(e,t){var a=String(e);switch(t){case"start":return a&&r.test(a)?a.replace(r,""):a;case"end":return a&&n.test(a)?a.replace(n,""):a;default:throw new Error('_trimFrom called with incorrect where parameter value: "'+t+'"')}}function t(e,t){var r=Number.parseInt(e,10)||0;if(r<1)return"";var n="undefined"==typeof t?"":String(t);for(""===n&&(n=" ");n.length<r;){var a=n.length,i=r-a;n+=a>i?n.slice(0,i):n}return n.length>r&&(n=n.slice(0,r)),n}var r=/^[\s\u00A0\uFEFF][\s\u00A0\uFEFF]*/,n=/[\s\u00A0\uFEFF][\s\u00A0\uFEFF]*$/;Array.prototype.includes||Object.defineProperty(Array.prototype,"includes",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.includes called on null or undefined");if(0===arguments.length)return!1;var e=this.length>>>0;if(0===e)return!1;var t=arguments[0],r=Number(arguments[1])||0;for(r<0&&(r=Math.max(0,e+r));r<e;++r){var n=this[r];if(t===n||t!==t&&n!==n)return!0}return!1}}),String.prototype.padStart||Object.defineProperty(String.prototype,"padStart",{configurable:!0,writable:!0,value:function(e,r){if(null==this)throw new TypeError("String.prototype.padStart called on null or undefined");var n=String(this),a=n.length,i=Number.parseInt(e,10);return i<=a?n:t(i-a,r)+n}}),String.prototype.padEnd||Object.defineProperty(String.prototype,"padEnd",{configurable:!0,writable:!0,value:function(e,r){if(null==this)throw new TypeError("String.prototype.padEnd called on null or undefined");var n=String(this),a=n.length,i=Number.parseInt(e,10);return i<=a?n:n+t(i-a,r)}}),String.prototype.trimStart||Object.defineProperty(String.prototype,"trimStart",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimStart called on null or undefined");return e(this,"start")}}),String.prototype.trimLeft||Object.defineProperty(String.prototype,"trimLeft",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimLeft called on null or undefined");return e(this,"start")}}),String.prototype.trimEnd||Object.defineProperty(String.prototype,"trimEnd",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimEnd called on null or undefined");return e(this,"end")}}),String.prototype.trimRight||Object.defineProperty(String.prototype,"trimRight",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimRight called on null or undefined");return e(this,"end")}})}(),function(){function _random(){if(0===arguments.length)throw new Error("_random called with insufficient parameters");var e=void 0,t=void 0;if(1===arguments.length?(e=0,t=arguments[0]):(e=arguments[0],t=arguments[1]),e>t){var r=[t,e];e=r[0],t=r[1]}return Math.floor(_nativeMathRandom()*(t-e+1))+e}function _getCodePointStartAndEnd(e,t){var r=e.charCodeAt(t);if(Number.isNaN(r))return{char:"",start:-1,end:-1};if(r<55296||r>57343)return{char:e.charAt(t),start:t,end:t};if(r>=55296&&r<=56319){var n=t+1;if(n>=e.length)throw new Error("high surrogate without trailing low surrogate");var a=e.charCodeAt(n);if(a<56320||a>57343)throw new Error("high surrogate without trailing low surrogate");return{char:e.charAt(t)+e.charAt(n),start:t,end:n}}if(0===t)throw new Error("low surrogate without leading high surrogate");var i=t-1,o=e.charCodeAt(i);if(o<55296||o>56319)throw new Error("low surrogate without leading high surrogate");return{char:e.charAt(i)+e.charAt(t),start:i,end:t}}var _nativeMathRandom=Math.random;Object.defineProperty(Array,"random",{configurable:!0,writable:!0,value:function(e,t,r){var n=t,a=r;return 2===arguments.length&&(a=n,n=0),Array.isArray(e)?e.random(n,a):e.hasOwnProperty("length")?[].concat(_toConsumableArray(e)).random(n,a):void 0}}),Object.defineProperty(Array.prototype,"count",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.count called on null or undefined");for(var e=Array.prototype.indexOf,t=arguments[0],r=Number(arguments[1])||0,n=0;(r=e.call(this,t,r))!==-1;)++n,++r;return n}}),Object.defineProperty(Array.prototype,"delete",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.delete called on null or undefined");if(0===arguments.length)return[];var e=this.length>>>0;if(0===e)return[];for(var t=Array.prototype.indexOf,r=Array.prototype.push,n=Array.prototype.splice,a=Array.prototype.concat.apply([],arguments),i=[],o=0,s=a.length;o<s;++o)for(var u=a[o],l=0;(l=t.call(this,u,l))!==-1;)r.apply(i,n.call(this,l,1));return i}}),Object.defineProperty(Array.prototype,"deleteAt",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.deleteAt called on null or undefined");if(0===arguments.length)return[];var e=this.length>>>0;if(0===e)return[];for(var t=Array.prototype.splice,r=[].concat(_toConsumableArray(new Set(Array.prototype.concat.apply([],arguments).map(function(t){return t<0?Math.max(0,e+t):t})).values())),n=[].concat(_toConsumableArray(r)).sort(function(e,t){return t-e}),a=[],i=0,o=r.length;i<o;++i)a[i]=this[r[i]];for(var s=0,u=n.length;s<u;++s)t.call(this,n[s],1);return a}}),Object.defineProperty(Array.prototype,"flatten",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.flatten called on null or undefined");return Array.prototype.reduce.call(this,function(e,t){return e.concat(Array.isArray(t)?t.flatten():t)},[])}}),Object.defineProperty(Array.prototype,"includesAll",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.includesAll called on null or undefined");if(1===arguments.length)return Array.isArray(arguments[0])?Array.prototype.includesAll.apply(this,arguments[0]):Array.prototype.includes.apply(this,arguments);for(var e=0,t=arguments.length;e<t;++e)if(!Array.prototype.some.call(this,function(e){return e===this.val||e!==e&&this.val!==this.val},{val:arguments[e]}))return!1;return!0}}),Object.defineProperty(Array.prototype,"includesAny",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.includesAny called on null or undefined");if(1===arguments.length)return Array.isArray(arguments[0])?Array.prototype.includesAny.apply(this,arguments[0]):Array.prototype.includes.apply(this,arguments);for(var e=0,t=arguments.length;e<t;++e)if(Array.prototype.some.call(this,function(e){return e===this.val||e!==e&&this.val!==this.val},{val:arguments[e]}))return!0;return!1}}),Object.defineProperty(Array.prototype,"pluck",{configurable:!0,writable:!0,value:function(e,t){if(null==this)throw new TypeError("Array.prototype.pluck called on null or undefined");var r=this.length>>>0;if(0!==r){var n=e,a=t;return 1===arguments.length&&(a=n,n=0),null==n?n=0:n<0?(n=r+n,n<0&&(n=0)):n>=r&&(n=r-1),null==a?a=r-1:a<0?(a=r+a,a<0&&(a=r-1)):a>=r&&(a=r-1),Array.prototype.splice.call(this,_random(n,a),1)[0]}}}),Object.defineProperty(Array.prototype,"random",{configurable:!0,writable:!0,value:function(e,t){if(null==this)throw new TypeError("Array.prototype.random called on null or undefined");var r=this.length>>>0;if(0!==r){var n=e,a=t;return 1===arguments.length&&(a=n,n=0),null==n?n=0:n<0?(n=r+n,n<0&&(n=0)):n>=r&&(n=r-1),null==a?a=r-1:a<0?(a=r+a,a<0&&(a=r-1)):a>=r&&(a=r-1),this[_random(n,a)]}}}),Object.defineProperty(Array.prototype,"shuffle",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.shuffle called on null or undefined");var e=this.length>>>0;if(0!==e){for(var t=e-1;t>0;--t){var r=Math.floor(_nativeMathRandom()*(t+1)),n=[this[r],this[t]];this[t]=n[0],this[r]=n[1]}return this}}}),Object.defineProperty(Function.prototype,"partial",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Function.prototype.partial called on null or undefined");var e=Array.prototype.slice,t=this,r=e.call(arguments,0);return function(){for(var n=[],a=0,i=0;i<r.length;++i)n.push(r[i]===undefined?arguments[a++]:r[i]);return t.apply(this,n.concat(e.call(arguments,a)))}}}),Object.defineProperty(Math,"clamp",{configurable:!0,writable:!0,value:function e(t,r,n){var e=Number(t);return Number.isNaN(e)?NaN:e.clamp(r,n)}}),Object.defineProperty(Math,"easeInOut",{configurable:!0,writable:!0,value:function(e){return 1-(Math.cos(Number(e)*Math.PI)+1)/2}}),Object.defineProperty(Number.prototype,"clamp",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Number.prototype.clamp called on null or undefined");if(2!==arguments.length)throw new Error("Number.prototype.clamp called with an incorrect number of parameters");var e=Number(arguments[0]),t=Number(arguments[1]);if(e>t){var r=[t,e];e=r[0],t=r[1]}return Math.min(Math.max(this,e),t)}}),RegExp.escape||!function(){var e=/[\\^$*+?.()|[\]{}]/g,t=new RegExp(e.source);Object.defineProperty(RegExp,"escape",{configurable:!0,writable:!0,value:function(r){var n=String(r);return n&&t.test(n)?n.replace(e,"\\$&"):n}})}(),function(){var e=/{(\d+)(?:,([+-]?\d+))?}/g,t=new RegExp(e.source);Object.defineProperty(String,"format",{configurable:!0,writable:!0,value:function(r){function n(e,t,r){if(!t)return e;var n=Math.abs(t)-e.length;if(n<1)return e;var a=String(r).repeat(n);return t<0?e+a:a+e}if(arguments.length<2)return 0===arguments.length?"":r;var a=2===arguments.length&&Array.isArray(arguments[1])?[].concat(_toConsumableArray(arguments[1])):Array.prototype.slice.call(arguments,1);return 0===a.length?r:t.test(r)?(e.lastIndex=0,r.replace(e,function(e,t,r){var i=a[t];if(null==i)return"";for(;"function"==typeof i;)i=i();switch("undefined"==typeof i?"undefined":_typeof(i)){case"string":break;case"object":i=JSON.stringify(i);break;default:i=String(i)}return n(i,r?Number.parseInt(r,10):0," ")})):r}})}(),Object.defineProperty(String.prototype,"contains",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.contains called on null or undefined");return String.prototype.indexOf.apply(this,arguments)!==-1}}),Object.defineProperty(String.prototype,"count",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.count called on null or undefined");var e=String(arguments[0]||"");if(""===e)return 0;for(var t=String.prototype.indexOf,r=e.length,n=Number(arguments[1])||0,a=0;(n=t.call(this,e,n))!==-1;)++a,n+=r;return a}}),Object.defineProperty(String.prototype,"splice",{configurable:!0,writable:!0,value:function(e,t,r){if(null==this)throw new TypeError("String.prototype.splice called on null or undefined");var n=this.length>>>0;if(0===n)return"";var a=Number(e);Number.isSafeInteger(a)?a<0&&(a+=n,a<0&&(a=0)):a=0,a>n&&(a=n);var i=Number(t);(!Number.isSafeInteger(i)||i<0)&&(i=0);var o=this.slice(0,a);return"undefined"!=typeof r&&(o+=r),a+i<n&&(o+=this.slice(a+i)),o}}),Object.defineProperty(String.prototype,"splitOrEmpty",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.splitOrEmpty called on null or undefined");return""===String(this)?[]:String.prototype.split.apply(this,arguments)}}),Object.defineProperty(String.prototype,"toLocaleUpperFirst",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.toLocaleUpperFirst called on null or undefined");var e=String(this),t=_getCodePointStartAndEnd(e,0),r=t.char,n=t.end;return n===-1?"":r.toLocaleUpperCase()+e.slice(n+1)}}),Object.defineProperty(String.prototype,"toUpperFirst",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.toUpperFirst called on null or undefined");var e=String(this),t=_getCodePointStartAndEnd(e,0),r=t.char,n=t.end;return n===-1?"":r.toUpperCase()+e.slice(n+1)}}),Object.defineProperty(Date.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:date)",this.toISOString()]}}),Object.defineProperty(Function.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:eval)","("+this.toString()+")"]}}),Object.defineProperty(Map.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:map)",[].concat(_toConsumableArray(this))]}}),Object.defineProperty(RegExp.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:eval)",this.toString()]}}),Object.defineProperty(Set.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:set)",[].concat(_toConsumableArray(this))]}}),Object.defineProperty(JSON,"reviveWrapper",{configurable:!0,writable:!0,value:function(e,t){if("string"!=typeof e)throw new TypeError("JSON.reviveWrapper code parameter must be a string");return["(revive:eval)",[e,t]]}}),Object.defineProperty(JSON,"_real_parse",{value:JSON.parse}),Object.defineProperty(JSON,"parse",{configurable:!0,writable:!0,value:function value(text,reviver){return JSON._real_parse(text,function(key,val){var value=val;if(Array.isArray(value)&&2===value.length)switch(value[0]){case"(revive:set)":value=new Set(value[1]);break;case"(revive:map)":value=new Map(value[1]);break;case"(revive:date)":value=new Date(value[1]);break;case"(revive:eval)":try{if(Array.isArray(value[1])){var $ReviveData$=value[1][1];value=eval(value[1][0])}else value=eval(value[1])}catch(e){}}else if("string"==typeof value&&"@@revive@@"===value.slice(0,10))try{value=eval(value.slice(10))}catch(e){}if("function"==typeof reviver)try{value=reviver(key,value)}catch(e){}return value})}}),Object.defineProperty(Array.prototype,"contains",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.contains called on null or undefined");return Array.prototype.includes.apply(this,arguments)}}),Object.defineProperty(Array.prototype,"containsAll",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.containsAll called on null or undefined");return Array.prototype.includesAll.apply(this,arguments)}}),Object.defineProperty(Array.prototype,"containsAny",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.containsAny called on null or undefined");return Array.prototype.includesAny.apply(this,arguments)}}),Object.defineProperty(String.prototype,"readBracketedList",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.readBracketedList called on null or undefined");for(var e=new RegExp("(?:\\[\\[((?:\\s|\\S)*?)\\]\\])|([^\"'\\s]\\S*)","gm"),t=[],r=void 0;null!==(r=e.exec(this));)r[1]?t.push(r[1]):r[2]&&t.push(r[2]);return t}})}();var Browser=function(){var e={userAgent:navigator.userAgent.toLowerCase()};return e.isGecko=navigator&&"Gecko"===navigator.product&&!/webkit|trident/.test(e.userAgent),e.isIE=/msie|trident/.test(e.userAgent)&&!e.userAgent.includes("opera"),e.ieVersion=function(){var t=/(?:msie\s+|rv:)(\d{1,2}\.\d)/.exec(e.userAgent);return t?Number([1]):0}(),e.isOpera=e.userAgent.includes("opera")||e.userAgent.includes(" opr/"),e.operaVersion=function(){var t=new RegExp((/applewebkit|chrome/.test(e.userAgent)?"opr":"version")+"\\/(\\d{1,2}\\.\\d+)"),r=t.exec(e.userAgent);return r?Number(r[1]):0}(),e.isMobile=Object.freeze({Android:/android/.test(e.userAgent),BlackBerry:/blackberry/.test(e.userAgent),iOS:/ip(?:hone|ad|od)/.test(e.userAgent),Windows:/iemobile/.test(e.userAgent),any:function(){var t=e.isMobile;return t.Android||t.BlackBerry||t.iOS||t.Windows}}),Object.freeze(e)}(),Has=function(){function e(e){try{if(null!=e&&e.length>=0){var t="SugarCube.WebStorage.Test",r="1701 Guilty Scott";if(e.setItem(t,r),e.getItem(t)===r)return e.removeItem(t),!0}}catch(e){}return!1}return Object.freeze({audio:"function"==typeof document.createElement("audio").canPlayType,fileAPI:"File"in window&&"FileList"in window&&"FileReader"in window&&!Browser.isMobile.any()&&(!Browser.isOpera||Browser.operaVersion>=15),geolocation:"geolocation"in navigator&&"function"==typeof navigator.geolocation.getCurrentPosition&&"function"==typeof navigator.geolocation.watchPosition,localStorage:"localStorage"in window&&e(window.localStorage),sessionStorage:"sessionStorage"in window&&e(window.sessionStorage)})}(),_ref4=function(){function e(t){if("object"!==("undefined"==typeof t?"undefined":_typeof(t))||null==t)return t;if("function"==typeof t.clone)return t.clone(!0);if(t.nodeType&&"function"==typeof t.cloneNode)return t.cloneNode(!0);var r=void 0;return Array.isArray(t)?r=[]:t instanceof Date?r=new Date(t.getTime()):t instanceof Map?(r=new Map,t.forEach(function(t,n){r.set(n,e(t))})):t instanceof RegExp?r=new RegExp(t):t instanceof Set?(r=new Set,t.forEach(function(t){r.add(e(t))})):r=Object.create(Object.getPrototypeOf(t)),Object.keys(t).forEach(function(n){return r[n]=e(t[n])}),r}function t(e){for(var t=document.createDocumentFragment(),r=document.createElement("p"),n=void 0;null!==(n=e.firstChild);){if(n.nodeType===Node.ELEMENT_NODE){var a=n.nodeName.toUpperCase();switch(a){case"BR":if(null!==n.nextSibling&&n.nextSibling.nodeType===Node.ELEMENT_NODE&&"BR"===n.nextSibling.nodeName.toUpperCase()){e.removeChild(n.nextSibling),e.removeChild(n),t.appendChild(r),r=document.createElement("p");continue}if(!r.hasChildNodes()){e.removeChild(n);continue}break;case"ADDRESS":case"ARTICLE":case"ASIDE":case"BLOCKQUOTE":case"CENTER":case"DIV":case"DL":case"FIGURE":case"FOOTER":case"FORM":case"H1":case"H2":case"H3":case"H4":case"H5":case"H6":case"HEADER":case"HR":case"MAIN":case"NAV":case"OL":case"P":case"PRE":case"SECTION":case"TABLE":case"UL":r.hasChildNodes()&&(t.appendChild(r),r=document.createElement("p")),t.appendChild(n);continue}}r.appendChild(n)}r.hasChildNodes()&&t.appendChild(r),e.appendChild(t)}function r(){try{return document.activeElement||null}catch(e){return null}}function n(e,t,r){var n="object"===("undefined"==typeof e?"undefined":_typeof(e))?e:document.getElementById(e);if(null==n)return null;var a=Array.isArray(t)?t:[t];jQuery(n).empty();for(var i=0,o=a.length;i<o;++i)if(Story.has(a[i]))return new Wikifier(n,Story.get(a[i]).processText().trim()),n;if(null!=r){var s=String(r).trim();""!==s&&new Wikifier(n,s)}return n}function a(e,t,r){return jQuery(document.createElement("span")).addClass("error").attr("title",r).text(L10n.get("errorTitle")+": "+(t||"unknown error")).appendTo(e),!1}function i(e,t){switch("undefined"==typeof e?"undefined":_typeof(e)){case"number":if(Number.isNaN(e))return t;break;case"object":if(null===e)return t;if(Array.isArray(e)||e instanceof Set)return[].concat(_toConsumableArray(e)).map(function(e){return i(e,t)}).join(", ");if(e instanceof Map){var r=function(){var r=i,n=[].concat(_toConsumableArray(e)).map(function(e){return r(e[0],t)+" ⇒ "+r(e[1],t)}).join("; ");return{v:"( "+n+" )"}}();if("object"===("undefined"==typeof r?"undefined":_typeof(r)))return r.v}else{if(e instanceof Date)return e.toLocaleString();if("function"==typeof e.toString)return e.toString()}return Object.prototype.toString.call(e);case"function":case"undefined":return t}return String(e)}return Object.freeze(Object.defineProperties({},{clone:{value:e},convertBreaks:{value:t},safeActiveElement:{value:r},setPageElement:{value:n},throwError:{value:a},toStringOrDefault:{value:i}}))}(),clone=_ref4.clone,convertBreaks=_ref4.convertBreaks,safeActiveElement=_ref4.safeActiveElement,setPageElement=_ref4.setPageElement,throwError=_ref4.throwError,toStringOrDefault=_ref4.toStringOrDefault;!function(){function e(e){13!==e.which&&32!==e.which||(e.preventDefault(),jQuery(safeActiveElement()||this).trigger("click"))}function t(e){return function(){var t=jQuery(this);t.is("[aria-pressed]")&&t.attr("aria-pressed","true"===t.attr("aria-pressed")?"false":"true"),e.apply(this,arguments)}}function r(e){return t(function(){jQuery(this).off(".aria-clickable").removeAttr("tabindex aria-controls aria-pressed").not("a,button").removeAttr("role").end().filter("button").prop("disabled",!0),e.apply(this,arguments)})}jQuery.fn.extend({ariaClick:function(n,a){if(0===this.length||0===arguments.length)return this;var i=n,o=a;return null==o&&(o=i,i=undefined),i=jQuery.extend({namespace:undefined,one:!1,selector:undefined,data:undefined,controls:undefined,pressed:undefined,label:undefined},i),"string"!=typeof i.namespace?i.namespace="":"."!==i.namespace[0]&&(i.namespace="."+i.namespace),"boolean"==typeof i.pressed&&(i.pressed=i.pressed?"true":"false"),this.filter("button").prop("type","button"),this.not("a,button").attr("role","button"),this.attr("tabindex",0),null!=i.controls&&this.attr("aria-controls",i.controls),null!=i.pressed&&this.attr("aria-pressed",i.pressed),null!=i.label&&this.attr({"aria-label":i.label,title:i.label}),this.not("button").on("keypress.aria-clickable"+i.namespace,i.selector,e),this.on("click.aria-clickable"+i.namespace,i.selector,i.data,i.one?r(o):t(o)),this}})}(),function(){jQuery.extend({wikiWithOptions:function(e){for(var t=arguments.length,r=Array(t>1?t-1:0),n=1;n<t;n++)r[n-1]=arguments[n];if(0!==r.length){var a=document.createDocumentFragment();r.forEach(function(t){return new Wikifier(a,t,e)});var i=[].concat(_toConsumableArray(a.querySelectorAll(".error"))).map(function(e){return e.textContent.replace(/^(?:(?:Uncaught\s+)?Error:\s+)+/,"")});if(i.length>0)throw new Error(i.join("; "))}},wiki:function(){for(var e=arguments.length,t=Array(e),r=0;r<e;r++)t[r]=arguments[r];this.wikiWithOptions.apply(this,[undefined].concat(t))}}),jQuery.fn.extend({wikiWithOptions:function(e){for(var t=arguments.length,r=Array(t>1?t-1:0),n=1;n<t;n++)r[n-1]=arguments[n];if(0===this.length||0===r.length)return this;var a=document.createDocumentFragment();return r.forEach(function(t){return new Wikifier(a,t,e)}),this.append(a),this},wiki:function(){for(var e=arguments.length,t=Array(e),r=0;r<e;r++)t[r]=arguments[r];return this.wikiWithOptions.apply(this,[undefined].concat(t))}})}();var Util=function(){function e(e){return Object.freeze(Object.assign(Object.create(null),e))}function t(e){var t=void 0;switch("undefined"==typeof e?"undefined":_typeof(e)){case"number":t=e;break;case"string":t=Number(e);break;default:return!1}return!Number.isNaN(t)&&Number.isFinite(t)}function r(e){return"boolean"==typeof e||"string"==typeof e&&("true"===e||"false"===e)}function n(e){return String(e).trim().replace(/[^\w\s\u2013\u2014-]+/g,"").replace(/[_\s\u2013\u2014-]+/g,"-").toLocaleLowerCase()}function a(e){if(null==e)return"";var t=String(e);return t&&p.test(t)?t.replace(f,function(e){return h[e]}):t}function i(e){if(null==e)return"";var t=String(e);return t&&m.test(t)?t.replace(g,function(e){return v[e]}):t}function o(e){var t=/^([+-]?(?:\d*\.)?\d+)([Mm]?[Ss])$/,r=t.exec(String(e));if(null===r)throw new SyntaxError('invalid time value syntax: "'+e+'"');var n=Number(r[1]);if(/^[Ss]$/.test(r[2])&&(n*=1e3),Number.isNaN(n)||!Number.isFinite(n))throw new RangeError('invalid time value: "'+e+'"');return n}function s(e){if("number"!=typeof e||Number.isNaN(e)||!Number.isFinite(e)){var t=void 0;switch("undefined"==typeof e?"undefined":_typeof(e)){case"string":t='"'+e+'"';break;case"number":t=String(e);break;default:t=Object.prototype.toString.call(e)}throw new Error("invalid milliseconds: "+t)}return e+"ms"}function u(e){if(!e.includes("-"))switch(e){case"bgcolor":return"backgroundColor";case"float":return"cssFloat";default:return e}var t="-ms-"===e.slice(0,4)?e.slice(1):e;return t.split("-").map(function(e,t){return 0===t?e:e.toUpperFirst()}).join("")}function l(e){var t=document.createElement("a"),r=Object.create(null);t.href=e,t.search&&t.search.replace(/^\?/,"").splitOrEmpty(/(?:&(?:amp;)?|;)/).forEach(function(e){var t=e.split("="),n=_slicedToArray(t,2),a=n[0],i=n[1];r[a]=i});var n=t.host&&"/"!==t.pathname[0]?"/"+t.pathname:t.pathname;return{href:t.href,protocol:t.protocol,host:t.host,hostname:t.hostname,port:t.port,path:""+n+t.search,pathname:n,query:t.search,search:t.search,queries:r,searches:r,hash:t.hash}}function c(e,t){for(var r=Object.prototype.toString,n=Array.isArray(e),a=[].concat(Object.keys(e),Object.keys(t)).sort().filter(function(e,t,r){return 0===t||r[t-1]!==e}),i={},o=void 0,s=function(e){return e===o},u=0,l=a.length;u<l;++u){var c=a[u],d=e[c],f=t[c];if(e.hasOwnProperty(c))if(t.hasOwnProperty(c)){if(d===f)continue;if(("undefined"==typeof d?"undefined":_typeof(d))===("undefined"==typeof f?"undefined":_typeof(f)))if("function"==typeof d)d.toString()!==f.toString()&&(i[c]=[y.Copy,f]);else if("object"!==("undefined"==typeof d?"undefined":_typeof(d))||null===d)i[c]=[y.Copy,f];else{var p=r.call(d),h=r.call(f);if(p===h)if("[object Date]"===p){var g=Number(f);Number(d)!==g&&(i[c]=[y.CopyDate,g])}else if("[object RegExp]"===p)d.toString()!==f.toString()&&(i[c]=[y.Copy,clone(f)]);else{var m=Util.diff(d,f);null!==m&&(i[c]=m)}else i[c]=[y.Copy,clone(f)]}else i[c]=[y.Copy,"object"!==("undefined"==typeof f?"undefined":_typeof(f))||null===f?f:clone(f)]}else if(n&&Util.isNumeric(c)){var v=Number(c);if(!o){o="";do o+="~";while(a.some(s));i[o]=[y.SpliceArray,v,v]}v<i[o][1]&&(i[o][1]=v),v>i[o][2]&&(i[o][2]=v)}else i[c]=y.Delete;else i[c]=[y.Copy,"object"!==("undefined"==typeof f?"undefined":_typeof(f))||null===f?f:clone(f)]}return Object.keys(i).length>0?i:null}function d(e,t){for(var r=Object.keys(t||{}),n=clone(e),a=0,i=r.length;a<i;++a){var o=r[a],s=t[o];if(s===y.Delete)delete n[o];else if(Array.isArray(s))switch(s[0]){case y.SpliceArray:n.splice(s[1],1+(s[2]-s[1]));break;case y.Copy:n[o]=clone(s[1]);break;case y.CopyDate:n[o]=new Date(s[1])}else n[o]=Util.patch(n[o],s)}return n}var f=/[&<>"'`]/g,p=new RegExp(f.source),h=Object.freeze({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","`":"&#96;"}),g=/&(?:amp|lt|gt|quot|apos|#39|#x27|#96|#x60);/g,m=new RegExp(g.source),v=Object.freeze({"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&apos;":"'","&#39;":"'","&#x27;":"'","&#96;":"`","&#x60;":"`"}),y=e({Delete:0,SpliceArray:1,Copy:2,CopyDate:3});return Object.freeze(Object.defineProperties({},{toEnum:{value:e},isNumeric:{value:t},isBoolean:{value:r},slugify:{value:n},escape:{value:a},unescape:{value:i},fromCssTime:{value:o},toCssTime:{value:s},fromCssProperty:{value:u},parseUrl:{value:l},DiffOp:{value:y},diff:{value:c},patch:{value:d},random:{value:Math.random},entityEncode:{value:a},entityDecode:{value:i},evalExpression:{value:function(){return Scripting.evalJavaScript.apply(Scripting,arguments)}},evalStatements:{value:function(){return Scripting.evalJavaScript.apply(Scripting,arguments)}}}))}(),SimpleAudio=function(){function e(){return g}function t(e){g=!!e,l("mute",g)}function r(){return p}function n(e){p=Math.clamp(e,.2,5),l("rate",p)}function a(){return h}function i(e){h=Math.clamp(e,0,1),l("volume",h)}function o(){l("stop")}function s(e,t){if("function"!=typeof t)throw new Error("callback parameter must be a function");f.set(e,t)}function u(e){f.delete(e)}function l(e,t){f.forEach(function(r){return r(e,t)})}function c(){for(var e=arguments.length,t=Array(e),r=0;r<e;r++)t[r]=arguments[r];return new(Function.prototype.bind.apply(m,[null].concat(t)))}function d(){for(var e=arguments.length,t=Array(e),r=0;r<e;r++)t[r]=arguments[r];return new(Function.prototype.bind.apply(v,[null].concat(t)))}var f=new Map,p=1,h=1,g=!1,m=function(){function e(t){if(_classCallCheck(this,e),Array.isArray(t))this._create(t);else{if(!(t instanceof e))throw new Error("sources parameter must be an array of either URLs or source objects");this._copy(t)}}return _createClass(e,[{key:"_create",value:function(t){if(!Array.isArray(t)||0===t.length)throw new Error("sources parameter must be an array of either URLs or source objects");var r=/^data:\s*audio\/([^;,]+)\s*[;,]/i,n=/\.([^.\/\\]+)$/,a=e.getType,i=[],o=document.createElement("audio");if(t.forEach(function(e){var t=null;switch("undefined"==typeof e?"undefined":_typeof(e)){case"string":var s=void 0;if("data:"===e.slice(0,5)){if(s=r.exec(e),null===s)throw new Error("source data URI missing media type")}else if(s=n.exec(Util.parseUrl(e).pathname),null===s)throw new Error("source URL missing file extension");var u=a(s[1]);null!==u&&(t={src:e,type:u});break;case"object":if(null===e)throw new Error("source object cannot be null");if(!e.hasOwnProperty("src"))throw new Error('source object missing required "src" property');if(!e.hasOwnProperty("format"))throw new Error('source object missing required "format" property');var l=a(e.format);null!==l&&(t={src:e.src,type:l});break;default:throw new Error("invalid source value (type: "+("undefined"==typeof e?"undefined":_typeof(e))+")")}if(null!==t){var c=document.createElement("source");c.src=t.src,c.type=t.type,o.appendChild(c),i.push(t)}}),!o.hasChildNodes())if(Browser.isIE)o.src=undefined;else{var s=document.createElement("source");s.src=undefined,s.type=undefined,o.appendChild(s)}this._finalize(o,i,clone(t))}},{key:"_copy",value:function(t){if(!(t instanceof e))throw new Error("original parameter must be an instance of AudioWrapper");this._finalize(t.audio.cloneNode(!0),clone(t.sources),clone(t.originalSources))}},{key:"_finalize",value:function(e,t,r){var n=this;Object.defineProperties(this,{audio:{configurable:!0,value:e},sources:{configurable:!0,value:Object.freeze(t)},originalSources:{configurable:!0,value:Object.freeze(r)},_error:{writable:!0,value:!1},_faderId:{writable:!0,value:null},_mute:{writable:!0,value:!1},_rate:{writable:!0,value:1},_volume:{writable:!0,value:1}}),jQuery(this.audio).on("loadstart",function(){return n._error=!1}).on("error",function(){return n._error=!0}).find("source:last-of-type").on("error",function(){return n._trigger("error")}),SimpleAudio.subscribe(this,function(e){if(!n.audio)return void SimpleAudio.unsubscribe(n);switch(e){case"mute":n._updateAudioMute();break;case"rate":n._updateAudioRate();break;case"stop":n.stop();break;case"volume":n._updateAudioVolume()}}),this.load()}},{key:"_trigger",value:function(e){jQuery(this.audio).triggerHandler(e)}},{key:"clone",value:function(){return new e(this)}},{key:"destroy",value:function(){SimpleAudio.unsubscribe(this),this.fadeStop(),this.stop();
