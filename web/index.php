@@ -716,7 +716,7 @@ or	\
 			&#x27;Sorry, that name was taken.&#x27;
 			)
 	&lt;&lt;/script&gt;&gt;
-&lt;&lt;else $PlayerFileCheckAndCreateResult eq &quot;Success&quot;&gt;&gt;
+&lt;&lt;elseif $PlayerFileCheckAndCreateResult eq &quot;Success&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
