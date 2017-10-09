@@ -120,7 +120,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 
 window.DFAccess = function (VarToCheck,VarToOutput){
 	
-      var url = "DimFileSimple.php"
+      var url = "DimFileSimple.php";
 	var payload = url+"?q="+VarToCheck;    console.log("Here's the full payload, url and json");
 	  var xhttp = new XMLHttpRequest();
   
