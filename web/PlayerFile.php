@@ -131,6 +131,14 @@ if ($method === "Access"){
 		echo json_encode($response);
 		return;
 	};
+	
+	if ($PFContentsJSON['Passcode'] != $PlayerFilePasscode){
+		$PlayerFileVar1 = $decodedjson['Var1'];
+		$response['TwineResponse'] = "Access";
+		$response['AccessObject'] = "Wrong Passcode";
+		echo json_encode($response);
+		return;
+	};
 };
 //----------------------------------------------------------------------------------------------------------------------------
 
