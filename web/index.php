@@ -248,10 +248,10 @@ window.PlayerFileCheckAndCreate = function(TwPlayerName,TwPasscode,Output) {
 			var ResponseObject = JSON.parse(this.response);
 			console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
 			if (ResponseObject.TwineResponse == "Taken") {
-			variables()[Output] = "The name was taken.";
+			variables()[Output] = "Taken";
 			}
 			if (ResponseObject.TwineResponse == "Success") {
-			variables()[Output] = "PlayerFile Successfully Created!";
+			variables()[Output] = "Success";
 			}
     }
   }
