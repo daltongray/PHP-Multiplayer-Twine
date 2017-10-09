@@ -116,24 +116,20 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 
 
 
-</style><script role="script" id="twine-user-script" type="text/twine-javascript">window.DFAccess = function (VarToCheck,VarToOutput){
-	var url = "DimFileSimple.php"
-	var payload = url+"?q="+VarToCheck;
-	console.log("Here's the full payload, url and json");
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">
+
+window.DFAccess = function (VarToCheck,VarToOutput){
 	
-	var xhttp;
-  xhttp = new XMLHttpRequest();
+      var url = "DimFileSimple.php"
+	var payload = url+"?q="+VarToCheck;    console.log("Here's the full payload, url and json");
+	  var xhttp = new XMLHttpRequest();
+  
   xhttp.onreadystatechange = function() {
-		if(this.readyState == 1) {console.log("XML ReadyStatus = 1");};
-		if(this.readyState == 2) {console.log("XML ReadyStatus = 2");};
-		if(this.readyState == 3) {console.log("XML ReadyStatus = 3");};
-		if(this.readyState == 4) {console.log("XML ReadyStatus = "+this.status);};
 		if (this.readyState == 4 && this.status == 200) {
 			var ResponseObject = this.response;
 			console.log("Here's the response text from the server"+ResponseObject[1]);
 			variables()[VarToOutput] = ResponseObject[1];
 			console.log("Here's the tw Output"+variables()[VarToOutput]);
-			}
     }
   }
 
