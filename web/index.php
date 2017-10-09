@@ -135,12 +135,12 @@ for (i = 1; i < arguments.length; i++) {
 
 
 
-
-/*----------CLOSE DIALOGUE BOXES
+window.DialogueClose = function(){
 			
 Dialog.close();
+	
+}
 			
---------------------------------*/
 
 
 
@@ -1757,7 +1757,7 @@ Looks like your passcode was invalid,
 		&quot; 
 	&gt;try again!&lt;/button&gt; 	
 
-&lt;&lt;else&gt;&gt;
+&lt;&lt;elseif $JoinTest eq $DimName&gt;&gt;
 
 You&#x27;re all set!
 &lt;&lt;set $DimSetup to &quot;true&quot;&gt;&gt;
@@ -1765,10 +1765,14 @@ You&#x27;re all set!
 	type=button
 	onclick=
 		&quot;	
-			Dialog.close();
+			window.DialogClose();
 		&quot;
 	&gt;continue&lt;/button&gt;
-	
+
+&lt;&lt;else&gt;&gt;
+
+There was an error, please try again.
+
 &lt;&lt;/if&gt;&gt;</tw-passagedata></tw-storydata></div>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
