@@ -708,7 +708,7 @@ or	\
 			&quot;Passcode&quot;,
 			&quot;CheckAndCreateTest&quot;
 		);
-&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileComplete" tags="" position="1277,202">&lt;&lt;if $PlayerFileCheckAndCreateResult eq &quot;Taken&quot;&gt;&gt;
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileComplete" tags="" position="1277,202">&lt;&lt;if $CheckAndCreateTest eq &quot;Taken&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
@@ -716,7 +716,7 @@ or	\
 			&#x27;Sorry, that name was taken.&#x27;
 			)
 	&lt;&lt;/script&gt;&gt;
-&lt;&lt;elseif $PlayerFileCheckAndCreateResult eq &quot;Success&quot;&gt;&gt;
+&lt;&lt;elseif $CheckAndCreateTest eq &quot;Success&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
