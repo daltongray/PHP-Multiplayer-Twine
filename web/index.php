@@ -436,16 +436,7 @@ console.log("Here's the full payload, url and json");
 
 
 // ----------------ON RESPONSE-------------------------------------------
-var OnResponse = function(){
-	if (ResponseObject.AccessObject == "Wrong Passcode") {
-		variables()[Output1] = "Passcode was Invalid";
-	}
-	
-	variables()[Output1] = ResponseObject.AccessObject;
-	variables().LocalDimFile = ResponseObject.TwineResponse;
-	console.log("Twine output var gets "+ResponseObject.AccessObject);
-	
-};
+...
 //-----------------------------------------------------------------------
 
 
@@ -461,7 +452,13 @@ xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 		var ResponseObject = JSON.parse(this.response);
 		console.log("Here's the response text from the server"+ResponseObject.ErrorMessage);
-		OnResponse();	
+		if (ResponseObject.AccessObject == "Wrong Passcode") {
+		variables()[Output1] = "Passcode was Invalid";
+	}
+	
+	variables()[Output1] = ResponseObject.AccessObject;
+	variables().LocalDimFile = ResponseObject.TwineResponse;
+	console.log("Twine output var gets "+ResponseObject.AccessObject);	
 	}
 }
 xhttp.open("GET", payload,);
