@@ -440,11 +440,11 @@ var OnResponse = function(){
 	if (ResponseObject.AccessObject == "Wrong Passcode") {
 		variables()[Output1] = "Passcode was Invalid";
 	}
-	if (ResponseObject.AccessObject != "Wrong Passcode") {
-		variables()[Output1] = ResponseObject.AccessObject;
-		variables().LocalDimFile = ResponseObject.TwineResponse;
-		console.log("Twine output var gets "+ResponseObject.AccessObject);
-	}
+	
+	variables()[Output1] = ResponseObject.AccessObject;
+	variables().LocalDimFile = ResponseObject.TwineResponse;
+	console.log("Twine output var gets "+ResponseObject.AccessObject);
+	
 };
 //-----------------------------------------------------------------------
 
@@ -1742,7 +1742,11 @@ or	\
 		&quot; 
 	&gt;wait, let me go back&lt;/button&gt; 			</tw-passagedata><tw-passagedata pid="43" name="DimFileJoinConfirm2" tags="" position="1295,346">Your server credentials have been sent to the server.
 
-&lt;&lt;if $JoinTest eq &quot;Passcode was Invalid&quot;&gt;&gt;
+JoinTest var = $JoinTest
+
+Local Dim Var = $LocalDimFile
+
+&lt;&lt;if $JoinTest == &quot;Passcode was Invalid&quot;&gt;&gt;
 
 Looks like your passcode was invalid,
 
@@ -1759,7 +1763,7 @@ Looks like your passcode was invalid,
 		&quot; 
 	&gt;try again!&lt;/button&gt; 	
 
-&lt;&lt;elseif $JoinTest eq $DimName&gt;&gt;
+&lt;&lt;elseif $JoinTest == $DimName&gt;&gt;
 
 You&#x27;re all set!
 &lt;&lt;set $DimSetup to &quot;true&quot;&gt;&gt;
