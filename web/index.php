@@ -480,7 +480,7 @@ xhttp.send();
 
 </script><tw-passagedata pid="1" name="Start" tags="" position="602,198">&lt;H1&gt;Welcome to the Adventure Society!&lt;/H1&gt;
 
-&lt;&lt;if $PlayerSetup != &quot;true&quot; &amp;&amp; $DimSetup != &quot;true&quot;&gt;&gt; 
+&lt;&lt;if ($PlayerSetup != &quot;true&quot;) and ($DimSetup != &quot;true&quot;)&gt;&gt; 
 	&lt;&lt;include &quot;PlayerFilePicker&quot;&gt;&gt;
 &lt;&lt;elseif $PlayerSetup eq &quot;true&quot; &amp;&amp; $DimSetup != &quot;true&quot;&gt;&gt;
 	&lt;&lt;include &quot;DimFilePicker&quot;&gt;&gt;
@@ -558,7 +558,9 @@ Dialog.addClickHandler(&quot;startbutton&quot;, null,
 	}
 );
 &lt;&lt;/script&gt;&gt;
-</tw-passagedata><tw-passagedata pid="4" name="PlayerFilePicker" tags="" position="899,198">&lt;button 
+</tw-passagedata><tw-passagedata pid="4" name="PlayerFilePicker" tags="" position="899,198">Let&#x27;s setup your playerfile / account.
+
+&lt;button 
 	type=button 
 	id=&quot;LoginButton&quot;
 	onclick=
