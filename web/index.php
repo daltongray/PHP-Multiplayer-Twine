@@ -480,14 +480,12 @@ xhttp.send();
 
 </script><tw-passagedata pid="1" name="Start" tags="" position="602,198">&lt;H1&gt;Welcome to the Adventure Society!&lt;/H1&gt;
 
-&lt;&lt;if $PlayerSetup eq &quot;true&quot;&gt;&gt; 
-	&lt;&lt;if $DimSetup eq &quot;true&quot;&gt;&gt;
-	[[001]]
-	&lt;&lt;else&gt;&gt;
+&lt;&lt;if $PlayerSetup != &quot;true&quot; &amp;&amp; $DimSetup != &quot;true&quot;&gt;&gt; 
+	&lt;&lt;include &quot;PlayerFilePicker&quot;&gt;&gt;
+&lt;&lt;elseif $PlayerSetup eq &quot;true&quot; &amp;&amp; $DimSetup != &quot;true&quot;&gt;&gt;
 	&lt;&lt;include &quot;DimFilePicker&quot;&gt;&gt;
-	&lt;&lt;/if&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;include &quot;PlayerFilePicker&quot;&gt;&gt;
+&lt;&lt;else if $PlayerSetup eq &quot;true&quot; &amp;&amp; $DimSetup eq &quot;true&quot;&gt;&gt;
+	[[001]]
 &lt;&lt;/if&gt;&gt;
 </tw-passagedata><tw-passagedata pid="2" name="Ready to MINGLE?!" tags="" position="0,1116">&lt;H1&gt;MINGLE&lt;/H1&gt;
 
