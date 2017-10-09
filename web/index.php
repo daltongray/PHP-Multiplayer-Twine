@@ -708,8 +708,7 @@ or	\
 			&quot;Passcode&quot;,
 			&quot;CheckAndCreateTest&quot;
 		);
-&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileComplete" tags="" position="1277,202">if taken, dialogue update, 
-&lt;&lt;if $PlayerFileCheckAndCreateResult eq &quot;Taken&quot;&gt;&gt;
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="PlayerFileComplete" tags="" position="1277,202">&lt;&lt;if $PlayerFileCheckAndCreateResult eq &quot;Taken&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
@@ -717,18 +716,24 @@ or	\
 			&#x27;Sorry, that name was taken.&#x27;
 			)
 	&lt;&lt;/script&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
-&lt;&lt;if $PlayerFileCheckAndCreateResult eq &quot;Success&quot;&gt;&gt;
+&lt;&lt;else $PlayerFileCheckAndCreateResult eq &quot;Success&quot;&gt;&gt;
 	&lt;&lt;script&gt;&gt;
 		window.DialogueUpdate
 			(
 			&#x27;PlayerFileComplete2&#x27;,
 			&#x27;Success!&#x27;
 			)
-&lt;&lt;/script&gt;&gt;
-</tw-passagedata><tw-passagedata pid="10" name="PlayerFileComplete2" tags="" position="1401,200">You now have an account &amp; you are logged in! 
+	&lt;&lt;/script&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="PlayerFileComplete2" tags="" position="1401,200">You now have an account &amp; you are logged in! 
 
+&lt;&lt;button &quot;Let&#x27;s get Started!&quot;&gt;&gt;
+	&lt;&lt;script&gt;&gt;
+		Dialog.close();
+	&lt;&lt;/script&gt;&gt;
+	&lt;&lt;goto &quot;Start&quot;&gt;&gt;
+&lt;&lt;/button&gt;&gt;
+
+&lt;&lt;silent&gt;&gt;
 You can find your account credentials in your \
 &lt;button 
 	type=button 
@@ -740,13 +745,8 @@ You can find your account credentials in your \
 			)
 		&quot;
 	&gt;Adventurer&#x27;s Journal&lt;/button&gt;  
+&lt;&lt;/silent&gt;&gt; 
 
-&lt;&lt;button &quot;Let&#x27;s get Started!&quot;&gt;&gt;
-	&lt;&lt;script&gt;
-			window.PlayerFileFunction();
-	&lt;&lt;/script&gt;&gt;
-	&lt;&lt;goto &quot;Start&quot;&gt;&gt;
-&lt;&lt;/button&gt;&gt;
 </tw-passagedata><tw-passagedata pid="11" name="PlayerFileLoginConfirm" tags="" position="1152,80">Player name: $PlayerName,
 Passcode: $Passcode
 
