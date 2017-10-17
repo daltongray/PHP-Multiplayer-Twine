@@ -117,8 +117,9 @@ var JSONifyForGet = function (Arg1,Arg2) {
   var Obj = {
      Protocol:"Unknown"
   };
+  
   for(var i=0; i<arguments.length; i++){
-    "Var" + i = arguments[i];
+    Obj.["Var"+i] = arguments[i];
 }
   
   
