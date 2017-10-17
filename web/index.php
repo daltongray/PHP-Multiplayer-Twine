@@ -102,11 +102,12 @@ Pseudo Code:
   Result <span id = "JSONifyForGetResult"></span>
  
 <script>
+var JSONifyForGet = function() {
   var ArgOne = document.getElementById("FirstArg");
   var ArgTwo = document.getElementById("SecondArg");
   
   document.getElementById("JSONifyForGetResult").innerHTML = ArgOne + ArgTwo;
-  
+}
   
 </script>
   
