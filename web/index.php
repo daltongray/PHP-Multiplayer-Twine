@@ -112,12 +112,16 @@ var JSONifyForGetShell = function() {
 }
 
 var JSONifyForGet = function (Arg1,Arg2) {
- 
+
+  
   var Obj = {
-    Protocol:"Unknown",
-    Var1:Arg1,
-    Var2:Arg2
+     Protocol:"Unknown"
   };
+  for(var i=0; i<arguments.length; i++){
+    "Var" + i = arguments[i];
+}
+  
+  
   var JSONObj = JSON.stringify(Obj);
   return JSONObj;
 }
