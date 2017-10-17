@@ -118,8 +118,8 @@ var JSONifyForGet = function (Arg1,Arg2) {
     Var1:Arg1,
     Var2:Arg2
   };
-  
-  return Obj;
+  var JSONObj = JSON.stringify(Obj);
+  return JSONObj;
 }
   
 </script>
