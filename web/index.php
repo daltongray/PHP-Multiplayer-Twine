@@ -12,6 +12,7 @@ Serverside
 
 1. Declare local Objects
 
+<p>
 LocalPlayerFile = {       <br>
     FirstName:"Dalton",   <br>
     LastName:"Gray",      <br>
@@ -19,23 +20,35 @@ LocalPlayerFile = {       <br>
     EyeColor:"Green",     <br>
     DimFile:"Earth"       <br>
 };                        <br>
+</p>
   
-Our first name is: <span id = "FirstName"></span>
-Our last name is: <span id = "LastName"></span>
-Our age is: <span id = "Age"></span>
-Out eye color is:<span id = "EyeColor"></span>
-Our DimFile is:<span id = "DimFile"></span>
-  
+<p>
+Our first name is: <span id = "FirstName"></span>       <br>
+Our last name is: <span id = "LastName"></span>         <br>
+Our age is: <span id = "Age"></span>                    <br>
+Our eye color is:<span id = "EyeColor"></span>          <br>
+Our DimFile is:<span id = "DimFile"></span>             <br>
+</p>
 
   
+<p>
+LocalDimFile = {            <br>
+    PlanetName:"Earth",     <br>
+    GalaxyName:"MilkyWay",  <br>
+    UniverseName:"1",       <br>
+    CupStatus:"Half Full"   <br>
+    Inhabitants: "Dalton"}; <br>
+</p>
   
-LocalDimFile = {
-    PlanetName:"Earth",
-    GalaxyName:"MilkyWay",
-    UniverseName:"1",
-    CupStatus:"Half Full"
-    Inhabitants: "Dalton"};
-<script>
+<p>
+Our planet name is: <span id = "PlanetName"></span>   <br>
+Our GalaxyName is: <span id = "GalaxyName"></span>    <br>
+Our UniverseName is: <span id = "UniverseName"></span>  <br>
+Our CupStatus is: <span id = "CupStatus"></span>  <br>
+Our Inhabitants are: <span id = "Inhabitants"></span> <br>
+</p>
+  
+<script>          
 
 var LocalPlayerFile = {
     FirstName:"Dalton",
@@ -51,6 +64,20 @@ document.getElementById("Age").innerHTML = LocalPlayerFile.Age;
 document.getElementById("EyeColor").innerHTML = LocalPlayerFile.EyeColor;
 document.getElementById("DimFile").innerHTML = LocalPlayerFile.DimFile;
 
+var LocalDimFile = {            
+    PlanetName:"Earth",     
+    GalaxyName:"MilkyWay",  
+    UniverseName:"1",       
+    CupStatus:"Half Full",   
+    Inhabitants: "Dalton"
+};
+  
+document.getElementById("PlanetName").innerHTML = LocalDimFile.PlanetName;
+document.getElementById("GalaxyName").innerHTML = LocalDimFile.GalaxyName;
+document.getElementById("UniverseName").innerHTML = LocalDimFile.UniverseName;
+document.getElementById("CupStatus").innerHTML = LocalDimFile.CupStatus;
+document.getElementById("Inhabitants").innerHTML = LocalDimFile.Inhabitants;
+  
 </script>
 
 
