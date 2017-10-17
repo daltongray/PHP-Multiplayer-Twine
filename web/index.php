@@ -97,7 +97,7 @@ Pseudo Code:
   <input type = "text" id = "FirstArg">
   <input type = "text" id = "SecondArg">
   
-  <button onclick = "JSONifyForGet();">
+  <button onclick = "JSONifyForGet();">JSONify!</button>
   
   Result <span id = "JSONifyForGetResult"></span>
  
