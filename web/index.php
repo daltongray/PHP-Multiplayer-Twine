@@ -12,14 +12,23 @@ Serverside
 
 1. Declare local Objects
 
-LocalPlayerFile = {
-    FirstName:"Dalton",    test: <p id = "FirstName"></p>
-    LastName:"Gray",
-    Age:25,
-    EyeColor:"Green",
-    DimFile:"Earth"
-};
-   
+LocalPlayerFile = {       <br>
+    FirstName:"Dalton",   <br>
+    LastName:"Gray",      <br>
+    Age:25,               <br>
+    EyeColor:"Green",     <br>
+    DimFile:"Earth"       <br>
+};                        <br>
+  
+Our first name is: <span id = "FirstName"></span>
+Our last name is: <span id = "LastName"></span>
+Our age is: <span id = "Age"></span>
+Out eye color is:<span id = "EyeColor"></span>
+Our DimFile is:<span id = "DimFile"></span>
+  
+
+  
+  
 LocalDimFile = {
     PlanetName:"Earth",
     GalaxyName:"MilkyWay",
@@ -37,6 +46,10 @@ var LocalPlayerFile = {
 };
 
 document.getElementById("FirstName").innerHTML = LocalPlayerFile.FirstName;
+document.getElementById("LastName").innerHTML = LocalPlayerFile.LastName;
+document.getElementById("Age").innerHTML = LocalPlayerFile.Age;
+document.getElementById("EyeColor").innerHTML = LocalPlayerFile.EyeColor;
+document.getElementById("DimFile").innerHTML = LocalPlayerFile.DimFile;
 
 </script>
 
