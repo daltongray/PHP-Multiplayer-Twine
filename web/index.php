@@ -103,8 +103,8 @@ Pseudo Code:
  
 <script>
 var JSONifyForGet = function() {
-  var ArgOne = document.getElementById("FirstArg");
-  var ArgTwo = document.getElementById("SecondArg");
+  var ArgOne = document.getElementById("FirstArg").value;
+  var ArgTwo = document.getElementById("SecondArg").value;
   
   document.getElementById("JSONifyForGetResult").innerHTML = ArgOne + ArgTwo;
 }
