@@ -26,8 +26,8 @@ LocalPlayerFile = {       <br>
 Our first name is: <span id = "FirstName"></span>       <br>
 Our last name is: <span id = "LastName"></span>         <br>
 Our age is: <span id = "Age"></span>                    <br>
-Our eye color is:<span id = "EyeColor"></span>          <br>
-Our DimFile is:<span id = "DimFile"></span>             <br>
+Our eye color is: <span id = "EyeColor"></span>          <br>
+Our DimFile is: <span id = "DimFile"></span>             <br>
 </p>
 
   
@@ -41,11 +41,11 @@ LocalDimFile = {            <br>
 </p>
   
 <p>
-Our planet name is: <span id = "PlanetName"></span>   <br>
-Our GalaxyName is: <span id = "GalaxyName"></span>    <br>
+Our planet name is: <span id = "PlanetName"></span>     <br>
+Our GalaxyName is: <span id = "GalaxyName"></span>      <br>
 Our UniverseName is: <span id = "UniverseName"></span>  <br>
-Our CupStatus is: <span id = "CupStatus"></span>  <br>
-Our Inhabitants are: <span id = "Inhabitants"></span> <br>
+Our CupStatus is: <span id = "CupStatus"></span>        <br>
+Our Inhabitants are: <span id = "Inhabitants"></span>   <br>
 </p>
   
 <script>          
@@ -81,11 +81,10 @@ document.getElementById("Inhabitants").innerHTML = LocalDimFile.Inhabitants;
 </script>
 
 
-
 <h1>Jsonify for GET</h1>
 
-This is a function in JS that will take args, passed to it by the GET function, 
-and turn them into a JSON that will sync up with our server. Adds a protocol: GET
+This is a function in JS that will take args, passed to it by the GET function,   <br>
+and turn them into a JSON that will sync up with our server. Adds a protocol: GET <br>
 
 Pseudo Code: 
     Create object, 
@@ -95,6 +94,22 @@ Pseudo Code:
         gets added to the object
     jsonify object
 
+  <input type = "text" id = "FirstArg">
+  <input type = "text" id = "SecondArg">
+  
+  <button onclick = "JSONifyForGet();">
+  
+  Result <span id = "JSONifyForGetResult"></span>
+ 
+<script>
+  var ArgOne = document.getElementById("FirstArg");
+  var ArgTwo = document.getElementById("SecondArg");
+  
+  document.getElementById("JSONifyForGetResult").innerHTML = ArgOne + ArgTwo;
+  
+  
+</script>
+  
 
 <h1>PHP for GET</h1>
 
