@@ -26,8 +26,8 @@ LocalPlayerFile = {       <br>
 Our first name is: <span id = "FirstName"></span>       <br>
 Our last name is: <span id = "LastName"></span>         <br>
 Our age is: <span id = "Age"></span>                    <br>
-Our eye color is: <span id = "EyeColor"></span>          <br>
-Our DimFile is: <span id = "DimFile"></span>             <br>
+Our eye color is: <span id = "EyeColor"></span>         <br>
+Our DimFile is: <span id = "DimFile"></span>            <br>
 </p>
 
   
@@ -37,7 +37,8 @@ LocalDimFile = {            <br>
     GalaxyName:"MilkyWay",  <br>
     UniverseName:"1",       <br>
     CupStatus:"Half Full"   <br>
-    Inhabitants: "Dalton"}; <br>
+    Inhabitants: "Dalton"   <br>
+}; <br>
 </p>
   
 <p>
@@ -117,10 +118,10 @@ var JSONifyForGet = function (Arg1,Arg2) {
   var Obj = {
      Protocol:"Unknown"
   };
-  
+  /*
   for(var i=0; i<arguments.length; i++){
     Obj.["Var"+i] = arguments[i];
-}
+}*/
   
   
   var JSONObj = JSON.stringify(Obj);
