@@ -97,24 +97,29 @@ Pseudo Code:
   <input type = "text" id = "FirstArg">
   <input type = "text" id = "SecondArg">
   
-  <button onclick = "JSONifyForGet();">JSONify!</button>
+  <button onclick = "JSONifyForGetShell();">JSONify!</button>
   
   Result <span id = "JSONifyForGetResult"></span>
  
 <script>
-var JSONifyForGet = function() {
+var JSONifyForGetShell = function() {
   
   var ArgOne = document.getElementById("FirstArg").value;
   var ArgTwo = document.getElementById("SecondArg").value;
   
+  var Response = JSONifyForGet(ArgOne,ArgTwo);
+  document.getElementById("JSONifyForGetResult").innerHTML = Response;
+}
+
+var JSONifyForGet = function (Arg1,Arg2) {
+ 
   var Obj = {
     Protocol:"Unknown",
-    Var1:"Unknown"
-  }
+    Var1:Arg1,
+    Var2:Arg2
+  };
   
-  
-  
-  document.getElementById("JSONifyForGetResult").innerHTML = ArgOne + ArgTwo;
+  return Obj;
 }
   
 </script>
