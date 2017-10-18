@@ -108,7 +108,7 @@ var JSONifyForGetShell = function() {
   var ArgOne = document.getElementById("FirstArg").value;
   var ArgTwo = document.getElementById("SecondArg").value;
   
-  var Response = JSONifyForGet(ArgOne,ArgTwo);
+  var Response = JSONifyForGet(ArgOne,ArgTwo,"ThirdArg");
   document.getElementById("JSONifyForGetResult").innerHTML = Response;
 }
 
@@ -143,6 +143,9 @@ Pseudo Code
     console log error message
     for each varname
         twvar = var
+  
+  
+ 
 
 
 
