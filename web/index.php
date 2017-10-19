@@ -186,6 +186,7 @@ Get("Var1", "var2", "var3", etc...)
     GET(VarOne,VarTwo,VarThree);
   };
   
+  
 var GET = function() {
   
   str = JSONifyForGet.apply(null, arguments);
@@ -203,10 +204,10 @@ var GET = function() {
       delete RRObject.ErrorMessage;
       
       var Values;
-      For(Values in RRObject) {
-      LocalPlayerFile['Values'] = Values.value;
-      console.log(LocalPlayerFile['Values'];
-      }
+      for (Values in RRObject) {
+        LocalPlayerFile['Values'] = Values.value;
+        console.log(LocalPlayerFile['Values'];
+      };
     }
   };
   //finally open an xml request, via GET protocol to GET.php
