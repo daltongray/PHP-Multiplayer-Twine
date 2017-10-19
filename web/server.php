@@ -47,7 +47,7 @@ $TestContentsVarDump = var_dump($TestContentsJSON);           $Response['ErrorMe
   $IntersectingVars = array_intersect_key($ArrayIncoming,$TestContentsJSON);
 
 
-echo array_merge($Response,$result);
+echo json_encode(array_merge($Response,$result));
 return;
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
