@@ -13,28 +13,28 @@
 //	Var1, etc: These vars JS will plop into their corresponding twine vars
 // 
 // ----------------SETUP-----------------------------------------------------------------------
-$response = array(
+$Response = array(
 	"ErrorMessage"=>"The Response Object has been setup. ");
 //----------------------------------------------------------------------------------------------------------------------------
 // ----------------ID JSON, UNPACK, SETUP-----------------------------------------------------------------------
 		        $q = $_REQUEST["q"];
-	$decodedjson = json_decode($q, true);
+	$IncomingArray = json_decode($q, true);
   
-if ($decodedjson == NULL) {
-       	$response['ErrorMessage'] .= "The JSON sent to the server was mal formed. ";
-	echo json_encode($response);
+if ($IncomingArray == NULL) {
+       	$Response['ErrorMessage'] .= "The JSON sent to the server was mal formed. ";
+	echo json_encode($Response);
 	return;
-}; 								                                          $response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
+}; 								                                          $Response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
 
-	       $Protocol = $decodedjson['Protocol'];			        $response['ErrorMessage'] .= "[Method] is ${method}. ";
+	       $Protocol = $decodedjson['Protocol'];			        $Response['ErrorMessage'] .= "[Method] is ${method}. ";
 
 
 if ($Protocol == "TESTGET") {
 
                 $Url = "TestJSON.txt";
-       $TestContents = file_get_contents("$Url");	            $response['ErrorMessage'] .= "[TestContents] is ${TestContents}. ";
-   $TestContentsJSON = json_decode($TestContents, true); 		  $response['ErrorMessage'] .= "The [PFContentsJSON] is $TestContentsJSON. ";
-$TestContentsVarDump = var_dump($TestContentsJSON);           $response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}; 
+       $TestContents = file_get_contents("$Url");	            $Response['ErrorMessage'] .= "[TestContents] is ${TestContents}. ";
+   $TestContentsJSON = json_decode($TestContents, true); 		  $Response['ErrorMessage'] .= "The [PFContentsJSON] is $TestContentsJSON. ";
+$TestContentsVarDump = var_dump($TestContentsJSON);           $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}; 
 
 
         //This code will flip the incoming JSON,
@@ -42,20 +42,13 @@ $TestContentsVarDump = var_dump($TestContentsJSON);           $response['ErrorMe
         //then merge the two into the response object. :)
         // test it out at http://sandbox.onlinephpfunctions.com/
         
-$response = array(
-	"ErrorMessage"=>"The Response Object has been setup. ");
-	
-$a1=array("Protocol"=>"get","var1"=>"firstname","var2"=>"lastname");
 
-$a3=array_flip($a1);
+     $ArrayIncoming = array_flip($IncomingArray);
+  $IntersectingVars = array_intersect_key($ArrayIncoming,$TestContentsJSON);
 
 
-$a2=array("firstname"=>"red","lastname"=>"blue","d"=>"pink");
-
-$result=array_intersect_key($a3,$a2);
-
-
-print_r(array_merge($response,$result));
+echo array_merge($Response,$result);
+return;
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // This is where I left off!
