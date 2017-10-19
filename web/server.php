@@ -26,7 +26,7 @@ if ($IncomingArray == NULL) {
 	return;
 }; 								          $Response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
 
-	       $Protocol = $decodedjson['Protocol'];			  $Response['ErrorMessage'] .= "[Method] is ${method}. ";
+	   $Protocol = $IncomingArray['Protocol'];			  $Response['ErrorMessage'] .= "[Method] is ${Protocol}. ";
 
 
 if ($Protocol == "TESTGET") {
