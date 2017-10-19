@@ -178,7 +178,7 @@ Get("Var1", "var2", "var3", etc...)
  
 <script>  
   
-  var function GetTest() {
+  var GetTest = function() {
     var VarOne = document.getElementById("GetInputOne").value;
     var VarTwo = document.getElementById("GetInputTwo").value;
     var VarThree = document.getElementById("GetInputThree").value;
@@ -186,7 +186,7 @@ Get("Var1", "var2", "var3", etc...)
     GET(VarOne,VarTwo,VarThree);
   };
   
-var function GET() {
+var GET = function() {
   
   str = JSONifyForGet.apply(null, arguments);
   console.log(str);
