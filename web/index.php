@@ -170,8 +170,52 @@ Get("Var1", "var2", "var3", etc...)
     xml JSON
     
     Dejsonifyforget(Response)
+  
+  Var 1<input type="text" id="GetInputOne"> <br>
+  Var 2<input type="text" id="GetInputTwo"> <br>
+  Var 3<input type="text" id="GetInputThree"> <br>
 
+  <button onclick="GetTest()">Get These Vars</button>
+<script>  
+  
+  function GetTest() {
+    var VarOne = document.getElementById("GetInputOne").value;
+    var VarTwo = document.getElementById("GetInputTwo").value;
+    var VarThree = document.getElementById("GetInputThree").value;
 
+    GET(VarOne,VarTwo,VarThree);
+  }
+  
+function GET() {
+  
+  str = JSONifyForGet.apply(null, arguments);
+  console.log(str);
+  
+  //create a var for our xhttp object
+  var xhttp;
+ 
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var ReceivedResponse = this.responseText;         console.log(this.responseText);
+      var RRObject = JSON.parse(ReceivedResponse);
+      console.log(RRObject.ErrorMessage);
+      delete RRObject.ErrorMessage;
+      
+      For(var Names in RRObject) {
+      LocalPlayerFile['Names'] = Names.value;
+      console.log(LocalPlayerFile['Names'];
+      }
+    }
+  };
+  //finally open an xml request, via GET protocol to GET.php
+  //with the additional q= protocol which adds any txt from the field to the url
+  //ie: how we send jsons!
+  xhttp.open("GET", "GET.php?q="+str, true);
+  xhttp.send();   
+}
+
+  </script>
 
 
 <h1>Jsonify for UPDATE </h1>
