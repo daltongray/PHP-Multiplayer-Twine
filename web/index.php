@@ -116,7 +116,7 @@ var JSONifyForGet = function () {
 
   
   var Obj = {
-     Protocol:"Unknown"
+     Protocol:"TESTGET"
   };
   
   for(var i=0; i<arguments.length; i++){
