@@ -198,7 +198,7 @@ var GET = function() {
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var ReceivedResponse = this.responseText;         console.log(this.responseText);
+      var ReceivedResponse = this.responseText;         console.log(ReceivedResponse);
       var RRObject = JSON.parse(ReceivedResponse);
       console.log(RRObject.ErrorMessage);
       delete RRObject.ErrorMessage;
