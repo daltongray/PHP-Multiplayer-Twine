@@ -112,7 +112,7 @@ var JSONifyForGetShell = function() {
   document.getElementById("JSONifyForGetResult").innerHTML = Response;
 }
 
-var JSONifyForGet = function (Arg1,Arg2) {
+var JSONifyForGet = function () {
 
   
   var Obj = {
@@ -175,18 +175,18 @@ Get("Var1", "var2", "var3", etc...)
   Var 2<input type="text" id="GetInputTwo"> <br>
   Var 3<input type="text" id="GetInputThree"> <br>
 
-  <button onclick="GetTest()">Get These Vars</button>
+ 
 <script>  
   
-  function GetTest() {
+  var function GetTest() {
     var VarOne = document.getElementById("GetInputOne").value;
     var VarTwo = document.getElementById("GetInputTwo").value;
     var VarThree = document.getElementById("GetInputThree").value;
 
     GET(VarOne,VarTwo,VarThree);
-  }
+  };
   
-function GET() {
+var function GET() {
   
   str = JSONifyForGet.apply(null, arguments);
   console.log(str);
@@ -202,9 +202,10 @@ function GET() {
       console.log(RRObject.ErrorMessage);
       delete RRObject.ErrorMessage;
       
-      For(var Names in RRObject) {
-      LocalPlayerFile['Names'] = Names.value;
-      console.log(LocalPlayerFile['Names'];
+      var Values;
+      For(Values in RRObject) {
+      LocalPlayerFile['Values'] = Values.value;
+      console.log(LocalPlayerFile['Values'];
       }
     }
   };
@@ -216,7 +217,8 @@ function GET() {
 }
 
   </script>
-
+  
+ <button onclick="GetTest()">Get These Vars</button>
 
 <h1>Jsonify for UPDATE </h1>
 
