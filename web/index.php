@@ -243,7 +243,7 @@ take args, make object<br>
     var ArgTwo = document.getElementById("SecondUpdateArg").value;
 
     var Response = JSONifyForUpdate(ArgOne, ArgTwo);
-    document.getElementById("JSONifyForGetResult").innerHTML = Response;
+    document.getElementById("JSONifyForUpdateResult").innerHTML = Response;
   }
 
 var JSONifyForUpdate = function() {
@@ -266,7 +266,7 @@ var JSONifyForUpdate = function() {
   </script>
   
   <button onclick = "JSONifyForUpdateShell();">JSONify!</button>
-    Results: <span id="JSONifyForGetResult"> </span>
+    Results: <span id="JSONifyForUpdateResult"> </span>
     
     
 <h1>DE-Jsonify for UPDATE </h1>
