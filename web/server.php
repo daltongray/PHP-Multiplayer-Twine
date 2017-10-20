@@ -40,8 +40,10 @@ $TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['Er
         
      $ArrayIncoming = array_flip($IncomingArray);
   $IntersectingVars = array_intersect_key($ArrayIncoming,$TestContentsJSON);
-
-echo json_encode(array_merge($Response,$result));
+	
+$JsonArray = array_merge($Response,$IntersectingVars);
+	
+echo json_encode($JsonArray);
 return;
 };
 
