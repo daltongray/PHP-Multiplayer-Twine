@@ -206,8 +206,8 @@ var GET = function() {
       var Values;
       for (Values in RRObject) {
         console.log(Values);
-        console.log(LocalPlayerFile['Values']);
-        LocalPlayerFile['Values'] = RRObject['Values'];
+        console.log(LocalPlayerFile[Values]);
+        LocalPlayerFile[Values] = RRObject[Values];
         console.log(LocalPlayerFile);
       };
     }
