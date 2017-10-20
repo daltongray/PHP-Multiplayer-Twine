@@ -41,7 +41,8 @@ $TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['Er
      $ArrayIncoming = array_flip($IncomingArray);	
 $ArrayIncomingVarDump = var_dump($ArrayIncoming);           	 	  $Response['ErrorMessage'] .= "The Var Dump of ArrayIncoming JSON is ${ArrayIncoming}"; 
 
-  $IntersectingVars = $TestContentsJSON + $ArrayIncoming;			//array_intersect_key($ArrayIncoming,$TestContentsJSON);
+ $TestContentsJSON = $TestContentsJSON + $ArrayIncoming;			//array_intersect_key($ArrayIncoming,$TestContentsJSON);
+$IntersectingVars = $TestContentsJSON
 	
 $JsonArray = array_merge($Response,$IntersectingVars);
 	
