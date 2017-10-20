@@ -253,8 +253,8 @@ var JSONifyForUpdate = function() {
     Protocol: "Update"
   };
 
-  for (var i = 0; i < arguments.length; i++) {
-    Obj["Var" + i] = arguments[i];
+  for (var i = 0; i < arguments.length; i+2) {
+    Obj[arguments[i]] = arguments[i+1];
   }
 
 
@@ -271,13 +271,85 @@ var JSONifyForUpdate = function() {
     
 <h1>DE-Jsonify for UPDATE </h1>
 
-This is a JS function that receives a json from the server,
-decodes it, plops the error reporting into the console log
-and does little else. 
+ 
 
 
 
 
+    
+    
+    <h1>Update</h1>
+    
+    This is a JS function that sends a json to the server,
+which decodes it, opens a repo json, and plops the values 
+   wesend it into the json, then returns the error reporting 
+    Js plops that into the console log
+and does little else.
+    
+    Update("Var1", "var2", "var3", etc...)
+    JSON = JsonifyforUpdate(this.args)
+    xml JSON
+    
+    Dejsonifyforupdate(Response)
+    console log error msg
+  
+  Var 1<input type="text" id="UpdateInputOne"> <br>
+  Var 2<input type="text" id="UpdateInputTwo"> <br>
+  Var 3<input type="text" id="UpdateInputThree"> <br>
+  Var 4<input type="text" id="UpdateInputFour"> <br>
+
+ 
+<script>  
+  
+  var UpdateShell = function() {
+    var VarOne = document.getElementById("UpdateInputOne").value;
+    var VarTwo = document.getElementById("UpdateInputTwo").value;
+    var VarThree = document.getElementById("UpdateInputThree").value;
+    var VarFour = document.getElementById("UpdateInputFour").value;
+
+    
+    Update(VarOne,VarTwo,VarThree,VarFour);
+  };
+  
+  
+var Update = function() {
+  
+  str = JSONifyForUpdate.apply(null, arguments);
+  console.log(str);
+  
+  var xhttp;
+ 
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) { 
+      var ReceivedResponse = this.responseText;     
+      var RRObject = JSON.parse(ReceivedResponse);
+      console.log(RRObject.ErrorMessage);
+      delete RRObject.ErrorMessage;
+     
+        documnet.getElementById("GetTestResult").innerHTML = RRObject.UpdateReport;
+      };
+    }
+  };
+  //finally open an xml request, via GET protocol to GET.php
+  //with the additional q= protocol which adds any txt from the field to the url
+  //ie: how we send jsons!
+  xhttp.open("GET", "server.php?q="+str, true);
+  xhttp.send();   
+}
+
+  </script>
+  
+ <button onclick="GetTest()">Get These Vars</button>
+  <span id="GetTestResult">
+  
+  
+    
+    
+    
+    
+    
+    
 <h1>Create Repo</h1>
 
 This is a Serverside PHP function that creates a json repository of vars. 
