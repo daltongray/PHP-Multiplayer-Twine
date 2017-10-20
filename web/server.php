@@ -19,7 +19,9 @@ $Response = array(
 // ----------------ID JSON, UNPACK, SETUP-----------------------------------------------------------------------
 		    $q = $_REQUEST["q"];
 	$IncomingArray = json_decode($q, true);
-  
+echo json_encode($Response);
+	return;
+
 if ($IncomingArray == NULL) {
        	$Response['ErrorMessage'] .= "The JSON sent to the server was mal formed. ";
 	echo json_encode($Response);
