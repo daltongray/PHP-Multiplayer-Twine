@@ -213,7 +213,7 @@ var GET = function() {
   //finally open an xml request, via GET protocol to GET.php
   //with the additional q= protocol which adds any txt from the field to the url
   //ie: how we send jsons!
-  xhttp.open("GET", "GET.php?q="+str, true);
+  xhttp.open("GET", "server.php?q="+str, true);
   xhttp.send();   
 }
 
