@@ -232,10 +232,10 @@ This is a function that receives args from twine,
 and turns them into a json for sending to the server. 
 Adds a protocol: Update
 
-take args, make object
-
-  <input type = "text" id = "FirstUpdateArg">
-  <input type = "text" id = "SecondUpateArg">
+take args, make object<br>
+<br>
+  <input type = "text" id = "FirstUpdateArg"> <br>
+  <input type = "text" id = "SecondUpdateArg"> <br>
   <script>
     var JSONifyForUpdateShell = function() {
 
