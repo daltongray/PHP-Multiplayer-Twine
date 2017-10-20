@@ -38,7 +38,7 @@ unset($IncomingArray['Protocol']);
                 $Url = "TestJSON.txt";
        $TestContents = file_get_contents("$Url");	           	  $Response['ErrorMessage'] .= "[TestContents] is ${TestContents}. ";
    $TestContentsJSON = json_decode($TestContents, true); 		 
-$TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}"; 
+//$TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}"; 
         
 $IncomingJSON = '{"Protocol":"TESTGET","Var0":"FirstName","Var1":"LastName","Var2":""}';
 
