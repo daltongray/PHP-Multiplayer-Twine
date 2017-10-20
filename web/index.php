@@ -209,6 +209,7 @@ var GET = function() {
         console.log(LocalPlayerFile[Values]);
         LocalPlayerFile[Values] = RRObject[Values];
         console.log(LocalPlayerFile);
+        documnet.getElementById("GetTestResult").innerHTML = LocalPlayerFile
       };
     }
   };
@@ -222,7 +223,9 @@ var GET = function() {
   </script>
   
  <button onclick="GetTest()">Get These Vars</button>
-
+  <span id="GetTestResult">
+  
+  
 <h1>Jsonify for UPDATE </h1>
 
 This is a function that receives args from twine,
