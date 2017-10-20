@@ -38,15 +38,17 @@ if ($Protocol == "TESTGET") {
    $TestContentsJSON = json_decode($TestContents, true); 		 
 $TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}"; 
         
-     $ArrayIncoming = array_flip($IncomingArray);	
-$ArrayIncomingVarDump = var_dump($ArrayIncoming);           	 	  $Response['ErrorMessage'] .= "The Var Dump of ArrayIncoming JSON is ${ArrayIncoming}"; 
+     $ArrayIncoming = array_flip($IncomingArray);			 $Response['ErrorMessage'] .= "ArrayIncoming JSON is ${ArrayIncoming}"; 
+$ArrayIncomingVarDump = var_dump($ArrayIncoming);           	 	  $Response['ErrorMessage'] .= "The Var Dump of ArrayIncoming JSON is ${ArrayIncomingVarDump}"; 
 
  $TestContentsJSON = $TestContentsJSON + $ArrayIncoming;			//array_intersect_key($ArrayIncoming,$TestContentsJSON);
 $IntersectingVars = $TestContentsJSON;
 	
 $JsonArray = array_merge($Response,$IntersectingVars);
+
+$out = array_values($JsonArray);
 	
-echo json_encode($JsonArray);
+echo json_encode($out);
 return;
 };
 
