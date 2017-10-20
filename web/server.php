@@ -56,7 +56,7 @@ $ArrayIncoming = array_flip($IncomingArray);
 unset($ArrayIncoming['']);
 
 $PlayerFile = array_intersect_key($PlayerFile, $ArrayIncoming);
-$PlayerFile = $PlayerFile + $Response
+$PlayerFile = $PlayerFile + $Response;
 echo json_encode($PlayerFile);
 return;
 };
