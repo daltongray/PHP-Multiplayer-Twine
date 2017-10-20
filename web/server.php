@@ -13,8 +13,9 @@
 //	Var1, etc: These vars JS will plop into their corresponding twine vars
 // 
 // ----------------SETUP-----------------------------------------------------------------------
-$Response = array(
-	"ErrorMessage"=>"The Response Object has been setup. ");
+
+$Response = array("ErrorMessage"=>"The Response Object has been setup. ");
+
 //----------------------------------------------------------------------------------------------------------------------------
 // ----------------ID JSON, UNPACK, SETUP-----------------------------------------------------------------------
 		    $q = $_REQUEST["q"];
@@ -35,7 +36,7 @@ if ($Protocol == "TESTGET") {
                 $Url = "TestJSON.txt";
        $TestContents = file_get_contents("$Url");	           	  $Response['ErrorMessage'] .= "[TestContents] is ${TestContents}. ";
    $TestContentsJSON = json_decode($TestContents, true); 		  $Response['ErrorMessage'] .= "The [PFContentsJSON] is $TestContentsJSON. ";
-$TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}; 
+$TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}"; 
         
      $ArrayIncoming = array_flip($IncomingArray);
   $IntersectingVars = array_intersect_key($ArrayIncoming,$TestContentsJSON);
