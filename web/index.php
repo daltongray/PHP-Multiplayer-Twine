@@ -234,7 +234,41 @@ Adds a protocol: Update
 
 take args, make object
 
+  <input type = "text" id = "FirstUpdateArg">
+  <input type = "text" id = "SecondUpateArg">
+  <script>
+    var JSONifyForUpdateShell = function() {
 
+    var ArgOne = document.getElementById("FirstUpdateArg").value;
+    var ArgTwo = document.getElementById("SecondUpdateArg").value;
+
+    var Response = JSONifyForUpdate(ArgOne, ArgTwo);
+    document.getElementById("JSONifyForGetResult").innerHTML = Response;
+  }
+
+var JSONifyForUpdate = function() {
+
+
+  var Obj = {
+    Protocol: "Update"
+  };
+
+  for (var i = 0; i < arguments.length; i++) {
+    Obj["Var" + i] = arguments[i];
+  }
+
+
+  var JSONObj = JSON.stringify(Obj);
+  return JSONObj;
+}
+
+  
+  </script>
+  
+  <button onclick = "JSONifyForUpdateShell();">JSONify!</button>
+   <span id="JSONifyForGetResult">
+    
+    
 <h1>DE-Jsonify for UPDATE </h1>
 
 This is a JS function that receives a json from the server,
