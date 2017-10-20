@@ -226,6 +226,12 @@ var GET = function() {
   <span id="GetTestResult">
   
   
+    
+    
+    
+    
+    
+    
 <h1>Jsonify for UPDATE </h1>
 
 This is a function that receives args from twine,
@@ -242,7 +248,7 @@ take args, make object<br>
     var ArgOne = document.getElementById("FirstUpdateArg").value;
     var ArgTwo = document.getElementById("SecondUpdateArg").value;
 
-    var Response = JSONifyForUpdate(ArgOne, ArgTwo);
+   var Response = JSONifyForUpdate(ArgOne, ArgTwo, "Dalton", "LastName");
     document.getElementById("JSONifyForUpdateResult").innerHTML = Response;
   }
 
@@ -252,11 +258,13 @@ var JSONifyForUpdate = function() {
   var Obj = {
     Protocol: "Update"
   };
-
-  for (var i = 0; i < arguments.length; i+2) {
-    Obj[arguments[i]] = arguments[i+1];
+var o;
+var ArgLenMinusOne = arguments.length - 1;
+  for (var i = 0; i < ArgLenMinusOne; i += 2) {
+    o = (i + 1);
+    Obj[arguments[i]] = arguments[o];
   }
-
+console.log(Obj);
 
   var JSONObj = JSON.stringify(Obj);
   return JSONObj;
@@ -267,6 +275,13 @@ var JSONifyForUpdate = function() {
   
   <button onclick = "JSONifyForUpdateShell();">JSONify!</button>
     Results: <span id="JSONifyForUpdateResult"> </span>
+    
+    
+    
+    
+    
+    
+    
     
     
 <h1>DE-Jsonify for UPDATE </h1>
@@ -294,9 +309,9 @@ and does little else.
     console log error msg
   
   Var 1<input type="text" id="UpdateInputOne"> <br>
-  Var 2<input type="text" id="UpdateInputTwo"> <br>
-  Var 3<input type="text" id="UpdateInputThree"> <br>
-  Var 4<input type="text" id="UpdateInputFour"> <br>
+  Val 1<input type="text" id="UpdateInputTwo"> <br>
+  Var 2<input type="text" id="UpdateInputThree"> <br>
+  Val 2<input type="text" id="UpdateInputFour"> <br>
 
  
 <script>  
@@ -327,7 +342,7 @@ var Update = function() {
       console.log(RRObject.ErrorMessage);
       delete RRObject.ErrorMessage;
      
-        documnet.getElementById("GetTestResult").innerHTML = RRObject.UpdateReport;
+        document.getElementById("UpdateTestResult").innerHTML = RRObject.UpdateReport;
       };
     }
   };
@@ -340,8 +355,8 @@ var Update = function() {
 
   </script>
   
- <button onclick="GetTest()">Get These Vars</button>
-  <span id="GetTestResult">
+ <button onclick="UpdateShell()">Update These Vars</button>
+  <span id="UpdateTestResults">
   
   
     
