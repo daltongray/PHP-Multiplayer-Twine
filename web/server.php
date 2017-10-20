@@ -32,23 +32,27 @@ if ($IncomingArray == NULL) {
 
 
 if ($Protocol == "TESTGET") {
-
+	
+unset($IncomingArray['Protocol']);
+	
                 $Url = "TestJSON.txt";
        $TestContents = file_get_contents("$Url");	           	  $Response['ErrorMessage'] .= "[TestContents] is ${TestContents}. ";
    $TestContentsJSON = json_decode($TestContents, true); 		 
 $TestContentsVarDump = var_dump($TestContentsJSON);           	 	  $Response['ErrorMessage'] .= "The Var Dump of Test Contents JSON is ${TestContentsVarDump}"; 
         
-     $ArrayIncoming = array_flip($IncomingArray);			 $Response['ErrorMessage'] .= "ArrayIncoming JSON is ${ArrayIncoming}"; 
-$ArrayIncomingVarDump = var_dump($ArrayIncoming);           	 	  $Response['ErrorMessage'] .= "The Var Dump of ArrayIncoming JSON is ${ArrayIncomingVarDump}"; 
+$IncomingJSON = '{"Protocol":"TESTGET","Var0":"FirstName","Var1":"LastName","Var2":""}';
 
- $TestContentsJSON = $TestContentsJSON + $ArrayIncoming;			//array_intersect_key($ArrayIncoming,$TestContentsJSON);
-$IntersectingVars = $TestContentsJSON;
-	
-$JsonArray = array_merge($Response,$IntersectingVars);
+$IncomingArray = JSON_decode($IncomingJSON, true);
 
-$out = array_values($JsonArray);
-	
-echo json_encode($out);
+
+$PlayerFile = $TestContentsJSON;
+
+$ArrayIncoming = array_flip($IncomingArray);
+unset($ArrayIncoming['']);
+
+$PlayerFile = array_intersect_key($PlayerFile, $ArrayIncoming);
+
+echo json_encode($PlayerFile);
 return;
 };
 
