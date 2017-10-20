@@ -266,7 +266,7 @@ var JSONifyForUpdate = function() {
   </script>
   
   <button onclick = "JSONifyForUpdateShell();">JSONify!</button>
-   <span id="JSONifyForGetResult">
+    Results: <span id="JSONifyForGetResult"> </span>
     
     
 <h1>DE-Jsonify for UPDATE </h1>
