@@ -26,9 +26,18 @@ if ($IncomingArray == NULL) {
        	$Response['ErrorMessage'] .= "The JSON sent to the server was mal formed. ";
 	echo json_encode($Response);
 	return;
-}; 								          $Response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
+}; 								      
 
-	   $Protocol = $IncomingArray['Protocol'];			  $Response['ErrorMessage'] .= "[Method] is ${Protocol}. ";
+$Response['ErrorMessage'] .= "The JSON sent to the server was well formed. ";
+
+
+
+
+
+
+
+
+$Protocol = $IncomingArray['Protocol'];			  $Response['ErrorMessage'] .= "[Method] is ${Protocol}. ";
 
 
 if ($Protocol == "TESTGET") {
@@ -47,7 +56,7 @@ $ArrayIncoming = array_flip($IncomingArray);
 unset($ArrayIncoming['']);
 
 $PlayerFile = array_intersect_key($PlayerFile, $ArrayIncoming);
-
+$PlayerFile = $PlayerFile + $Response
 echo json_encode($PlayerFile);
 return;
 };
