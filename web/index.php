@@ -346,7 +346,7 @@ var Update = function() {
       console.log(RRObject.ErrorMessage);
       delete RRObject.ErrorMessage;
      
-        document.getElementById("UpdateTestResult").innerHTML = RRObject.UpdateReport;
+        document.getElementById("UpdateTestResults").innerHTML = RRObject.UpdateReport;
       };
     };
   
