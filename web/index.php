@@ -360,7 +360,7 @@ var Update = function() {
   </script>
   
  <button onclick="UpdateShell()">Update These Vars</button>
-  <span id="UpdateTestResults">
+  <span id="UpdateTestResults"></span>
   
   
     
