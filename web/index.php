@@ -223,7 +223,7 @@ var GET = function() {
   </script>
   
  <button onclick="GetTest()">Get These Vars</button>
- Result: <span id="GetTestResult">
+  Result: <span id="GetTestResult"></span>
   
   
     
