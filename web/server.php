@@ -52,8 +52,6 @@ if ($Protocol == "TESTGET") {
 
 
 if($Protocol = "Update") {
-    $vardb = '{"FirstName":"Quasar","LastName":"Gray"}'; //file_get_contents("$filename") or die("could not reach $filename");
-    $vardbjson = json_decode($vardb, true);
 
     foreach ($IncomingArray as $key => $value) {
     $PlayerFile[$key] = $value;
