@@ -209,7 +209,7 @@ var GET = function() {
         console.log(LocalPlayerFile[Values]);
         LocalPlayerFile[Values] = RRObject[Values];
         console.log(LocalPlayerFile);
-        documnet.getElementById("GetTestResult").innerHTML = LocalPlayerFile
+        document.getElementById("GetTestResult").innerHTML = LocalPlayerFile
       };
     }
   };
@@ -223,7 +223,7 @@ var GET = function() {
   </script>
   
  <button onclick="GetTest()">Get These Vars</button>
-  <span id="GetTestResult">
+ Result: <span id="GetTestResult">
   
   
     
@@ -306,7 +306,8 @@ and does little else.
     xml JSON
     
     Dejsonifyforupdate(Response)
-    console log error msg
+    console log error msg <br>
+  <br>
   
   Var 1<input type="text" id="UpdateInputOne"> <br>
   Val 1<input type="text" id="UpdateInputTwo"> <br>
