@@ -293,7 +293,7 @@ console.log(Obj);
 
     
     
-    <h1>Update</h1>
+ <h1>Update</h1>
     
     This is a JS function that sends a json to the server,
 which decodes it, opens a repo json, and plops the values 
@@ -317,6 +317,9 @@ and does little else.
  
 <script>  
   
+   
+   
+  
   var UpdateShell = function() {
     var VarOne = document.getElementById("UpdateInputOne").value;
     var VarTwo = document.getElementById("UpdateInputTwo").value;
@@ -330,7 +333,7 @@ and does little else.
   
 var Update = function() {
   
-  str = JSONifyForUpdate.apply(null, arguments);
+  var str = JSONifyForUpdate.apply(null, arguments);
   console.log(str);
   
   var xhttp;
@@ -345,21 +348,22 @@ var Update = function() {
      
         document.getElementById("UpdateTestResult").innerHTML = RRObject.UpdateReport;
       };
-    }
-  };
-  //finally open an xml request, via GET protocol to GET.php
-  //with the additional q= protocol which adds any txt from the field to the url
-  //ie: how we send jsons!
+    };
+  
+
   xhttp.open("GET", "server.php?q="+str, true);
   xhttp.send();   
-}
+};
 
+ 
+ 
   </script>
   
  <button onclick="UpdateShell()">Update These Vars</button>
   <span id="UpdateTestResults">
   
   
+    
     
     
     
