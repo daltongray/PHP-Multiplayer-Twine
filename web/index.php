@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <body>
+  
+  <a href="HelloWorld.html">Twine Hello World</a>
+
 
 Data structures:
 
@@ -365,9 +368,29 @@ var Update = function() {
   
     
     
+     
+  <h1>Pull vars from elements</h1>
+  
+  This function pulls data from HTML elements and turns them into js and twine variables. 
+  <br>
+  <br>
+  <input id = "FetchTestInput"><br>
+  
+  <script>
+    
+    var FetchTest = function (ToFetch){
+     var Fetched = document.getElementById(ToFetch).value;
+     console.log(Fetched);
+     window[ToFetch] = Fetched;
+      console.log(window[ToFetch]);
+   
+    };
     
     
-    
+  </script>
+  <span id = "FetchTestOutput"></span>
+  <button onclick="FetchTest('FetchTestInput');" >Test it!</button>
+      <button onclick="console.log(window.FetchTestInput);" >Console Log FetchTestInput!</button>
     
     
 <h1>Create Repo</h1>
